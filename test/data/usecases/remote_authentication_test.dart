@@ -9,13 +9,16 @@ class RemoteAuthentication {
   RemoteAuthentication({required this.httpClient, required this.url});
 
   Future<void> auth() async {
-    await httpClient.request(url: url);
+    await httpClient.request(url: url, method: 'post');
   }
 }
 
 abstract class HttpClient {
   //TODO verificar https://github.com/dart-lang/mockito/issues/403
-  Future<void>? request({required String url});
+  Future<void>? request({
+    required String url,
+    required String method,
+  });
 }
 
 class HttpClientMock extends Mock implements HttpClient {}
@@ -27,6 +30,6 @@ main() {
     final sut = RemoteAuthentication(httpClient: httpClient, url: url);
 
     await sut.auth();
-    verify(httpClient.request(url: url)).called(1);
+    verify(httpClient.request(url: url, method: 'post'));
   });
 }
