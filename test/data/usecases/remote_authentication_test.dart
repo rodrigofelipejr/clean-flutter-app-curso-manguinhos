@@ -41,7 +41,7 @@ main() {
       url: url,
       method: 'post',
       body: {'email': params.email, 'password': params.secret},
-    )).called(1);
+    ));
   });
 
   test('should throw UnexpectedError if HttpClient return 400', () async {
