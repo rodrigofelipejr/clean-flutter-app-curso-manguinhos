@@ -9,27 +9,26 @@ class HttpAdapter implements HttpClient {
 
   HttpAdapter(this.client);
 
+  Map _handleResponse(http.Response response) {
+    if (response.statusCode == 200) {
+      return response.body.isEmpty ? {} : jsonDecode(response.body);
+    } else {
+      return {};
+    }
+  }
+
   Future<Map> request({
     required String url,
     required String method,
     Map? body,
   }) async {
-    final responseEmpty = {};
     final headers = {
       'content-type': 'application/json',
       'accept': 'application/json',
     };
     final jsonBody = body != null ? jsonEncode(body) : null;
-    final response = await client.post(
-      Uri.parse(url),
-      headers: headers,
-      body: jsonBody,
-    );
+    final response = await client.post(Uri.parse(url), headers: headers, body: jsonBody);
 
-    if (response.statusCode == 200) {
-      return response.body.isEmpty ? responseEmpty : jsonDecode(response.body);
-    } else {
-      return responseEmpty;
-    }
+    return _handleResponse(response);
   }
 }
