@@ -28,12 +28,18 @@ class HttpAdapter {
 
 @GenerateMocks([], customMocks: [MockSpec<http.Client>(as: #ClientMock)])
 main() {
+  late HttpAdapter sut;
+  late ClientMock client;
+  late String url;
+
+  setUp(() {
+    client = ClientMock();
+    sut = HttpAdapter(client);
+    url = faker.internet.httpUrl();
+  });
+
   group('post', () {
     test('should call post with correct values', () async {
-      final client = ClientMock();
-      final sut = HttpAdapter(client);
-      final url = faker.internet.httpUrl();
-
       await sut.request(url: url, method: 'post');
 
       verify(client.post(
