@@ -19,6 +19,7 @@ class HttpAdapter implements HttpClient {
     required String method,
     Map? body,
   }) async {
+    final responseEmpty = {};
     final headers = {
       'content-type': 'application/json',
       'accept': 'application/json',
@@ -29,7 +30,12 @@ class HttpAdapter implements HttpClient {
       headers: headers,
       body: jsonBody,
     );
-    return response.body.isEmpty ? {} : jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return response.body.isEmpty ? responseEmpty : jsonDecode(response.body);
+    } else {
+      return responseEmpty;
+    }
   }
 }
 
@@ -51,7 +57,7 @@ main() {
         );
 
     void mockResponse(int statusCode, {String body = '{"any_key":"any_value"}'}) {
-      mockRequest()..thenAnswer((_) async => http.Response(body, 200));
+      mockRequest().thenAnswer((_) async => http.Response(body, statusCode));
     }
 
     setUp(() {
@@ -78,14 +84,20 @@ main() {
       expect(response, {"any_key": "any_value"});
     });
 
-    test('should return null if post returns 200 with no data', () async {
+    test('should return empty if post returns 200 with no data', () async {
       mockResponse(200, body: '');
       final response = await sut.request(url: url, method: 'post');
       expect(response, {});
     });
 
-    test('should return null if post returns 204 with no data', () async {
+    test('should return empty if post returns 204 with no data', () async {
       mockResponse(204, body: '');
+      final response = await sut.request(url: url, method: 'post');
+      expect(response, {});
+    });
+
+    test('should return empty if post returns 204 with data', () async {
+      mockResponse(204);
       final response = await sut.request(url: url, method: 'post');
       expect(response, {});
     });
