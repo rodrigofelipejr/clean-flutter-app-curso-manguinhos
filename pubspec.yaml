@@ -12,13 +12,14 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   http: ^0.13.3
+  google_fonts: ^2.0.0
 dev_dependencies:
   faker: ^2.0.0-rc.2
   flutter_test:
     sdk: flutter
-  mockito: ^5.0.7
-  # mocktail: ^0.1.2
-  # build_runner: ^1.10.0
+  mockito: ^5.0.7 
   build_runner: 2.0.2
 flutter:
   uses-material-design: true
+  assets:
+    - lib/ui/assets/
