@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fordev/ui/components/components.dart';
 import 'package:fordev/ui/constants/constants.dart';
 
+import 'login_presenter.dart';
+
 class LoginPage extends StatelessWidget {
+  final LoginPresenter presenter;
+
+  const LoginPage({Key? key, required this.presenter}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +36,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       keyboardType: TextInputType.emailAddress,
+                      onChanged: presenter.validateEmail,
                     ),
                     SizedBox(height: 8.0),
                     TextFormField(
@@ -45,6 +52,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
+                      onChanged: presenter.validatePassword,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
