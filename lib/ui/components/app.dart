@@ -20,9 +20,6 @@ class LoginPresenterMock implements LoginPresenter {
   Stream<bool> get isFormValidStream => throw UnimplementedError();
 
   @override
-  void auth() {}
-
-  @override
   Stream<bool> get isLoadingStream => throw UnimplementedError();
 
   @override
@@ -30,6 +27,11 @@ class LoginPresenterMock implements LoginPresenter {
 
   @override
   void dispose() {}
+
+  @override
+  Future<void> auth() {
+    throw UnimplementedError();
+  }
 }
 
 class App extends StatelessWidget {
