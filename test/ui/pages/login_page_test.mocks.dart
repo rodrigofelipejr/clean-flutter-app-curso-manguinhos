@@ -42,4 +42,7 @@ class LoginPresenterMock extends _i1.Mock implements _i2.LoginPresenter {
   void validatePassword(String? password) =>
       super.noSuchMethod(Invocation.method(#validatePassword, [password]),
           returnValueForMissingStub: null);
+  @override
+  void auth() => super.noSuchMethod(Invocation.method(#auth, []),
+      returnValueForMissingStub: null);
 }

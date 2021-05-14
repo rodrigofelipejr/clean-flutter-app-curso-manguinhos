@@ -4,7 +4,6 @@
  * A implementação dela (classe concréta) será algo voltado a alguma biblioteca.
  * Quando mais genérico deixarmos o presenter, mais ele fica reutilizável e o mínimo será necessário 
  * alterá-lo, caso queiramos utilizar o Mobx ou qualquer outra lib que desejarmos.
- * 
 */
 abstract class LoginPresenter {
   Stream<String?> get emailErrorStream;
@@ -13,4 +12,5 @@ abstract class LoginPresenter {
 
   void validateEmail(String email);
   void validatePassword(String password);
+  void auth();
 }
