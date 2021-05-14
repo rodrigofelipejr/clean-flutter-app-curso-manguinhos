@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fordev/ui/constants/constants.dart';
+
+import '../constants/constants.dart';
 
 void showErrorMessage(BuildContext context, String error) {
   ScaffoldMessenger.of(context).showSnackBar(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../pages/pages.dart';
-import 'package:fordev/ui/constants/constants.dart';
+import '../constants/constants.dart';
 
 class LoginPresenterMock implements LoginPresenter {
   @override
