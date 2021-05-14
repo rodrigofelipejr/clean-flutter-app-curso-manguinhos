@@ -79,7 +79,7 @@ main() {
     expect(find.text('any error'), findsOneWidget);
   });
 
-  testWidgets('should presente no error if email is valid', (WidgetTester tester) async {
+  testWidgets('should presente no error if email is valid (null)', (WidgetTester tester) async {
     await loadPage(tester);
 
     emailErrorController.add(null);
@@ -91,7 +91,7 @@ main() {
     );
   });
 
-  testWidgets('should presente no error if email is valid', (WidgetTester tester) async {
+  testWidgets('should presente no error if email is valid (empty)', (WidgetTester tester) async {
     await loadPage(tester);
 
     emailErrorController.add('');
@@ -110,5 +110,29 @@ main() {
     await tester.pump();
 
     expect(find.text('any error'), findsOneWidget);
+  });
+
+  testWidgets('should presente no error if password is valid (null)', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    passwordErrorController.add(null);
+    await tester.pump();
+
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('should presente no error if password is valid (empty)', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    passwordErrorController.add('');
+    await tester.pump();
+
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
+      findsOneWidget,
+    );
   });
 }
