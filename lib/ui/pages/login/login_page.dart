@@ -25,39 +25,46 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     StreamBuilder<String?>(
-                        stream: presenter.emailErrorStream,
-                        builder: (context, snapshot) {
-                          return TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'E-mail',
-                              icon: Padding(
-                                padding: const EdgeInsets.only(top: 12.0),
-                                child: Icon(
-                                  Icons.email,
-                                  color: AppColors.kPrimaryColorLight,
-                                ),
+                      stream: presenter.emailErrorStream,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'E-mail',
+                            icon: Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: Icon(
+                                Icons.email,
+                                color: AppColors.kPrimaryColorLight,
                               ),
-                              errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
                             ),
-                            keyboardType: TextInputType.emailAddress,
-                            onChanged: presenter.validateEmail,
-                          );
-                        }),
-                    SizedBox(height: 8.0),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Senha',
-                        icon: Padding(
-                          padding: const EdgeInsets.only(top: 12.0),
-                          child: Icon(
-                            Icons.lock,
-                            color: AppColors.kPrimaryColorLight,
+                            errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
                           ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      onChanged: presenter.validatePassword,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: presenter.validateEmail,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 8.0),
+                    StreamBuilder<String?>(
+                      stream: presenter.passwordErrorStream,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Senha',
+                            icon: Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: Icon(
+                                Icons.lock,
+                                color: AppColors.kPrimaryColorLight,
+                              ),
+                            ),
+                            errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+                          ),
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                          onChanged: presenter.validatePassword,
+                        );
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
