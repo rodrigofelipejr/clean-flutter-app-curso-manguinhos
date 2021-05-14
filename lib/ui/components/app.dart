@@ -10,7 +10,6 @@ class LoginPresenterMock implements LoginPresenter {
 
   @override
   void validatePassword(String password) {}
-
   @override
   Stream<String> get emailErrorStream => throw UnimplementedError();
 
@@ -25,6 +24,9 @@ class LoginPresenterMock implements LoginPresenter {
 
   @override
   Stream<bool> get isLoadingStream => throw UnimplementedError();
+
+  @override
+  Stream<String?> get mainErrorStream => throw UnimplementedError();
 }
 
 class App extends StatelessWidget {
