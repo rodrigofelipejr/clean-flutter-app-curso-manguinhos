@@ -22,6 +22,9 @@ class LoginPresenterMock implements LoginPresenter {
 
   @override
   void auth() {}
+
+  @override
+  Stream<bool> get isLoadingStream => throw UnimplementedError();
 }
 
 class App extends StatelessWidget {
