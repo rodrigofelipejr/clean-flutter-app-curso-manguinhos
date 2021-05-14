@@ -27,6 +27,9 @@ class LoginPresenterMock implements LoginPresenter {
 
   @override
   Stream<String?> get mainErrorStream => throw UnimplementedError();
+
+  @override
+  void dispose() {}
 }
 
 class App extends StatelessWidget {
