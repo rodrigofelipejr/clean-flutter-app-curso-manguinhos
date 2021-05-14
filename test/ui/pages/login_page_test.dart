@@ -14,11 +14,11 @@ import 'login_page_test.mocks.dart';
 @GenerateMocks([], customMocks: [MockSpec<LoginPresenter>(as: #LoginPresenterMock, returnNullOnMissingStub: false)])
 main() {
   late LoginPresenter presenter;
-  late StreamController<String> emailErrorController;
+  late StreamController<String?> emailErrorController;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterMock();
-    emailErrorController = StreamController<String>();
+    emailErrorController = StreamController<String?>();
     when(presenter.emailErrorStream).thenAnswer((_) => emailErrorController.stream);
 
     final loginPage = MaterialApp(home: LoginPage(presenter: presenter));
@@ -72,5 +72,29 @@ main() {
     await tester.pump(); // atualizando a tela
 
     expect(find.text('any error'), findsOneWidget);
+  });
+
+  testWidgets('should presente no error if email is valid', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    emailErrorController.add(null);
+    await tester.pump(); // atualizando a tela
+
+    expect(
+      find.descendant(of: find.bySemanticsLabel('E-mail'), matching: find.byType(Text)),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('should presente no error if email is valid', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    emailErrorController.add('');
+    await tester.pump(); // atualizando a tela
+
+    expect(
+      find.descendant(of: find.bySemanticsLabel('E-mail'), matching: find.byType(Text)),
+      findsOneWidget,
+    );
   });
 }
