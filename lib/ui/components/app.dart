@@ -16,6 +16,9 @@ class LoginPresenterMock implements LoginPresenter {
 
   @override
   Stream<String?> get passwordErrorStream => throw UnimplementedError();
+
+  @override
+  Stream<bool> get isFormValidStream => throw UnimplementedError();
 }
 
 class App extends StatelessWidget {
