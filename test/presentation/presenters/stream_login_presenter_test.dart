@@ -3,15 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/domain/usecases/usecases.dart';
+
 import 'package:fordev/presentation/presenters/presenters.dart';
 import 'package:fordev/presentation/dependencies/validation.dart';
 
 import 'stream_login_presenter_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<Validation>(as: #ValidationMock, returnNullOnMissingStub: true)])
+@GenerateMocks([], customMocks: [
+  MockSpec<Validation>(as: #ValidationMock, returnNullOnMissingStub: true),
+  MockSpec<Authentication>(as: #AuthenticationMock, returnNullOnMissingStub: true),
+])
 void main() {
   late StreamLoginPresenter sut;
   late ValidationMock validation;
+  late AuthenticationMock authentication;
   late String email;
   late String password;
 
@@ -24,7 +30,8 @@ void main() {
 
   setUp(() {
     validation = ValidationMock();
-    sut = StreamLoginPresenter(validation: validation);
+    authentication = AuthenticationMock();
+    sut = StreamLoginPresenter(validation: validation, authentication: authentication);
 
     email = faker.internet.email();
     password = faker.internet.password();
@@ -88,5 +95,12 @@ void main() {
     sut.validateEmail(email);
     await Future.delayed(Duration.zero); // ANCHOR hack for stream
     sut.validatePassword(password);
+  });
+
+  test('Should call Authentication with correct values', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    await sut.auth();
+    verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
   });
 }
