@@ -71,4 +71,13 @@ void main() {
     sut.validatePassword(password);
     sut.validatePassword(password);
   });
+
+  test('Should emit an invalid form error if any fields are invalid', () {
+    mockValidation(field: 'email', value: 'error');
+    sut.emailErrorStream.listen(expectAsync1((error) => expect(error, 'error')));
+    sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validateEmail(password);
+    sut.validatePassword(password);
+  });
 }
