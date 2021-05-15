@@ -77,7 +77,16 @@ void main() {
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, 'error')));
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
-    sut.validateEmail(password);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+  });
+
+  test('Should emit an invalid form error if any fields are invalid', () async {
+    sut.emailErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
+    sut.validateEmail(email);
+    await Future.delayed(Duration.zero); // ANCHOR hack for stream
     sut.validatePassword(password);
   });
 }
