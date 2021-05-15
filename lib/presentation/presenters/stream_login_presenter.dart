@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:fordev/domain/helpers/helpers.dart';
-
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 
 import '../dependencies/dependencies.dart';
