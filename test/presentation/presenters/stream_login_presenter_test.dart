@@ -5,11 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'stream_login_presenter_test.mocks.dart';
+import 'package:fordev/presentation/dependencies/validation.dart';
 
-abstract class Validation {
-  String? validate({required String field, required String value});
-}
+import 'stream_login_presenter_test.mocks.dart';
 
 class LoginState {
   String? emailError;
