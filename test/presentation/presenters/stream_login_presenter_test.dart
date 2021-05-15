@@ -20,11 +20,17 @@ class StreamLoginPresenter {
 
 @GenerateMocks([], customMocks: [MockSpec<Validation>(as: #ValidationMock, returnNullOnMissingStub: true)])
 void main() {
-  test('Should call Validation with correct e-mail', () {
-    final validation = ValidationMock();
-    final sut = StreamLoginPresenter(validation: validation);
-    final email = faker.internet.email();
+  late StreamLoginPresenter sut;
+  late ValidationMock validation;
+  late String email;
 
+  setUp(() {
+    validation = ValidationMock();
+    sut = StreamLoginPresenter(validation: validation);
+    email = faker.internet.email();
+  });
+
+  test('Should call Validation with correct e-mail', () {
     sut.validateEmail(email);
     verify(validation.validate(field: 'email', value: email)).called(1);
   });
