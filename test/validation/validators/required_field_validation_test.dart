@@ -1,20 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-abstract class FieldValidation {
-  String get field;
-  String? validate(String value);
-}
-
-class RequiredFieldValidation extends FieldValidation {
-  final String field;
-
-  RequiredFieldValidation(this.field);
-
-  @override
-  String? validate(String value) {
-    return value.isEmpty ? 'Campo obrigatório' : null;
-  }
-}
+import 'package:fordev/validation/validators/validators.dart';
 
 main() {
   late RequiredFieldValidation sut;
@@ -28,5 +14,9 @@ main() {
 
   test('Should return error if value is empty', () {
     expect(sut.validate(''), 'Campo obrigatório');
+  });
+
+  test('Should return error if value is null', () {
+    expect(sut.validate(null), 'Campo obrigatório');
   });
 }
