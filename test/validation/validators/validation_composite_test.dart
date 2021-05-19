@@ -8,9 +8,20 @@ import 'package:mockito/mockito.dart';
 import 'validation_composite_test.mocks.dart';
 
 class ValidationComposite implements Validation {
+  final List<FieldValidation> validations;
+
+  ValidationComposite(this.validations);
+
   @override
   String? validate({required String field, required String value}) {
-    return null;
+    String? error;
+
+    for (final validation in validations) {
+      final error = validation.validate(value);
+      if (error?.isNotEmpty == true) return error;
+    }
+
+    return error;
   }
 }
 
@@ -46,12 +57,20 @@ main() {
     when(validation3.field).thenReturn('other_field');
     mockValidation3(null);
 
-    sut = ValidationComposite();
+    sut = ValidationComposite([validation1, validation2, validation3]);
   });
 
   test('Should return null if all validations returns null or empty', () {
     mockValidation2('');
     final error = sut.validate(field: 'any_field', value: 'any_value');
     expect(error, null);
+  });
+
+  test('Should return the first error', () {
+    mockValidation1('error_1');
+    mockValidation2('error_2');
+    mockValidation3('error_3');
+    final error = sut.validate(field: 'any_field', value: 'any_value');
+    expect(error, 'error_1');
   });
 }
