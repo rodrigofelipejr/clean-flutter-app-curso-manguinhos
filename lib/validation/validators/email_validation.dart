@@ -10,7 +10,7 @@ class EmailValidation extends Equatable implements FieldValidation {
   @override
   String? validate(String? value) {
     final regexp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.([a-zA-Z]{2})+");
-    final isValid = value?.isNotEmpty == true && regexp.hasMatch(value!);
+    final isValid = value?.isNotEmpty != true || regexp.hasMatch(value!);
     return isValid ? null : 'Campo inválido';
   }
 
