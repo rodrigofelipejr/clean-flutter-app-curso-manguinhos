@@ -7,9 +7,8 @@ class EmailValidation implements FieldValidation {
 
   @override
   String? validate(String? value) {
-    final regexp = RegExp(
-        "^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*\$");
-    final isValid = value?.isNotEmpty != true || regexp.hasMatch(value!);
+    final regexp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.([a-zA-Z]{2})+");
+    final isValid = value?.isNotEmpty == true && regexp.hasMatch(value!);
     return isValid ? null : 'Campo inválido';
   }
 }

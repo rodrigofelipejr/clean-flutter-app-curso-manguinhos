@@ -8,4 +8,6 @@ class AppColors {
   static final Color kBlack = Color(0xFF000000);
   static final Color kTransparent = Color.fromRGBO(0, 0, 0, 0);
   static final Color kRedLight = Color(0xFFea5455);
+  static final Color kGrey = Color(0xFFbbbbbb);
+  static final Color kGreyDark = Color(0xFF5e5e5e);
 }

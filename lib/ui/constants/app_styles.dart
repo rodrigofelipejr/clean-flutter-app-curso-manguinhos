@@ -19,6 +19,11 @@ class AppTextStyles {
     color: AppColors.kWhite,
     fontWeight: FontWeight.w600,
   );
+
+  static final kButtonGray = GoogleFonts.notoSans(
+    color: AppColors.kGreyDark,
+    fontWeight: FontWeight.w600,
+  );
 }
 
 class AppStyles {
@@ -41,10 +46,23 @@ class AppStyles {
         if (states.any(interactiveStates.contains)) return AppColors.kGrey;
         return AppColors.kPrimaryColor;
       }),
-      foregroundColor: MaterialStateProperty.all(AppColors.kWhite),
+      foregroundColor: MaterialStateProperty.resolveWith((states) {
+        const Set<MaterialState> interactiveStates = <MaterialState>{
+          MaterialState.disabled,
+        };
+        if (states.any(interactiveStates.contains)) return AppColors.kGreyDark;
+        return AppColors.kWhite;
+      }),
       overlayColor: MaterialStateProperty.all(AppColors.kPrimaryColorLight),
       padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0)),
-      textStyle: MaterialStateProperty.all(AppTextStyles.kButtonWhite),
+      textStyle: MaterialStateProperty.all(AppTextStyles.kButtonGray),
+      // MaterialStateProperty.resolveWith((states) {
+      //   const Set<MaterialState> interactiveStates = <MaterialState>{
+      //     MaterialState.disabled,
+      //   };
+      //   if (states.any(interactiveStates.contains)) return AppTextStyles.kButtonGray;
+      //   return AppTextStyles.kButtonWhite;
+      // }),
       shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(58.0))),
     ),
   );
