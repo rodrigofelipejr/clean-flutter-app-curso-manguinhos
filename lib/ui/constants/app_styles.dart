@@ -34,7 +34,13 @@ class AppStyles {
 
   static final kElevatedButtonThemeData = ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.all(AppColors.kPrimaryColor),
+      backgroundColor: MaterialStateProperty.resolveWith((states) {
+        const Set<MaterialState> interactiveStates = <MaterialState>{
+          MaterialState.disabled,
+        };
+        if (states.any(interactiveStates.contains)) return AppColors.kGrey;
+        return AppColors.kPrimaryColor;
+      }),
       foregroundColor: MaterialStateProperty.all(AppColors.kWhite),
       overlayColor: MaterialStateProperty.all(AppColors.kPrimaryColorLight),
       padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0)),
