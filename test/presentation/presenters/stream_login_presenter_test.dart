@@ -106,7 +106,7 @@ void main() {
     sut.passwordErrorStream!.listen(expectAsync1((error) => expect(error, null)));
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
     sut.validateEmail(email);
-    await Future.delayed(Duration.zero); // ANCHOR hack for stream
+    await Future.delayed(Duration.zero); // ANCHOR - Hack for stream
     sut.validatePassword(password);
   });
 
@@ -132,7 +132,7 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    // expectLater(sut.isLoadingStream, emitsInOrder([true, false])); // ANCHOR por conta do try catch da erro?
+    // expectLater(sut.isLoadingStream, emitsInOrder([true, false])); // ANCHOR - Por conta do try catch da erro?
     expectLater(sut.isLoadingStream, emits(false));
     sut.mainErrorStream!.listen(expectAsync1((error) => expect(error, 'Credenciais inválidas.')));
 

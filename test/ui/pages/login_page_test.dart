@@ -54,7 +54,7 @@ main() {
     await tester.pumpWidget(loginPage);
   }
 
-  // ANCHOR roda sempre ao fim dos testes
+  // ANCHOR - Roda sempre ao fim dos testes
   tearDown(() {
     closeStreams();
   });
@@ -120,7 +120,7 @@ main() {
     await loadPage(tester);
 
     emailErrorController.add('');
-    // ANCHOR atualizando a tela
+    // ANCHOR - Atualizando a tela
     await tester.pump();
 
     expect(

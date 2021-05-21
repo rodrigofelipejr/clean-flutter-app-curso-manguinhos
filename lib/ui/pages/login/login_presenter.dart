@@ -1,5 +1,5 @@
 /*
- * ANCHOR  PRESENTER
+ * ANCHOR - PRESENTER
  * Esse presenter é uma abstração genérica, que se refere as necessidades que oLoginPage possui. 
  * A implementação dela (classe concréta) será algo voltado a alguma biblioteca.
  * Quando mais genérico deixarmos o presenter, mais ele fica reutilizável e o mínimo será necessário 

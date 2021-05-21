@@ -1,7 +1,7 @@
 import '../../validation/dependencies/dependencies.dart';
 import '../../validation/validators/validators.dart';
 
-// ANCHOR Designer partner builder
+// ANCHOR - Designer partner builder
 
 class ValidationBuilder {
   static late ValidationBuilder _instance;
@@ -9,8 +9,10 @@ class ValidationBuilder {
 
   List<FieldValidation> validations = [];
 
+  ValidationBuilder._(); // ANCHOR - Construtor privado
+
   static ValidationBuilder field(String fieldName) {
-    _instance = ValidationBuilder();
+    _instance = ValidationBuilder._();
     _instance.fieldName = fieldName;
     return _instance;
   }
