@@ -9,7 +9,7 @@ Validation makeLoginValidation() {
 
 List<FieldValidation> makeLoginValidations() {
   return [
-    // ANCHOR - Consumindo o designer partner builder
+    //ANCHOR - Consumindo o designer partner builder
     ...ValidationBuilder.field('email').required().email().build(),
     ...ValidationBuilder.field('password').required().build(),
   ];

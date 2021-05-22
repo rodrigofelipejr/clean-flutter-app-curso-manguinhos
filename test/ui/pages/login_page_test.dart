@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:faker/faker.dart';
+import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 
@@ -16,32 +17,36 @@ main() {
   late LoginPresenter presenter;
   late StreamController<String?> emailErrorController;
   late StreamController<String?> passwordErrorController;
+  late StreamController<String?> mainErrorController;
+  late StreamController<String?> navigateToController;
   late StreamController<bool> isFormValidController;
   late StreamController<bool> isLoadingController;
-  late StreamController<String?> mainErrorController;
 
   void initStreams() {
     emailErrorController = StreamController<String?>();
     passwordErrorController = StreamController<String?>();
+    mainErrorController = StreamController<String?>();
+    navigateToController = StreamController<String?>();
     isFormValidController = StreamController<bool>();
     isLoadingController = StreamController<bool>();
-    mainErrorController = StreamController<String?>();
   }
 
   void mockStreams() {
     when(presenter.emailErrorStream).thenAnswer((_) => emailErrorController.stream);
     when(presenter.passwordErrorStream).thenAnswer((_) => passwordErrorController.stream);
+    when(presenter.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
+    when(presenter.navigateToStream).thenAnswer((_) => navigateToController.stream);
     when(presenter.isFormValidStream).thenAnswer((_) => isFormValidController.stream);
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
-    when(presenter.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
   }
 
   void closeStreams() {
     emailErrorController.close();
     passwordErrorController.close();
+    mainErrorController.close();
+    navigateToController.close();
     isFormValidController.close();
     isLoadingController.close();
-    mainErrorController.close();
   }
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -50,11 +55,18 @@ main() {
     initStreams();
     mockStreams();
 
-    final loginPage = MaterialApp(home: LoginPage(presenter: presenter));
+    final loginPage = GetMaterialApp(
+      initialRoute: '/login',
+      getPages: [
+        GetPage(name: '/login', page: () => LoginPage(presenter: presenter)),
+        GetPage(name: '/any_route', page: () => Scaffold(body: Text('fake page'))),
+      ],
+    );
+
     await tester.pumpWidget(loginPage);
   }
 
-  // ANCHOR - Roda sempre ao fim dos testes
+  //ANCHOR - Roda sempre ao fim dos testes
   tearDown(() {
     closeStreams();
   });
@@ -120,7 +132,7 @@ main() {
     await loadPage(tester);
 
     emailErrorController.add('');
-    // ANCHOR - Atualizando a tela
+    //ANCHOR - Atualizando a tela
     await tester.pump();
 
     expect(
@@ -223,11 +235,14 @@ main() {
     expect(find.text('any error'), findsOneWidget);
   });
 
-  testWidgets('should close streams on dispose', (WidgetTester tester) async {
+  testWidgets('should change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    addTearDown(() {
-      verify(presenter.dispose()).called(1);
-    });
+    navigateToController.add('/any_route');
+    //ANCHOR - como a troca de rota demora um pouco mais  para acontecer é utilizado o pumpAndSettle
+    await tester.pumpAndSettle();
+
+    expect(Get.currentRoute, '/any_route');
+    expect(find.text('fake page'), findsOneWidget);
   });
 }

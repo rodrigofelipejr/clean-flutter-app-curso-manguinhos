@@ -25,12 +25,14 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   var _emailError = RxnString();
   var _passwordError = RxnString();
   var _mainError = RxnString();
+  var _navigateTo = RxnString();
   var _isFormValid = RxBool(false);
   var _isLoading = RxBool(false);
 
   Stream<String?> get emailErrorStream => _emailError.stream;
   Stream<String?> get passwordErrorStream => _passwordError.stream;
   Stream<String?> get mainErrorStream => _mainError.stream;
+  Stream<String?> get navigateToStream => _navigateTo.stream;
   Stream<bool> get isFormValidStream => _isFormValid.subject.stream;
   Stream<bool> get isLoadingStream => _isLoading.subject.stream;
 
@@ -56,6 +58,11 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
       _isLoading.value = true;
       final account = await authentication.auth(params: AuthenticationParams(email: _email!, secret: _password!));
       await saveCurrentAccount.save(account);
+      /** 
+       * ANCHOR - para que o presentation fique livre de implementação do flutter, a responsabilidade de navegação 
+       * não vai ficar aqui dentro, e sim dentro da UI 
+       */
+      _navigateTo.value = '/surveys';
     } on DomainError catch (error) {
       _mainError.value = error.description;
       _isLoading.value = false;

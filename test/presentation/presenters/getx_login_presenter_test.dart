@@ -121,7 +121,7 @@ void main() {
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
     sut.validateEmail(email);
-    await Future.delayed(Duration.zero); // ANCHOR - Hack for stream
+    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
     sut.validatePassword(password);
   });
 
@@ -147,6 +147,15 @@ void main() {
 
     await sut.auth();
     verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
+  });
+
+  test('Should change page on success ', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    sut.navigateToStream.listen(expectAsync1((page) => '/surveys'));
+
+    await sut.auth();
   });
 
   test('Should emit correct event on InvalidCredentialError', () async {

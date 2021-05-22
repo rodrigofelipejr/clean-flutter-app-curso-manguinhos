@@ -1,4 +1,4 @@
-// ANCHOR - Vai ser genérico, reaproveitável para qualquer tipo de validação de formulário
+//ANCHOR - Vai ser genérico, reaproveitável para qualquer tipo de validação de formulário
 
 import '../../validation/dependencies/dependencies.dart';
 import '../../presentation/dependencies/dependencies.dart';
