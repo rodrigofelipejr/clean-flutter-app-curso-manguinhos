@@ -143,7 +143,7 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    expectLater(sut.isLoadingStream, emits(true));
 
     await sut.auth();
     verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
