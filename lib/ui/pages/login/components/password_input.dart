@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 import '../login_presenter.dart';
 import '../../../constants/constants.dart';
@@ -7,12 +7,9 @@ import '../../../constants/constants.dart';
 class PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<LoginPresenter>(context);
+    final presenter = Get.find<LoginPresenter>();
 
-    return StreamBuilder<String?>(
-      stream: presenter.passwordErrorStream,
-      builder: (context, snapshot) {
-        return TextFormField(
+    return Obx(() => TextFormField(
           decoration: InputDecoration(
             labelText: 'Senha',
             icon: Padding(
@@ -22,13 +19,11 @@ class PasswordInput extends StatelessWidget {
                 color: AppColors.kPrimaryColorLight,
               ),
             ),
-            errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+            errorText: presenter.passwordError.value?.isEmpty == true ? null : presenter.passwordError.value,
           ),
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
           onChanged: presenter.validatePassword,
-        );
-      },
-    );
+        ));
   }
 }

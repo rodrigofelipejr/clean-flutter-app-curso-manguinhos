@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 import '../login_presenter.dart';
 import '../../../constants/constants.dart';
@@ -7,12 +7,9 @@ import '../../../constants/constants.dart';
 class EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<LoginPresenter>(context);
+    final presenter = Get.find<LoginPresenter>();
 
-    return StreamBuilder<String?>(
-      stream: presenter.emailErrorStream,
-      builder: (context, snapshot) {
-        return TextFormField(
+    return Obx(() => TextFormField(
           decoration: InputDecoration(
             labelText: 'E-mail',
             icon: Padding(
@@ -22,12 +19,10 @@ class EmailInput extends StatelessWidget {
                 color: AppColors.kPrimaryColorLight,
               ),
             ),
-            errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+            errorText: presenter.emailError.value?.isEmpty == true ? null : presenter.emailError.value,
           ),
           keyboardType: TextInputType.emailAddress,
           onChanged: presenter.validateEmail,
-        );
-      },
-    );
+        ));
   }
 }
