@@ -11,7 +11,7 @@ import 'package:fordev/ui/pages/pages.dart';
 
 import 'login_page_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<LoginPresenter>(as: #LoginPresenterMock, returnNullOnMissingStub: false)])
+@GenerateMocks([], customMocks: [MockSpec<LoginPresenter>(as: #LoginPresenterMock)])
 main() {
   late LoginPresenter presenter;
   late StreamController<String?> emailErrorController;

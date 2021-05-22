@@ -9,7 +9,7 @@ import 'package:fordev/data/http/http.dart';
 
 import 'http_adapter_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<http.Client>(as: #ClientMock, returnNullOnMissingStub: false)])
+@GenerateMocks([], customMocks: [MockSpec<http.Client>(as: #ClientMock)])
 main() {
   late HttpAdapter sut;
   late ClientMock client;

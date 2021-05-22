@@ -20,10 +20,6 @@ import 'local_save_current_account_test.dart' as _i2;
 /// See the documentation for Mockito's code generation for more information.
 class SaveSecureCacheStorageMock extends _i1.Mock
     implements _i2.SaveSecureCacheStorage {
-  SaveSecureCacheStorageMock() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i3.Future<void> saveSecure({String? key, String? value}) =>
       (super.noSuchMethod(

@@ -7,7 +7,7 @@ import 'package:fordev/validation/validators/validators.dart';
 
 import 'validation_composite_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<FieldValidation>(as: #FieldValidationMock, returnNullOnMissingStub: false)])
+@GenerateMocks([], customMocks: [MockSpec<FieldValidation>(as: #FieldValidationMock)])
 main() {
   late FieldValidationMock validation1;
   late FieldValidationMock validation2;
