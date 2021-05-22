@@ -22,10 +22,17 @@ class LocalLoadCurrentAccount {
   MockSpec<FetchSecureCacheStorage>(as: #FetchSecureCacheStorageMock, returnNullOnMissingStub: true),
 ])
 main() {
+  late FetchSecureCacheStorageMock fetchSecureCacheStorage;
+  late LocalLoadCurrentAccount sut;
+  late String key;
+
+  setUp(() {
+    fetchSecureCacheStorage = FetchSecureCacheStorageMock();
+    sut = LocalLoadCurrentAccount(fetchSecureCacheStorage: fetchSecureCacheStorage);
+    key = 'token';
+  });
+
   test('Should call FetchSecureCacheStorage with correct value', () async {
-    final fetchSecureCacheStorage = FetchSecureCacheStorageMock();
-    final sut = LocalLoadCurrentAccount(fetchSecureCacheStorage: fetchSecureCacheStorage);
-    final key = 'token';
     await sut.load(key);
     verify(fetchSecureCacheStorage.fetchSecure(key)).called(1);
   });
