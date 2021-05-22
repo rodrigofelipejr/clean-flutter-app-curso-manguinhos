@@ -3,32 +3,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/data/cache/cache.dart';
+import 'package:fordev/data/usecases/save_current_account/save_current_account.dart';
+
 import 'package:fordev/domain/entities/entities.dart';
 import 'package:fordev/domain/helpers/helpers.dart';
-import 'package:fordev/domain/usecases/usecases.dart';
 
 import 'local_save_current_account_test.mocks.dart';
 
-abstract class SaveSecureCacheStorage {
-  Future<void> saveSecure({required String key, required String value});
-}
-
-class LocalSaveCurrentAccount implements SaveCurrentAccount {
-  final SaveSecureCacheStorage saveSecureCacheStorage;
-
-  LocalSaveCurrentAccount({required this.saveSecureCacheStorage});
-  @override
-  Future<void> save(AccountEntity account) async {
-    try {
-      await saveSecureCacheStorage.saveSecure(key: 'token', value: account.token);
-    } catch (error) {
-      throw DomainError.unexpected;
-    }
-  }
-}
-
-@GenerateMocks([],
-    customMocks: [MockSpec<SaveSecureCacheStorage>(as: #SaveSecureCacheStorageMock, returnNullOnMissingStub: true)])
+@GenerateMocks([], customMocks: [
+  MockSpec<SaveSecureCacheStorage>(as: #SaveSecureCacheStorageMock, returnNullOnMissingStub: true),
+])
 main() {
   late LocalSaveCurrentAccount sut;
   late SaveSecureCacheStorageMock saveSecureCacheStorage;
@@ -51,7 +36,7 @@ main() {
 
   test('Should throw UnexpectedError if SaveSecureCacheStorage throws', () async {
     mockError();
-    final future = sut.save(account); 
+    final future = sut.save(account);
     expect(future, throwsA(DomainError.unexpected));
   });
 }
