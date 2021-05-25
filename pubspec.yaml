@@ -21,8 +21,8 @@ dev_dependencies:
   faker: ^2.0.0-rc.2
   flutter_test:
     sdk: flutter
-  mockito: ^5.0.7 
-  build_runner: 2.0.2 
+  mockito: ^5.0.8
+  build_runner: ^2.0.4
   flutter_launcher_icons: ^0.9.0
 flutter:
   uses-material-design: true

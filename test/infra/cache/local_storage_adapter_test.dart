@@ -44,7 +44,7 @@ main() {
   group('fetchSecure', () {
     PostExpectation mockFetchSecureCall() => when(secureStorage.read(key: anyNamed('key')));
 
-    void mockFetchSecure() => mockFetchSecureCall().thenAnswer((_) => value);
+    void mockFetchSecure() => mockFetchSecureCall().thenAnswer((_) async => value);
     void mockFetchSecureError() => mockFetchSecureCall().thenThrow(Exception());
 
     setUp(() {
