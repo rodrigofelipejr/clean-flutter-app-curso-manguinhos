@@ -18,8 +18,10 @@ class SplashPage extends StatelessWidget {
         }
       });
 
-      return Center(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     });
   }

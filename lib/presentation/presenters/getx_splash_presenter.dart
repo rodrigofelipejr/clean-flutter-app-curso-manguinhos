@@ -14,12 +14,12 @@ class GetxSplashPresenter implements SplashPresenter {
   Stream<String?> get navigateToStream => _navigateTo.stream;
 
   @override
-  Future<void> checkAccount() async {
+  Future<void> checkAccount({int durationInSeconds = 2}) async {
+    await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       final account = await loadCurrentAccount.load();
       _navigateTo.value = account.token.isEmpty ? '/login' : '/surveys';
     } catch (e) {
-      print(e);
       _navigateTo.value = '/login';
     }
   }

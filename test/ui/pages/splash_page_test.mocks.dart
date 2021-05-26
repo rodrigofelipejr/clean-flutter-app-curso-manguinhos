@@ -26,8 +26,10 @@ class SplashPresenterMock extends _i1.Mock implements _i2.SplashPresenter {
       (super.noSuchMethod(Invocation.getter(#navigateToStream),
           returnValue: Stream<String?>.empty()) as _i3.Stream<String?>);
   @override
-  _i3.Future<void> checkAccount() =>
-      (super.noSuchMethod(Invocation.method(#checkAccount, []),
+  _i3.Future<void> checkAccount({int? durationInSeconds}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #checkAccount, [], {#durationInSeconds: durationInSeconds}),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i3.Future<void>);
 }
