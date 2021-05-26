@@ -1,36 +1,13 @@
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fordev/domain/entities/entities.dart';
-import 'package:get/state_manager.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:fordev/ui/pages/splash/splash.dart';
-import 'package:fordev/domain/usecases/load_current_account/load_current_account.dart';
+import 'package:fordev/domain/entities/entities.dart';
+import 'package:fordev/presentation/presenters/presenters.dart';
+import 'package:fordev/domain/usecases/usecases.dart';
 
 import 'getx_splash_presenter_test.mocks.dart';
-
-class GetxSplashPresenter implements SplashPresenter {
-  final LoadCurrentAccount loadCurrentAccount;
-
-  GetxSplashPresenter({required this.loadCurrentAccount});
-
-  var _navigateTo = RxnString();
-
-  @override
-  Stream<String?> get navigateToStream => _navigateTo.stream;
-
-  @override
-  Future<void> checkAccount() async {
-    try {
-      final account = await loadCurrentAccount.load();
-      _navigateTo.value = account.token.isEmpty ? '/login' : '/surveys';
-    } catch (e) {
-      print(e);
-      _navigateTo.value = '/login';
-    }
-  }
-}
 
 @GenerateMocks([], customMocks: [
   MockSpec<LoadCurrentAccount>(as: #LoadCreationAccountMock, returnNullOnMissingStub: true),
