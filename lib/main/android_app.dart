@@ -14,14 +14,14 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '4Dev',
       theme: appTheme(),
-      initialRoute: '/login',
+      initialRoute: '/',
       getPages: [
-        GetPage(name: '/login', page: makeLoginPage),
+        GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
+        GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
         GetPage(
             name: '/surveys',
-            page: () => Scaffold(
-                  body: Text('Enquetes'),
-                )), //ANCHOR - Fake
+            page: () => Scaffold(body: Text('Enquetes')),
+            transition: Transition.fadeIn), //ANCHOR - Fake
       ],
     );
   }
