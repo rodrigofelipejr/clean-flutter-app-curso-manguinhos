@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fordev/utils/i18n/i18n.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -51,32 +52,37 @@ class LoginPage extends StatelessWidget {
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  LoginHeader(),
-                  Headline1(text: 'Login'.toUpperCase()),
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Provider<LoginPresenter>(
-                      create: (context) => presenter,
-                      child: Form(
-                        child: Column(
-                          children: [
-                            EmailInput(),
-                            SizedBox(height: 8.0),
-                            PasswordInput(),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
-                              child: LoginButton(),
+                  Container(child: LoginHeader()),
+                  Column(
+                    children: [
+                      Headline1(text: R.strings.login.toUpperCase()),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
+                        child: Provider<LoginPresenter>(
+                          create: (context) => presenter,
+                          child: Form(
+                            child: Column(
+                              children: [
+                                EmailInput(),
+                                SizedBox(height: 8.0),
+                                PasswordInput(),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
+                                  child: LoginButton(),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.person),
+                                  label: Text(R.strings.addAccount),
+                                ),
+                              ],
                             ),
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.person),
-                              label: Text('Criar conta'),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),

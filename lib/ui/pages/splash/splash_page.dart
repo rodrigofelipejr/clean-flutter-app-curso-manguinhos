@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fordev/ui/constants/constants.dart';
 import 'package:get/get.dart';
 
 import 'splash.dart';
@@ -18,9 +19,27 @@ class SplashPage extends StatelessWidget {
         }
       });
 
-      return Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+      return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              AppColors.kPrimaryColor,
+              AppColors.kPrimaryColorDark,
+            ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(image: AssetImage(AppImage.logo), width: 100.0, height: 100.0),
+            SizedBox(height: 20.0),
+            CircularProgressIndicator(
+              backgroundColor: AppColors.kPrimaryColor,
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.kWhite),
+            ),
+          ],
         ),
       );
     });

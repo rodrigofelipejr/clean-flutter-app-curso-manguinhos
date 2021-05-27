@@ -6,7 +6,7 @@ class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240,
+      height: MediaQuery.of(context).size.height * 0.4,
       margin: const EdgeInsets.only(bottom: 32.0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -30,7 +30,7 @@ class LoginHeader extends StatelessWidget {
         ),
       ),
       child: Image(
-        image: AssetImage('lib/ui/assets/logo.png'),
+        image: AssetImage(AppImage.logo),
       ),
     );
   }
