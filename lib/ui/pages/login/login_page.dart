@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fordev/utils/i18n/i18n.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/components.dart';
+import '../../../ui/helpers/errors/errors.dart';
+import '../../../utils/i18n/i18n.dart';
+import '../../../ui/components/components.dart';
 
 import 'components/components.dart';
 import 'login_presenter.dart';
@@ -23,7 +24,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          presenter.isLoadingStream!.listen((isLoading) {
+          presenter.isLoadingStream.listen((isLoading) {
             if (isLoading) {
               showLoading(context);
             } else {
@@ -31,13 +32,13 @@ class LoginPage extends StatelessWidget {
             }
           });
 
-          presenter.mainErrorStream!.listen((error) {
+          presenter.mainErrorStream.listen((error) {
             if (error != null) {
-              showErrorMessage(context, error);
+              showErrorMessage(context, error.description);
             }
           });
 
-          presenter.navigateToStream!.listen((page) {
+          presenter.navigateToStream.listen((page) {
             //NOTE - diferente de null e vazio
             if (page?.isNotEmpty == true) {
               //ANCHOR - Get.offAllNamed => remove todas as telas e insere uma nova na pilha
