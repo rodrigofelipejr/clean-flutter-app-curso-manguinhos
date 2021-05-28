@@ -24,6 +24,7 @@ main() {
   Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
 
   void mockHttpData(Map data) => mockRequest().thenAnswer((_) async => data);
+  void mockHttpError(HttpError error) => mockRequest().thenThrow(error);
 
   setUp(() {
     httpClient = HttpClientMock();
@@ -48,5 +49,10 @@ main() {
       'passwordConfirmation': params.passwordConfirmation,
     }));
   });
-}
 
+  test('should throw UnexpectedError if HttpClient return 400', () async {
+    mockHttpError(HttpError.badRequest);
+    final future = sut.add(params: params);
+    expect(future, throwsA(DomainError.unexpected));
+  });
+}
