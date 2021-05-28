@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../ui/helpers/errors/errors.dart';
-import '../../../../utils/i18n/i18n.dart';
+import '../../../../ui/helpers/helpers.dart';
 import '../login_presenter.dart';
 import '../../../constants/constants.dart';
 

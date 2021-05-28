@@ -5,7 +5,7 @@
  * Quando mais genérico deixarmos o presenter, mais ele fica reutilizável e o mínimo será necessário 
  * alterá-lo, caso queiramos utilizar o Mobx ou qualquer outra lib que desejarmos.
 */
-import '../../../ui/helpers/errors/errors.dart';
+import '../../../ui/helpers/helpers.dart';
 
 abstract class LoginPresenter {
   Stream<UiError?> get emailErrorStream;

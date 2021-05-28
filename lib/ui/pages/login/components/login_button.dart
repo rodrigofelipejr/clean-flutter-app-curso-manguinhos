@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fordev/utils/i18n/i18n.dart';
+import 'package:fordev/ui/helpers/helpers.dart';
 import 'package:provider/provider.dart';
 
 import '../login_presenter.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:fordev/ui/helpers/errors/errors.dart';
+import 'package:fordev/ui/helpers/helpers.dart';
 
 import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/entities/entities.dart';
@@ -102,7 +102,7 @@ void main() {
     verify(validation.validate(field: 'password', value: password)).called(1);
   });
 
-  test('Should emit requiredFieldError if password is empty', () {
+  test('Should emit password error if validation fails', () {
     mockValidation(value: ValidationErro.requiredField);
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, UiError.requiredField)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../../ui/helpers/errors/errors.dart';
+import '../../ui/helpers/helpers.dart';
 
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
