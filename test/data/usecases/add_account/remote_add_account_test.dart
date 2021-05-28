@@ -18,8 +18,9 @@ main() {
   late String url;
   late AddAccountParams params;
 
-  PostExpectation mockRequest() =>
-      when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')));
+  PostExpectation mockRequest() => when(
+        httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')),
+      );
 
   Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
 
@@ -72,5 +73,12 @@ main() {
     mockHttpError(HttpError.forbidden);
     final future = sut.add(params: params);
     expect(future, throwsA(DomainError.emailInUse));
+  });
+
+  test('should return an Account if HttpClient return 200', () async {
+    final validData = mockValidData();
+    mockHttpData(validData);
+    final account = await sut.add(params: params);
+    expect(account.token, validData['accessToken']);
   });
 }
