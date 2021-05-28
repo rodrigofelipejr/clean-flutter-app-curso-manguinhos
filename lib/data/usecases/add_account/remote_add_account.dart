@@ -19,7 +19,7 @@ class RemoteAddAccount implements AddAccount {
       final httpResponse = await httpClient.request(url: url, method: 'post', body: body);
       return RemoteAccountModel.fromJson(httpResponse).toEntity();
     } on HttpError catch (error) {
-      throw DomainError.unexpected;
+      throw error == HttpError.unauthorized ? DomainError.invalidCredentials : DomainError.unexpected;
     }
   }
 }
