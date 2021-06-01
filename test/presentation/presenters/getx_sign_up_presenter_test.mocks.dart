@@ -2,7 +2,13 @@
 // in fordev/test/presentation/presenters/getx_sign_up_presenter_test.dart.
 // Do not manually edit this file.
 
-import 'package:fordev/presentation/dependencies/validation.dart' as _i2;
+import 'dart:async' as _i5;
+
+import 'package:fordev/domain/entities/account_entity.dart' as _i2;
+import 'package:fordev/domain/usecases/add_account/add_account.dart' as _i4;
+import 'package:fordev/domain/usecases/add_account/add_account_params.dart'
+    as _i6;
+import 'package:fordev/presentation/dependencies/validation.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -11,13 +17,27 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
+class _FakeAccountEntity extends _i1.Fake implements _i2.AccountEntity {}
+
 /// A class which mocks [Validation].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class ValidationMock extends _i1.Mock implements _i2.Validation {
+class ValidationMock extends _i1.Mock implements _i3.Validation {
   @override
-  _i2.ValidationErro? validate({String? field, String? value}) =>
+  _i3.ValidationErro? validate({String? field, String? value}) =>
       (super.noSuchMethod(
               Invocation.method(#validate, [], {#field: field, #value: value}))
-          as _i2.ValidationErro?);
+          as _i3.ValidationErro?);
+}
+
+/// A class which mocks [AddAccount].
+///
+/// See the documentation for Mockito's code generation for more information.
+class AddAccountMock extends _i1.Mock implements _i4.AddAccount {
+  @override
+  _i5.Future<_i2.AccountEntity> add({_i6.AddAccountParams? params}) =>
+      (super.noSuchMethod(Invocation.method(#add, [], {#params: params}),
+              returnValue:
+                  Future<_i2.AccountEntity>.value(_FakeAccountEntity()))
+          as _i5.Future<_i2.AccountEntity>);
 }

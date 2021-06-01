@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/domain/usecases/usecases.dart';
+import 'package:fordev/domain/entities/entities.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
-
 import 'package:fordev/presentation/presenters/presenters.dart';
 import 'package:fordev/presentation/dependencies/validation.dart';
 
@@ -12,14 +13,17 @@ import 'getx_sign_up_presenter_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
   MockSpec<Validation>(as: #ValidationMock, returnNullOnMissingStub: true),
+  MockSpec<AddAccount>(as: #AddAccountMock, returnNullOnMissingStub: true),
 ])
 void main() {
   late GetxSignUpPresenter sut;
   late ValidationMock validation;
+  late AddAccountMock addAccount;
   late String name;
   late String email;
   late String password;
   late String passwordConfirmation;
+  late String token;
 
   PostExpectation mockValidationCall(String? field) =>
       when(validation.validate(field: field == null ? anyNamed('field') : field, value: anyNamed('value')));
@@ -28,16 +32,25 @@ void main() {
     mockValidationCall(field).thenReturn(value);
   }
 
+  PostExpectation mockAddAccountCall() => when(addAccount.add(params: anyNamed('params')));
+
+  void mockAddAccount() {
+    mockAddAccountCall().thenAnswer((_) async => AccountEntity(token));
+  }
+
   setUp(() {
     validation = ValidationMock();
-    sut = GetxSignUpPresenter(validation: validation);
+    addAccount = AddAccountMock();
+    sut = GetxSignUpPresenter(validation: validation, addAccount: addAccount);
 
     name = faker.person.name();
     email = faker.internet.email();
     password = faker.internet.password();
     passwordConfirmation = faker.internet.password();
+    token = faker.guid.guid();
 
     mockValidation(); // SUCCESS
+    mockAddAccount();
   });
 
   test('Should call Validation with correct name', () {
@@ -166,5 +179,20 @@ void main() {
 
     sut.validatePasswordConfirmation(passwordConfirmation);
     await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+  });
+
+  test('Should call AddAccount with correct values', () async {
+    sut.validateName(name);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    await sut.signUp();
+    verify(addAccount.add(
+        params: AddAccountParams(
+      name: name,
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+    ))).called(1);
   });
 }

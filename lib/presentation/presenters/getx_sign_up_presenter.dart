@@ -1,15 +1,18 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 
+import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
 
 import '../dependencies/dependencies.dart';
 
 class GetxSignUpPresenter extends GetxController {
   final Validation validation;
+  final AddAccount addAccount;
 
   GetxSignUpPresenter({
     required this.validation,
+    required this.addAccount,
   });
 
   var _nameError = Rxn<UiError>();
@@ -77,5 +80,15 @@ class GetxSignUpPresenter extends GetxController {
         _passwordError.value == null &&
         _passwordConfirmation != null &&
         _passwordConfirmationError.value == null;
+  }
+
+  Future<void> signUp() async {
+    await addAccount.add(
+        params: AddAccountParams(
+      name: _name!,
+      email: _email!,
+      password: _password!,
+      passwordConfirmation: _passwordConfirmation!,
+    ));
   }
 }
