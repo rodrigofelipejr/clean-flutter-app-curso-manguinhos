@@ -16,6 +16,7 @@ import 'getx_sign_up_presenter_test.mocks.dart';
 void main() {
   late GetxSignUpPresenter sut;
   late ValidationMock validation;
+  late String name;
   late String email;
 
   PostExpectation mockValidationCall(String? field) =>
@@ -29,9 +30,38 @@ void main() {
     validation = ValidationMock();
     sut = GetxSignUpPresenter(validation: validation);
 
+    name = faker.person.name();
     email = faker.internet.email();
 
     mockValidation(); // SUCCESS
+  });
+
+  test('Should call Validation with correct name', () {
+    sut.validateName(name);
+    verify(validation.validate(field: 'name', value: name)).called(1);
+  });
+
+  test('Should emit invalid field error if name is invalid', () {
+    mockValidation(value: ValidationErro.invalidField);
+    sut.nameErrorStream.listen(expectAsync1((error) => expect(error, UiError.invalidField)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validateName(name);
+    sut.validateName(name);
+  });
+
+  test('Should emit requiredFieldError if name is empty', () {
+    mockValidation(value: ValidationErro.requiredField);
+    sut.nameErrorStream.listen(expectAsync1((error) => expect(error, UiError.requiredField)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validateName(name);
+    sut.validateName(name);
+  });
+
+  test('Should emit null if validation succeeds', () {
+    sut.nameErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validateName(name);
+    sut.validateName(name);
   });
 
   test('Should call Validation with correct e-mail', () {
@@ -39,7 +69,7 @@ void main() {
     verify(validation.validate(field: 'email', value: email)).called(1);
   });
 
-  test('Should emit invalid field error if email is invalid', () {
+  test('Should emit invalid field error if e-mail is invalid', () {
     mockValidation(value: ValidationErro.invalidField);
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, UiError.invalidField)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
@@ -47,7 +77,7 @@ void main() {
     sut.validateEmail(email);
   });
 
-  test('Should emit requiredFieldError if email is empty', () {
+  test('Should emit requiredFieldError if e-mail is empty', () {
     mockValidation(value: ValidationErro.requiredField);
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, UiError.requiredField)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
