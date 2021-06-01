@@ -20,6 +20,7 @@ main() {
   late StreamController<UiError?> passwordErrorController;
   late StreamController<UiError?> passwordConfirmationErrorController;
   late StreamController<UiError?> mainErrorController;
+  late StreamController<String?> navigateToController;
   late StreamController<bool> isFormValidController;
   late StreamController<bool> isLoadingController;
 
@@ -28,6 +29,7 @@ main() {
     emailErrorController = StreamController<UiError?>();
     passwordErrorController = StreamController<UiError?>();
     passwordConfirmationErrorController = StreamController<UiError?>();
+    navigateToController = StreamController<String?>();
     mainErrorController = StreamController<UiError?>();
     isFormValidController = StreamController<bool>();
     isLoadingController = StreamController<bool>();
@@ -39,6 +41,7 @@ main() {
     when(presenter.passwordErrorStream).thenAnswer((_) => passwordErrorController.stream);
     when(presenter.passwordConfirmationErrorStream).thenAnswer((_) => passwordConfirmationErrorController.stream);
     when(presenter.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
+    when(presenter.navigateToStream).thenAnswer((_) => navigateToController.stream);
     when(presenter.isFormValidStream).thenAnswer((_) => isFormValidController.stream);
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
   }
@@ -48,6 +51,7 @@ main() {
     emailErrorController.close();
     passwordErrorController.close();
     passwordConfirmationErrorController.close();
+    navigateToController.close();
     mainErrorController.close();
     isFormValidController.close();
     isLoadingController.close();
@@ -63,6 +67,7 @@ main() {
       initialRoute: '/sign-up',
       getPages: [
         GetPage(name: '/sign-up', page: () => SignUpPage(presenter: presenter)),
+        GetPage(name: '/any-route', page: () => Scaffold(body: Text('fake page'))),
       ],
     );
 
@@ -236,7 +241,7 @@ main() {
 
     mainErrorController.add(UiError.emailInUse);
     await tester.pump();
-    
+
     expect(find.text('O email já está em uso.'), findsOneWidget);
   });
 
@@ -247,5 +252,27 @@ main() {
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
+  });
+
+  testWidgets('Should change page', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    navigateToController.add('/any-route');
+    await tester.pumpAndSettle();
+
+    expect(Get.currentRoute, '/any-route');
+    expect(find.text('fake page'), findsOneWidget);
+  });
+
+  testWidgets('Should not change page', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    navigateToController.add('');
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/sign-up');
+
+    navigateToController.add(null);
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '/sign-up');
   });
 }

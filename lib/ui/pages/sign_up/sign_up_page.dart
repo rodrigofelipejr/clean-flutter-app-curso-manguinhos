@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/helpers/helpers.dart';
@@ -33,6 +34,13 @@ class SignUpPage extends StatelessWidget {
           presenter.mainErrorStream.listen((error) {
             if (error != null) {
               showErrorMessage(context, error.description);
+            }
+          });
+
+          presenter.navigateToStream.listen((page) {
+            //NOTE - diferente de null e vazio
+            if (page?.isNotEmpty == true) {
+              Get.offAllNamed(page!);
             }
           });
 

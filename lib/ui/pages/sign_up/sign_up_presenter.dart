@@ -13,6 +13,7 @@ abstract class SignUpPresenter {
   Stream<UiError?> get passwordErrorStream;
   Stream<UiError?> get passwordConfirmationErrorStream;
   Stream<UiError?> get mainErrorStream;
+  Stream<String?> get navigateToStream;
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
 
