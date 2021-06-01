@@ -102,6 +102,22 @@ main() {
     verify(presenter.validatePasswordConfirmation(password));
   });
 
+  testWidgets('Should presente name error', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    nameErrorController.add(UiError.invalidField);
+    await tester.pump();
+    expect(find.text('Campo inválido'), findsOneWidget);
+
+    nameErrorController.add(UiError.requiredField);
+    await tester.pump();
+    expect(find.text('Campo obrigatório'), findsOneWidget);
+
+    nameErrorController.add(null);
+    await tester.pump();
+    expect(find.descendant(of: find.bySemanticsLabel('Nome'), matching: find.byType(Text)), findsOneWidget);
+  });
+
   testWidgets('Should presente email error', (WidgetTester tester) async {
     await loadPage(tester);
 
