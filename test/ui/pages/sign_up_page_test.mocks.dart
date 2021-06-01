@@ -40,6 +40,10 @@ class SignUpPresenterMock extends _i1.Mock implements _i2.SignUpPresenter {
               returnValue: Stream<_i4.UiError?>.empty())
           as _i3.Stream<_i4.UiError?>);
   @override
+  _i3.Stream<bool> get isFormValidStream =>
+      (super.noSuchMethod(Invocation.getter(#isFormValidStream),
+          returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
+  @override
   void validateName(String? email) =>
       super.noSuchMethod(Invocation.method(#validateName, [email]),
           returnValueForMissingStub: null);
@@ -55,6 +59,11 @@ class SignUpPresenterMock extends _i1.Mock implements _i2.SignUpPresenter {
   void validatePasswordConfirmation(String? password) => super.noSuchMethod(
       Invocation.method(#validatePasswordConfirmation, [password]),
       returnValueForMissingStub: null);
+  @override
+  _i3.Future<void> signUp() =>
+      (super.noSuchMethod(Invocation.method(#signUp, []),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future.value()) as _i3.Future<void>);
   @override
   void dispose() => super.noSuchMethod(Invocation.method(#dispose, []),
       returnValueForMissingStub: null);

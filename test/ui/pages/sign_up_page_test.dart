@@ -19,12 +19,14 @@ main() {
   late StreamController<UiError?> emailErrorController;
   late StreamController<UiError?> passwordErrorController;
   late StreamController<UiError?> passwordConfirmationErrorController;
+  late StreamController<bool> isFormValidController;
 
   void initStreams() {
     nameErrorController = StreamController<UiError?>();
     emailErrorController = StreamController<UiError?>();
     passwordErrorController = StreamController<UiError?>();
     passwordConfirmationErrorController = StreamController<UiError?>();
+    isFormValidController = StreamController<bool>();
   }
 
   void mockStreams() {
@@ -32,6 +34,7 @@ main() {
     when(presenter.emailErrorStream).thenAnswer((_) => emailErrorController.stream);
     when(presenter.passwordErrorStream).thenAnswer((_) => passwordErrorController.stream);
     when(presenter.passwordConfirmationErrorStream).thenAnswer((_) => passwordConfirmationErrorController.stream);
+    when(presenter.isFormValidStream).thenAnswer((_) => isFormValidController.stream);
   }
 
   void closeStreams() {
@@ -39,6 +42,7 @@ main() {
     emailErrorController.close();
     passwordErrorController.close();
     passwordConfirmationErrorController.close();
+    isFormValidController.close();
   }
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -164,5 +168,25 @@ main() {
     passwordConfirmationErrorController.add(null);
     await tester.pump();
     expect(find.descendant(of: find.bySemanticsLabel('Confirmar senha'), matching: find.byType(Text)), findsOneWidget);
+  });
+
+  testWidgets('Should enable button if form is valid', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isFormValidController.add(true);
+    await tester.pump();
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.enabled, isTrue);
+  });
+
+  testWidgets('Should disable button if form is invalid', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isFormValidController.add(false);
+    await tester.pump();
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.enabled, isFalse);
   });
 }
