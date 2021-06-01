@@ -151,4 +151,20 @@ void main() {
     sut.validatePasswordConfirmation(passwordConfirmation);
     sut.validatePasswordConfirmation(passwordConfirmation);
   });
+
+  test('Should enable form button if any field is invalid', () async {
+    expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
+
+    sut.validateName(name);
+    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+
+    sut.validateEmail(email);
+    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+
+    sut.validatePassword(password);
+    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+  });
 }
