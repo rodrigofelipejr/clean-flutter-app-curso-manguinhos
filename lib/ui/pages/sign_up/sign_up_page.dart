@@ -20,55 +20,67 @@ class SignUpPage extends StatelessWidget {
     }
 
     return Scaffold(
-      body: GestureDetector(
-        onTap: _hideKeyboard,
-        child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(child: LoginHeader()),
-              Column(
+      body: Builder(
+        builder: (context) {
+          presenter.isLoadingStream.listen((isLoading) {
+            if (isLoading) {
+              showLoading(context);
+            } else {
+              hideLoading(context);
+            }
+          });
+
+          return GestureDetector(
+            onTap: _hideKeyboard,
+            child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Headline1(text: R.strings.signUp.toUpperCase()),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
-                    child: Provider<SignUpPresenter>(
-                      create: (context) => presenter,
-                      child: Form(
-                        child: Column(
-                          children: [
-                            NameInput(),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: EmailInput(),
+                  Container(child: LoginHeader()),
+                  Column(
+                    children: [
+                      Headline1(text: R.strings.signUp.toUpperCase()),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
+                        child: Provider<SignUpPresenter>(
+                          create: (context) => presenter,
+                          child: Form(
+                            child: Column(
+                              children: [
+                                NameInput(),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: EmailInput(),
+                                ),
+                                PasswordInput(),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: PasswordConfirmationInput(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
+                                  child: SignUpButton(),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.exit_to_app),
+                                  label: Text(R.strings.login),
+                                ),
+                              ],
                             ),
-                            PasswordInput(),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: PasswordConfirmationInput(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
-                              child: SignUpButton(),
-                            ),
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.exit_to_app),
-                              label: Text(R.strings.login),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
