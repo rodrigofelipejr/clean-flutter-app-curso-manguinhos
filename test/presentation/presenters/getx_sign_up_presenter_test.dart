@@ -19,6 +19,7 @@ void main() {
   late String name;
   late String email;
   late String password;
+  late String passwordConfirmation;
 
   PostExpectation mockValidationCall(String? field) =>
       when(validation.validate(field: field == null ? anyNamed('field') : field, value: anyNamed('value')));
@@ -34,6 +35,7 @@ void main() {
     name = faker.person.name();
     email = faker.internet.email();
     password = faker.internet.password();
+    passwordConfirmation = faker.internet.password();
 
     mockValidation(); // SUCCESS
   });
@@ -120,5 +122,33 @@ void main() {
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
     sut.validatePassword(password);
     sut.validatePassword(password);
+  });
+
+  test('Should call Validation with correct passwordConfirmation', () {
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    verify(validation.validate(field: 'passwordConfirmation', value: passwordConfirmation)).called(1);
+  });
+
+  test('Should emit invalid field error if passwordConfirmation is invalid', () {
+    mockValidation(value: ValidationErro.invalidField);
+    sut.passwordConfirmationErrorStream.listen(expectAsync1((error) => expect(error, UiError.invalidField)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    sut.validatePasswordConfirmation(passwordConfirmation);
+  });
+
+  test('Should emit requiredFieldError if passwordConfirmation is empty', () {
+    mockValidation(value: ValidationErro.requiredField);
+    sut.passwordConfirmationErrorStream.listen(expectAsync1((error) => expect(error, UiError.requiredField)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    sut.validatePasswordConfirmation(passwordConfirmation);
+  });
+
+  test('Should emit null if validation succeeds', () {
+    sut.passwordConfirmationErrorStream.listen(expectAsync1((error) => expect(error, null)));
+    sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    sut.validatePasswordConfirmation(passwordConfirmation);
   });
 }
