@@ -40,6 +40,10 @@ class SignUpPresenterMock extends _i1.Mock implements _i2.SignUpPresenter {
               returnValue: Stream<_i4.UiError?>.empty())
           as _i3.Stream<_i4.UiError?>);
   @override
+  _i3.Stream<_i4.UiError?> get mainErrorStream => (super.noSuchMethod(
+      Invocation.getter(#mainErrorStream),
+      returnValue: Stream<_i4.UiError?>.empty()) as _i3.Stream<_i4.UiError?>);
+  @override
   _i3.Stream<bool> get isFormValidStream =>
       (super.noSuchMethod(Invocation.getter(#isFormValidStream),
           returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
