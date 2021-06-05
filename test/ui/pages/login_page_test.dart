@@ -248,7 +248,7 @@ main() {
     verify(presenter.goToSignUp()).called(1);
   });
 
-   testWidgets('Should call gotoSignUp on link click', (WidgetTester tester) async {
+  testWidgets('Should call goToSignUp on link click', (WidgetTester tester) async {
     await loadPage(tester);
 
     final button = find.text('Criar conta');
