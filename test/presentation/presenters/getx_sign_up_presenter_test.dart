@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
 import 'package:fordev/domain/entities/entities.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
@@ -33,6 +34,12 @@ void main() {
 
   void mockValidation({String? field, ValidationErro? value}) {
     mockValidationCall(field).thenReturn(value);
+  }
+
+  PostExpectation mockSaveCurrentAccountCall() => when(saveCurrentAccount.save(AccountEntity(token)));
+
+  void mockSaveCurrentAccountError() {
+    mockSaveCurrentAccountCall().thenThrow(DomainError.unexpected);
   }
 
   PostExpectation mockAddAccountCall() => when(addAccount.add(params: anyNamed('params')));
@@ -215,5 +222,18 @@ void main() {
 
     await sut.signUp();
     verify(saveCurrentAccount.save(AccountEntity(token))).called(1);
+  });
+
+  test('Should emit UnexpectedErro if SaveCurrentAccount fails', () async {
+    mockSaveCurrentAccountError();
+    sut.validateName(name);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    sut.validatePasswordConfirmation(passwordConfirmation);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.mainErrorStream.listen(expectAsync1((error) => expect(error, UiError.unexpected)));
+
+    await sut.signUp();
   });
 }
