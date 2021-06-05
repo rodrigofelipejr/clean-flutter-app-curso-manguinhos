@@ -6,3 +6,6 @@ enum ValidationErro {
   requiredField,
   invalidField,
 }
+ class Controller {
+   
+ }

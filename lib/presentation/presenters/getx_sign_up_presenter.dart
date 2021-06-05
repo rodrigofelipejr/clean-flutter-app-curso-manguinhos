@@ -9,10 +9,12 @@ import '../dependencies/dependencies.dart';
 class GetxSignUpPresenter extends GetxController {
   final Validation validation;
   final AddAccount addAccount;
+  final SaveCurrentAccount saveCurrentAccount;
 
   GetxSignUpPresenter({
     required this.validation,
     required this.addAccount,
+    required this.saveCurrentAccount,
   });
 
   var _nameError = Rxn<UiError>();
@@ -83,12 +85,14 @@ class GetxSignUpPresenter extends GetxController {
   }
 
   Future<void> signUp() async {
-    await addAccount.add(
+    final account = await addAccount.add(
         params: AddAccountParams(
       name: _name!,
       email: _email!,
       password: _password!,
       passwordConfirmation: _passwordConfirmation!,
     ));
+
+    await saveCurrentAccount.save(account);
   }
 }

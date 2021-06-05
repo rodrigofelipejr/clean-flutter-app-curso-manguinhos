@@ -14,11 +14,14 @@ import 'getx_sign_up_presenter_test.mocks.dart';
 @GenerateMocks([], customMocks: [
   MockSpec<Validation>(as: #ValidationMock, returnNullOnMissingStub: true),
   MockSpec<AddAccount>(as: #AddAccountMock, returnNullOnMissingStub: true),
+  MockSpec<SaveCurrentAccount>(as: #SaveCurrentAccountMock, returnNullOnMissingStub: true),
 ])
 void main() {
   late GetxSignUpPresenter sut;
   late ValidationMock validation;
   late AddAccountMock addAccount;
+  late SaveCurrentAccount saveCurrentAccount;
+
   late String name;
   late String email;
   late String password;
@@ -41,7 +44,13 @@ void main() {
   setUp(() {
     validation = ValidationMock();
     addAccount = AddAccountMock();
-    sut = GetxSignUpPresenter(validation: validation, addAccount: addAccount);
+    saveCurrentAccount = SaveCurrentAccountMock();
+
+    sut = GetxSignUpPresenter(
+      validation: validation,
+      addAccount: addAccount,
+      saveCurrentAccount: saveCurrentAccount,
+    );
 
     name = faker.person.name();
     email = faker.internet.email();
@@ -186,7 +195,9 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
     sut.validatePasswordConfirmation(passwordConfirmation);
+
     await sut.signUp();
+
     verify(addAccount.add(
         params: AddAccountParams(
       name: name,
@@ -194,5 +205,15 @@ void main() {
       password: password,
       passwordConfirmation: passwordConfirmation,
     ))).called(1);
+  });
+
+  test('Should call SaveCurrentAccount with correct value', () async {
+    sut.validateName(name);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    sut.validatePasswordConfirmation(passwordConfirmation);
+
+    await sut.signUp();
+    verify(saveCurrentAccount.save(AccountEntity(token))).called(1);
   });
 }

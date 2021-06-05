@@ -24,6 +24,7 @@ void main() {
   late ValidationMock validation;
   late AuthenticationMock authentication;
   late SaveCurrentAccount saveCurrentAccount;
+  
   late String email;
   late String password;
   late String token;
