@@ -24,7 +24,7 @@ void main() {
   late ValidationMock validation;
   late AuthenticationMock authentication;
   late SaveCurrentAccount saveCurrentAccount;
-  
+
   late String email;
   late String password;
   late String token;
@@ -167,15 +167,6 @@ void main() {
     verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
   });
 
-  test('Should change page on success ', () async {
-    sut.validateEmail(email);
-    sut.validatePassword(password);
-
-    sut.navigateToStream.listen(expectAsync1((page) => '/surveys'));
-
-    await sut.auth();
-  });
-
   test('Should emit correct event on InvalidCredentialError', () async {
     mockAuthenticationError(DomainError.invalidCredentials);
     sut.validateEmail(email);
@@ -198,5 +189,14 @@ void main() {
 
     await sut.auth();
     verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
+  });
+
+  test('Should change page on success ', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    sut.navigateToStream.listen(expectAsync1((page) => '/surveys'));
+
+    await sut.auth();
   });
 }
