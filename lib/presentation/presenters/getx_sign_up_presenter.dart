@@ -93,17 +93,24 @@ class GetxSignUpPresenter extends GetxController {
     _isLoading.value = true;
     try {
       final account = await addAccount.add(
-          params: AddAccountParams(
-        name: _name!,
-        email: _email!,
-        password: _password!,
-        passwordConfirmation: _passwordConfirmation!,
-      ));
+        params: AddAccountParams(
+          name: _name!,
+          email: _email!,
+          password: _password!,
+          passwordConfirmation: _passwordConfirmation!,
+        ),
+      );
 
       await saveCurrentAccount.save(account);
       _isLoading.value = false;
     } on DomainError catch (error) {
-      _mainError.value = UiError.unexpected;
+      switch (error) {
+        case DomainError.emailInUse:
+          _mainError.value = UiError.emailInUse;
+          break;
+        default:
+          _mainError.value = UiError.unexpected;
+      }
       _isLoading.value = false;
     }
   }
