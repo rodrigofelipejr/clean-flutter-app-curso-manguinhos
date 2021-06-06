@@ -2,19 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:fordev/presentation/dependencies/validation.dart';
-import 'package:fordev/validation/dependencies/dependencies.dart';
-
-class MinLengthValidation implements FieldValidation {
-  final String field;
-  final int length;
-
-  MinLengthValidation({required this.field, required this.length});
-
-  @override
-  ValidationErro? validate(String? value) {
-    return value != null && value.length >= length ? null : ValidationErro.invalidField;
-  }
-}
+import 'package:fordev/validation/validators/validators.dart';
 
 main() {
   late MinLengthValidation sut;
