@@ -30,7 +30,7 @@ void main() {
   late String token;
 
   PostExpectation mockValidationCall(String? field) =>
-      when(validation.validate(field: field == null ? anyNamed('field') : field, value: anyNamed('value')));
+      when(validation.validate(field: field == null ? anyNamed('field') : field, input: anyNamed('input')));
 
   void mockValidation({String? field, ValidationErro? value}) {
     mockValidationCall(field).thenReturn(value);
@@ -71,11 +71,12 @@ void main() {
   });
 
   test('Should call Validation with correct e-mail', () {
+    final formData = {'email': email, 'password': null};
     sut.validateEmail(email);
-    verify(validation.validate(field: 'email', value: email)).called(1);
+    verify(validation.validate(field: 'email', input: formData)).called(1);
   });
 
-  test('Should emit invalid field error if email is invalid', () {
+  test('Should emit invalidFieldError if email is invalid', () {
     mockValidation(value: ValidationErro.invalidField);
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, UiError.invalidField)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
@@ -84,7 +85,7 @@ void main() {
   });
 
   test('Should emit requiredFieldError if email is empty', () {
-    mockValidation(value: ValidationErro.requiredField);
+    mockValidation(field: 'email', value: ValidationErro.requiredField);
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, UiError.requiredField)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
     sut.validateEmail(email);
@@ -99,8 +100,9 @@ void main() {
   });
 
   test('Should call Validation with correct password', () {
+    final formData = {'email': null, 'password': password};
     sut.validatePassword(password);
-    verify(validation.validate(field: 'password', value: password)).called(1);
+    verify(validation.validate(field: 'password', input: formData)).called(1);
   });
 
   test('Should emit password error if validation fails', () {

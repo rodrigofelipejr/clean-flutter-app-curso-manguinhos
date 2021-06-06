@@ -61,18 +61,22 @@ class StreamLoginPresenter implements LoginPresenterStream {
 
   void validateEmail(String email) {
     _state.email = email;
-    _state.emailError = _validateField(field: 'email', value: email);
+    _state.emailError = _validateField('email');
     _update();
   }
 
   void validatePassword(String password) {
     _state.password = password;
-    _state.passwordError = _validateField(field: 'password', value: password);
+    _state.passwordError = _validateField('password');
     _update();
   }
 
-  UiError? _validateField({required String field, required String value}) {
-    final error = validation.validate(field: field, value: value);
+  UiError? _validateField(String field) {
+    final formData = {
+      'email': _state.email,
+      'password': _state.password,
+    };
+    final error = validation.validate(field: field, input: formData);
 
     switch (error) {
       case ValidationErro.invalidField:

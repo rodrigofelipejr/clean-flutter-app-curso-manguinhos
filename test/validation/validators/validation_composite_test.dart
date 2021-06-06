@@ -47,7 +47,7 @@ main() {
     mockValidation1(ValidationErro.requiredField);
     mockValidation2(ValidationErro.requiredField);
     mockValidation3(ValidationErro.invalidField);
-    final error = sut.validate(field: 'any_field', value: 'any_value');
+    final error = sut.validate(field: 'any_field', input: {'any_field': 'any_value'});
     expect(error, ValidationErro.requiredField);
   });
 }

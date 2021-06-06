@@ -12,22 +12,22 @@ main() {
   });
 
   test('Should return error if value is empty', () {
-    expect(sut.validate(''), ValidationErro.invalidField);
+    expect(sut.validate({'any_field': ''}), ValidationErro.invalidField);
   });
 
   test('Should return error if value is null', () {
-    expect(sut.validate(null), ValidationErro.invalidField);
+    expect(sut.validate({'any_field': null}), ValidationErro.invalidField);
   });
 
   test('Should return error if value is less then min size', () {
-    expect(sut.validate(faker.randomGenerator.string(4, min: 1)), ValidationErro.invalidField);
+    expect(sut.validate({'any_field': faker.randomGenerator.string(4, min: 1)}), ValidationErro.invalidField);
   });
 
   test('Should return error if value is equal than min size', () {
-    expect(sut.validate(faker.randomGenerator.string(5, min: 5)), null);
+    expect(sut.validate({'any_field': faker.randomGenerator.string(5, min: 5)}), null);
   });
 
   test('Should return error if value is bigger than min size', () {
-    expect(sut.validate(faker.randomGenerator.string(10, min: 6)), null);
+    expect(sut.validate({'any_field': faker.randomGenerator.string(10, min: 6)}), null);
   });
 }

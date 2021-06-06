@@ -2,6 +2,7 @@
 // in fordev/test/validation/validators/validation_composite_test.dart.
 // Do not manually edit this file.
 
+import 'package:fordev/presentation/dependencies/validation.dart' as _i3;
 import 'package:fordev/validation/dependencies/field_validation.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -23,4 +24,8 @@ class FieldValidationMock extends _i1.Mock implements _i2.FieldValidation {
   String get field =>
       (super.noSuchMethod(Invocation.getter(#field), returnValue: '')
           as String);
+  @override
+  _i3.ValidationErro? validate(Map<dynamic, dynamic>? input) =>
+      (super.noSuchMethod(Invocation.method(#validate, [input]))
+          as _i3.ValidationErro?);
 }

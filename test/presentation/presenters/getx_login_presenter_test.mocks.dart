@@ -27,9 +27,9 @@ class _FakeAccountEntity extends _i1.Fake implements _i2.AccountEntity {}
 /// See the documentation for Mockito's code generation for more information.
 class ValidationMock extends _i1.Mock implements _i3.Validation {
   @override
-  _i3.ValidationErro? validate({String? field, String? value}) =>
+  _i3.ValidationErro? validate({String? field, Map<dynamic, dynamic>? input}) =>
       (super.noSuchMethod(
-              Invocation.method(#validate, [], {#field: field, #value: value}))
+              Invocation.method(#validate, [], {#field: field, #input: input}))
           as _i3.ValidationErro?);
 }
 

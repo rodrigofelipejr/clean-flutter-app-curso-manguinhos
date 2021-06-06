@@ -9,12 +9,12 @@ class ValidationComposite implements Validation {
   ValidationComposite(this.validations);
 
   @override
-  ValidationErro? validate({required String field, required String value}) {
+  ValidationErro? validate({required String field, required Map input}) {
     ValidationErro? error;
 
     for (final validation in validations.where((v) => v.field == field)) {
-      final error = validation.validate(value);
-      return error;
+      final error = validation.validate(input);
+      if (error != null) return error;
     }
 
     return error;

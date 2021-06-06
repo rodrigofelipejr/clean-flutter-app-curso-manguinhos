@@ -1,11 +1,10 @@
 abstract class Validation {
-  ValidationErro? validate({required String field, required String value});
+  ValidationErro? validate({required String field, required Map input});
 }
 
 enum ValidationErro {
   requiredField,
   invalidField,
 }
- class Controller {
-   
- }
+
+class Controller {}
