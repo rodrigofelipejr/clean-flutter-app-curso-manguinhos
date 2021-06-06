@@ -10,7 +10,7 @@ class CompareFieldsValidation extends Equatable implements FieldValidation {
 
   @override
   ValidationErro? validate(String? value) {
-    return ValidationErro.invalidField;
+    return value == valueToCompare ? null : ValidationErro.invalidField;
   }
 
   @override
