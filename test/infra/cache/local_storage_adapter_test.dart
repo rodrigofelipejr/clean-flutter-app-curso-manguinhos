@@ -66,5 +66,11 @@ main() {
       final future = sut.fetchSecure(key);
       expect(future, throwsA(TypeMatcher<Exception>()));
     });
+
+    test('Should return empty if no value for key fetched from secure storage is found', () async {
+      mockFetchSecureCall().thenAnswer((_) async => null);
+      final result = await sut.fetchSecure(key);
+      expect(result, isEmpty);
+    });
   });
 }
