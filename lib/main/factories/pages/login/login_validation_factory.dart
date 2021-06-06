@@ -8,5 +8,5 @@ Validation makeLoginValidation() => ValidationComposite(makeLoginValidations());
 List<FieldValidation> makeLoginValidations() => [
       //ANCHOR - Consumindo o designer partner builder
       ...ValidationBuilder.field('email').required().email().build(),
-      ...ValidationBuilder.field('password').required().build(),
+      ...ValidationBuilder.field('password').required().min(6).build(),
     ];
