@@ -5,6 +5,7 @@ import '../../ui/pages/pages.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/helpers/helpers.dart';
+import '../../shared/routes/routes.dart';
 
 import '../dependencies/dependencies.dart';
 
@@ -111,7 +112,7 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
       );
 
       await saveCurrentAccount.save(account);
-      _navigateTo.value = '/surveys';
+      _navigateTo.value = AppRoutes.surveys;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.emailInUse:
@@ -126,6 +127,6 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
 
   @override
   void goToLogin() {
-    _navigateTo.value = '/login'; //TODO - Centralizar todas rotas
+    _navigateTo.value = AppRoutes.login; //TODO - Centralizar todas rotas
   }
 }

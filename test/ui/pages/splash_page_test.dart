@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/pages/pages.dart';
 
 import 'splash_page_test.mocks.dart';
@@ -25,10 +26,10 @@ main() {
 
     await tester.pumpWidget(
       GetMaterialApp(
-        initialRoute: '/',
+        initialRoute: AppRoutes.initial,
         getPages: [
-          GetPage(name: '/', page: () => SplashPage(presenter: presenter)),
-          GetPage(name: '/any_route', page: () => Scaffold(body: Text('fake page'))),
+          GetPage(name: AppRoutes.initial, page: () => SplashPage(presenter: presenter)),
+          GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
         ],
       ),
     );
@@ -51,10 +52,10 @@ main() {
   testWidgets('Should load page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('/any_route');
+    navigateToController.add(AppRoutes.anyRoute);
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, '/any_route');
+    expect(Get.currentRoute, AppRoutes.anyRoute);
     expect(find.text('fake page'), findsOneWidget);
   });
 
@@ -63,10 +64,10 @@ main() {
 
     navigateToController.add('');
     await tester.pump();
-    expect(Get.currentRoute, '/');
+    expect(Get.currentRoute, AppRoutes.initial);
 
     navigateToController.add(null);
     await tester.pump();
-    expect(Get.currentRoute, '/');
+    expect(Get.currentRoute, AppRoutes.initial);
   });
 }

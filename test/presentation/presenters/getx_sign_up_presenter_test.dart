@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
 import 'package:fordev/domain/entities/entities.dart';
@@ -290,13 +291,13 @@ void main() {
     sut.validatePassword(password);
     sut.validatePasswordConfirmation(passwordConfirmation);
 
-    sut.navigateToStream.listen(expectAsync1((page) => '/surveys'));
+    sut.navigateToStream.listen(expectAsync1((page) => AppRoutes.surveys));
 
     await sut.signUp();
   });
 
   test('Should go to LoginPage on link click', () async {
-    sut.navigateToStream.listen(expectAsync1((page) => '/login'));
+    sut.navigateToStream.listen(expectAsync1((page) => AppRoutes.login));
     sut.goToLogin();
   });
 }

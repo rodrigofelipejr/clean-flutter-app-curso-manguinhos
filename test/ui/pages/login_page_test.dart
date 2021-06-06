@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
 import 'package:fordev/ui/pages/pages.dart';
 
@@ -56,10 +57,10 @@ main() {
     mockStreams();
 
     final loginPage = GetMaterialApp(
-      initialRoute: '/login',
+      initialRoute: AppRoutes.login,
       getPages: [
-        GetPage(name: '/login', page: () => LoginPage(presenter: presenter)),
-        GetPage(name: '/any_route', page: () => Scaffold(body: Text('fake page'))),
+        GetPage(name: AppRoutes.login, page: () => LoginPage(presenter: presenter)),
+        GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
       ],
     );
 
@@ -229,11 +230,11 @@ main() {
   testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('/any_route');
+    navigateToController.add(AppRoutes.anyRoute);
     //ANCHOR - como a troca de rota demora um pouco mais  para acontecer é utilizado o pumpAndSettle
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, '/any_route');
+    expect(Get.currentRoute, AppRoutes.anyRoute);
     expect(find.text('fake page'), findsOneWidget);
   });
 

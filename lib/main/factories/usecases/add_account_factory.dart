@@ -4,9 +4,9 @@ import '../../../data/usecases/usecases.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../factories.dart';
 
-Authentication makeRemoteAuthentication() {
-  return RemoteAuthentication(
+AddAccount makeRemoteAddAccount() {
+  return RemoteAddAccount(
     httpClient: makeHttpAdapter(),
-    url: makeApiUrl(AppRoutes.login),
+    url: makeApiUrl(AppRoutes.singUp),
   );
 }

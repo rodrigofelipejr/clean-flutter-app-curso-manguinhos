@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/domain/entities/entities.dart';
 import 'package:fordev/presentation/presenters/presenters.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
@@ -38,19 +39,19 @@ main() {
   });
 
   test('Should go to surveys page on success', () async {
-    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/surveys')));
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, AppRoutes.surveys)));
     await sut.checkAccount(durationInSeconds: 0);
   });
 
   test('Should go to login page on null result', () async {
     mockLoadCurrentAccount(account: AccountEntity(''));
-    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/login')));
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, AppRoutes.login)));
     await sut.checkAccount(durationInSeconds: 0);
   });
 
   test('Should go to login page on error', () async {
     mockLoadCurrentAccountError();
-    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/login')));
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, AppRoutes.login)));
     await sut.checkAccount(durationInSeconds: 0);
   });
 }

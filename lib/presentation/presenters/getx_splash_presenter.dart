@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../shared/routes/routes.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/pages/pages.dart';
 
@@ -18,9 +19,9 @@ class GetxSplashPresenter implements SplashPresenter {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       final account = await loadCurrentAccount.load();
-      _navigateTo.value = account.token.isEmpty ? '/login' : '/surveys';
+      _navigateTo.value = account.token.isEmpty ? AppRoutes.login : AppRoutes.surveys;
     } catch (e) {
-      _navigateTo.value = '/login';
+      _navigateTo.value = AppRoutes.login;
     }
   }
 }

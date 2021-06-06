@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; 
 import 'package:get/get.dart';
 
+import '../shared/routes/routes.dart';
 import '../ui/components/components.dart';
 import 'factories/factories.dart';
 
@@ -14,14 +15,13 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '4Dev',
       theme: appTheme(),
-      initialRoute: '/',
+      initialRoute: AppRoutes.initial,
       getPages: [
-        GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
-        GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
-        GetPage(
-            name: '/surveys',
-            page: () => Scaffold(body: Text('Enquetes')),
-            transition: Transition.fadeIn), //ANCHOR - Fake
+        GetPage(name: AppRoutes.initial, page: makeSplashPage, transition: Transition.fade),
+        GetPage(name: AppRoutes.login, page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(name: AppRoutes.singUp, page: makeSignUpPage),
+        //ANCHOR - remove
+        GetPage(name: AppRoutes.surveys, page: () => Scaffold(body: Text('Enquetes')), transition: Transition.fadeIn),
       ],
     );
   }

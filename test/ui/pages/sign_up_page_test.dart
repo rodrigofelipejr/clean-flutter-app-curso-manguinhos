@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
 import 'package:fordev/ui/pages/pages.dart';
 import 'package:mockito/annotations.dart';
@@ -64,10 +65,10 @@ main() {
     mockStreams();
 
     final signUpPage = GetMaterialApp(
-      initialRoute: '/sign-up',
+      initialRoute: AppRoutes.singUp,
       getPages: [
-        GetPage(name: '/sign-up', page: () => SignUpPage(presenter: presenter)),
-        GetPage(name: '/any-route', page: () => Scaffold(body: Text('fake page'))),
+        GetPage(name: AppRoutes.singUp, page: () => SignUpPage(presenter: presenter)),
+        GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
       ],
     );
 
@@ -257,10 +258,10 @@ main() {
   testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('/any-route');
+    navigateToController.add(AppRoutes.anyRoute);
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, '/any-route');
+    expect(Get.currentRoute, AppRoutes.anyRoute);
     expect(find.text('fake page'), findsOneWidget);
   });
 
@@ -269,11 +270,11 @@ main() {
 
     navigateToController.add('');
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/sign-up');
+    expect(Get.currentRoute, AppRoutes.singUp);
 
     navigateToController.add(null);
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '/sign-up');
+    expect(Get.currentRoute, AppRoutes.singUp);
   });
 
   testWidgets('Should call goToLogin on link click', (WidgetTester tester) async {

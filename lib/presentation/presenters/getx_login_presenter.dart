@@ -1,12 +1,11 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 
+import '../../shared/routes/routes.dart';
 import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
-
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-
 import '../dependencies/dependencies.dart';
 
 class GetxLoginPresenter extends GetxController implements LoginPresenter {
@@ -82,7 +81,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
        * ANCHOR - para que o presentation fique livre de implementação do flutter, a responsabilidade de navegação 
        * não vai ficar aqui dentro, e sim dentro da UI 
        */
-      _navigateTo.value = '/surveys';
+      _navigateTo.value = AppRoutes.surveys;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.invalidCredentials:
@@ -98,6 +97,6 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
 
   @override
   void goToSignUp() {
-    _navigateTo.value = '/sing-up';
+    _navigateTo.value = AppRoutes.singUp;
   }
 }

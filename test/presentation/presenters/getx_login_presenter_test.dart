@@ -3,12 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
-
 import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/entities/entities.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
-
 import 'package:fordev/presentation/presenters/presenters.dart';
 import 'package:fordev/presentation/dependencies/validation.dart';
 
@@ -197,14 +196,14 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    sut.navigateToStream.listen(expectAsync1((page) => '/surveys'));
+    sut.navigateToStream.listen(expectAsync1((page) => AppRoutes.surveys));
 
     await sut.auth();
   });
 
   test('Should go to SignUpPage on link click', () async {
     //NOTE - Como estamos testando streams o o teste deve ficar antes da chamada
-    sut.navigateToStream.listen(expectAsync1((page) => '/sing-up'));
+    sut.navigateToStream.listen(expectAsync1((page) => AppRoutes.singUp));
     sut.goToSignUp();
   });
 }
