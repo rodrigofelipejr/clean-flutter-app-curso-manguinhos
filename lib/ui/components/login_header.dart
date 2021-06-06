@@ -6,8 +6,6 @@ class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
-      margin: const EdgeInsets.only(bottom: 32.0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topRight,

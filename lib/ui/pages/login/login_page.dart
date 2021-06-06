@@ -15,11 +15,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _hideKeyboard() {
-      final currentFocus = FocusScope.of(context);
-      if (!currentFocus.hasPrimaryFocus) currentFocus.unfocus();
-    }
-
     return Scaffold(
       body: Builder(
         builder: (context) {
@@ -46,45 +41,59 @@ class LoginPage extends StatelessWidget {
           });
 
           return GestureDetector(
-            onTap: _hideKeyboard,
+            onTap: () => hideKeyboard(context),
             child: SingleChildScrollView(
               physics: ClampingScrollPhysics(),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(child: LoginHeader()),
-                  Column(
-                    children: [
-                      Headline1(text: R.strings.login.toUpperCase()),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
-                        child: Provider<LoginPresenter>(
-                          create: (context) => presenter,
-                          child: Form(
-                            child: Column(
-                              children: [
-                                EmailInput(),
-                                SizedBox(height: 8.0),
-                                PasswordInput(),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
-                                  child: LoginButton(),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: 320.0),
+                        child: LoginHeader(),
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0),
+                            child: Headline1(text: R.strings.login.toUpperCase()),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
+                            child: Provider<LoginPresenter>(
+                              create: (context) => presenter,
+                              child: Form(
+                                child: Column(
+                                  children: [
+                                    EmailInput(),
+                                    SizedBox(height: 8.0),
+                                    PasswordInput(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 36.0, bottom: 16.0),
+                                      child: LoginButton(),
+                                    ),
+                                    TextButton.icon(
+                                      onPressed: presenter.goToSignUp,
+                                      icon: Icon(Icons.person),
+                                      label: Text(R.strings.addAccount),
+                                    ),
+                                  ],
                                 ),
-                                TextButton.icon(
-                                  onPressed: presenter.goToSignUp,
-                                  icon: Icon(Icons.person),
-                                  label: Text(R.strings.addAccount),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );
