@@ -43,7 +43,7 @@ main() {
     await sut.checkAccount(durationInSeconds: 0);
   });
 
-  test('Should go to login page on null result', () async {
+  test('Should go to login page on empty token token', () async {
     mockLoadCurrentAccount(account: AccountEntity(''));
     sut.navigateToStream.listen(expectAsync1((page) => expect(page, AppRoutes.login)));
     await sut.checkAccount(durationInSeconds: 0);
