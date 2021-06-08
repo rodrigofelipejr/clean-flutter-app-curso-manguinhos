@@ -51,15 +51,16 @@ class SignUpPage extends StatelessWidget {
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(child: LoginHeader()),
-                  Column(
-                    children: [
-                      Headline1(text: R.strings.signUp.toUpperCase()),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
-                        child: Provider<SignUpPresenter>(
+                  LoginHeader(),
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      children: [
+                        Headline1(text: R.strings.signUp.toUpperCase()),
+                        SizedBox(height: 14.0),
+                        Provider<SignUpPresenter>(
                           create: (context) => presenter,
                           child: Form(
                             child: Column(
@@ -87,8 +88,8 @@ class SignUpPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -11,9 +11,9 @@ main() {
       RequiredFieldValidation('email'),
       EmailValidation('email'),
       RequiredFieldValidation('password'),
-      MinLengthValidation(field: 'password', length: 6),
+      MinLengthValidation(field: 'password', length: 5),
       RequiredFieldValidation('passwordConfirmation'),
-      MinLengthValidation(field: 'passwordConfirmation', length: 6),
+      MinLengthValidation(field: 'passwordConfirmation', length: 5),
       CompareFieldsValidation(field: 'passwordConfirmation', fieldToCompare: 'password')
     ]);
   });

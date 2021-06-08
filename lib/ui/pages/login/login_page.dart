@@ -50,23 +50,19 @@ class LoginPage extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 320.0),
-                        child: LoginHeader(),
-                      ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 340.0),
+                      child: LoginHeader(),
                     ),
-                    Container(
+                    Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Headline1(text: R.strings.login.toUpperCase()),
                           Padding(
-                            padding: const EdgeInsets.only(top: 32.0),
-                            child: Headline1(text: R.strings.login.toUpperCase()),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(32.0, 6.0, 32.0, 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 32.0),
                             child: Provider<LoginPresenter>(
                               create: (context) => presenter,
                               child: Form(

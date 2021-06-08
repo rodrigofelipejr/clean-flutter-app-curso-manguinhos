@@ -9,7 +9,7 @@ main() {
       RequiredFieldValidation('email'),
       EmailValidation('email'),
       RequiredFieldValidation('password'),
-      MinLengthValidation(field: 'password', length: 6),
+      MinLengthValidation(field: 'password', length: 5),
     ]);
   });
 }

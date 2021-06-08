@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../shared/routes/routes.dart';
@@ -21,7 +21,10 @@ class App extends StatelessWidget {
         GetPage(name: AppRoutes.login, page: makeLoginPage, transition: Transition.fadeIn),
         GetPage(name: AppRoutes.singUp, page: makeSignUpPage),
         //ANCHOR - remove
-        GetPage(name: AppRoutes.surveys, page: () => Scaffold(body: Text('Enquetes')), transition: Transition.fadeIn),
+        GetPage(
+            name: AppRoutes.surveys,
+            page: () => Scaffold(body: Center(child: Text('Enquetes'))),
+            transition: Transition.fadeIn),
       ],
     );
   }

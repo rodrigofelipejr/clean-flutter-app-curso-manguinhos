@@ -91,7 +91,7 @@ void main() {
     sut.validateEmail(email);
   });
 
-  test('Should emit null if validation succeeds', () {
+  test('Should emit null if email validation succeeds', () {
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
     sut.validateEmail(email);
@@ -112,7 +112,7 @@ void main() {
     sut.validatePassword(password);
   });
 
-  test('Should emit null if validation succeeds', () {
+  test('Should emit null if password validation succeeds', () {
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
     sut.validatePassword(password);
@@ -153,7 +153,7 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream.listen(expectAsync1((error) => expect(error, UiError.unexpected)));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UiError.unexpected]));
 
     await sut.auth();
   });
@@ -162,6 +162,7 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
+    expectLater(sut.mainErrorStream, emits(null));
     expectLater(sut.isLoadingStream, emits(true));
 
     await sut.auth();
@@ -174,7 +175,7 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream.listen(expectAsync1((error) => expect(error, UiError.invalidCredentials)));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UiError.invalidCredentials]));
 
     await sut.auth();
     verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
@@ -186,7 +187,7 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream.listen(expectAsync1((error) => expect(error, UiError.unexpected)));
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UiError.unexpected]));
 
     await sut.auth();
     verify(authentication.auth(params: AuthenticationParams(email: email, secret: password))).called(1);
