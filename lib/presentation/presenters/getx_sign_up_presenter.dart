@@ -128,6 +128,6 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
 
   @override
   void goToLogin() {
-    _navigateTo.value = AppRoutes.login; //TODO - Centralizar todas rotas
+    _navigateTo.value = AppRoutes.login;
   }
 }

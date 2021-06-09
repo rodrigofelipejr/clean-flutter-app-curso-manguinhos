@@ -9,7 +9,7 @@ import 'package:fordev/domain/usecases/usecases.dart';
 import 'package:fordev/data/http/http.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 
-import './remote_add_account_test.mocks.dart';
+import 'remote_add_account_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
 main() {

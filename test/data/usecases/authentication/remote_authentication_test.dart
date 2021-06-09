@@ -3,20 +3,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 
-import 'remote_authentication_test.mocks.dart';
-
 import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
 
 import 'package:fordev/data/http/http.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
+import 'remote_authentication_test.mocks.dart';
+
+@GenerateMocks([], customMocks: [MockSpec<HttpClient<Map>>(as: #HttpClientMock)])
 main() {
   late RemoteAuthentication sut;
   late HttpClientMock httpClient;
-  late String url;
   late AuthenticationParams params;
+  late String url;
 
   Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
 
