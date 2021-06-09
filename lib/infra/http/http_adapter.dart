@@ -40,8 +40,14 @@ class HttpAdapter implements HttpClient {
     var response = http.Response('', 500);
 
     try {
-      if (method == 'post') {
-        response = await client.post(Uri.parse(url), headers: headers, body: jsonBody);
+      switch (method) {
+        case 'post':
+          response = await client.post(Uri.parse(url), headers: headers, body: jsonBody);
+          break;
+        case 'get':
+          response = await client.get(Uri.parse(url), headers: headers);
+          break;
+        default:
       }
     } catch (error) {
       throw HttpError.serverError;
