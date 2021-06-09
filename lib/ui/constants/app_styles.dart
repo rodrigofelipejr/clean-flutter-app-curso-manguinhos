@@ -24,6 +24,18 @@ class AppTextStyles {
     color: AppColors.kGreyDark,
     fontWeight: FontWeight.w600,
   );
+
+  static final kSurveysDate = GoogleFonts.notoSans(
+    color: AppColors.kWhite,
+    fontWeight: FontWeight.w600,
+    fontSize: 20.0,
+  );
+
+  static final kSurveysDescription = GoogleFonts.notoSans(
+    color: AppColors.kWhite,
+    fontWeight: FontWeight.w400,
+    fontSize: 24.0,
+  );
 }
 
 class AppStyles {

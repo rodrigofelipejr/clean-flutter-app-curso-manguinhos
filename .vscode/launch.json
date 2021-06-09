@@ -11,7 +11,7 @@
       "name": "Run Flutter",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main/main.dart"
+      "program": "./lib/main/main.dart"
     }
   ]
 }
