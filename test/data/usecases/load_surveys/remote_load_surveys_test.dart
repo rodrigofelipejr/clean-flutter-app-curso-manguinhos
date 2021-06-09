@@ -35,6 +35,7 @@ void main() {
   PostExpectation mockRequest() => when(httpClient.request(url: anyNamed('url'), method: anyNamed('method')));
 
   void mockHttpData(List<Map> data) => mockRequest().thenAnswer((_) async => data);
+  void mockHttpError(HttpError error) => mockRequest().thenThrow(error);
 
   setUp(() {
     url = faker.internet.httpUrl();
@@ -73,6 +74,12 @@ void main() {
       {'invalid_key': 'invalid_value'}
     ]);
 
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
+  test('should throw UnexpectedError if HttpClient return 404', () async {
+    mockHttpError(HttpError.notFound);
     final future = sut.load();
     expect(future, throwsA(DomainError.unexpected));
   });
