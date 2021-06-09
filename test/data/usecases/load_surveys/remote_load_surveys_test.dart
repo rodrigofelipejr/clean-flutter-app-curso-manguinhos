@@ -67,4 +67,13 @@ void main() {
       ),
     ]);
   });
+
+  test('Should throw UnexpectedError if HttpClient return 200 with invalid data', () async {
+    mockHttpData([
+      {'invalid_key': 'invalid_value'}
+    ]);
+
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
+  });
 }
