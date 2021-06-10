@@ -54,6 +54,11 @@ main() {
     await tester.pumpWidget(surveysPage);
   }
 
+  List<SurveyViewModel> makeSurveys() => [
+        SurveyViewModel(id: '1', question: 'Question 1', date: 'Any Date', didAnswer: true),
+        SurveyViewModel(id: '2', question: 'Question 2', date: 'Any Date', didAnswer: false),
+      ];
+
   testWidgets('Should call LoadSurveys on page load', (WidgetTester tester) async {
     await loadPage(tester);
     verify(presenter.loadData()).called(1);
@@ -84,5 +89,17 @@ main() {
     expect(find.text(R.strings.msgUnexpectedError), findsOneWidget);
     expect(find.text(R.strings.reload), findsOneWidget);
     expect(find.text('Question 1'), findsNothing);
+  });
+
+  testWidgets('Should present list loadSurveysStream success', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    loadSurveysController.add(makeSurveys());
+    await tester.pump();
+
+    expect(find.text(R.strings.msgUnexpectedError), findsNothing);
+    expect(find.text(R.strings.reload), findsNothing);
+    expect(find.text('Question 1'), findsWidgets);
+    expect(find.text('Question 2'), findsWidgets);
   });
 }

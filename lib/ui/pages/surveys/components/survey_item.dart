@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../survey_view_model.dart';
+
 import '../../../../ui/constants/constants.dart';
 
 class SurveyItem extends StatelessWidget {
-  const SurveyItem({Key? key}) : super(key: key);
+  final SurveyViewModel viewModel;
+
+  const SurveyItem(this.viewModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class SurveyItem extends StatelessWidget {
               style: AppTextStyles.kSurveysDate,
             ),
             Text(
-              'Qual é seu framework web favorito?',
+              viewModel.question,
               style: AppTextStyles.kSurveysDescription,
             ),
           ],
