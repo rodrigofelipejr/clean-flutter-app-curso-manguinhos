@@ -4,6 +4,7 @@
 
 import 'dart:async' as _i3;
 
+import 'package:fordev/ui/pages/surveys/survey_view_model.dart' as _i4;
 import 'package:fordev/ui/pages/surveys/surveys_presenter.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -25,6 +26,11 @@ class SurveysPresenterMock extends _i1.Mock implements _i2.SurveysPresenter {
   _i3.Stream<bool> get isLoadingStream =>
       (super.noSuchMethod(Invocation.getter(#isLoadingStream),
           returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
+  @override
+  _i3.Stream<List<_i4.SurveyViewModel>> get loadSurveyStream =>
+      (super.noSuchMethod(Invocation.getter(#loadSurveyStream),
+              returnValue: Stream<List<_i4.SurveyViewModel>>.empty())
+          as _i3.Stream<List<_i4.SurveyViewModel>>);
   @override
   _i3.Future<void> loadData() =>
       (super.noSuchMethod(Invocation.method(#loadData, []),
