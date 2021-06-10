@@ -3,9 +3,23 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import '../../../ui/helpers/helpers.dart';
 import 'components/components.dart';
+import 'surveys_presenter.dart';
 
-class SurveysPage extends StatelessWidget {
-  const SurveysPage({Key? key}) : super(key: key);
+class SurveysPage extends StatefulWidget {
+  final SurveysPresenter? presenter;
+
+  const SurveysPage(this.presenter, {Key? key}) : super(key: key);
+
+  @override
+  _SurveysPageState createState() => _SurveysPageState();
+}
+
+class _SurveysPageState extends State<SurveysPage> {
+  @override
+  void initState() {
+    widget.presenter!.loadData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
