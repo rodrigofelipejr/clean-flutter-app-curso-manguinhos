@@ -22,7 +22,7 @@ class SurveyItem extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: AppColors.kGreyShadow,
+              color: viewModel.didAnswer ? AppColors.kGreyShadow : AppColors.kPrimaryColorDark,
               offset: const Offset(0, 4.0),
               blurRadius: 8.0,
               spreadRadius: -2.0,
@@ -32,7 +32,7 @@ class SurveyItem extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              '20 ago 2020',
+              viewModel.date,
               style: AppTextStyles.kSurveysDate,
             ),
             Text(
