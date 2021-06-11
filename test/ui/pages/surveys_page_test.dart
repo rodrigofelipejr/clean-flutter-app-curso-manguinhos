@@ -19,21 +19,21 @@ main() {
   late SurveysPresenterMock presenter;
 
   late StreamController<bool> isLoadingController;
-  late StreamController<List<SurveyViewModel>> loadSurveysController;
+  late StreamController<List<SurveyViewModel>> surveysController;
 
   void initStreams() {
     isLoadingController = StreamController<bool>();
-    loadSurveysController = StreamController<List<SurveyViewModel>>();
+    surveysController = StreamController<List<SurveyViewModel>>();
   }
 
   void mockStreams() {
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
-    when(presenter.loadSurveyStream).thenAnswer((_) => loadSurveysController.stream);
+    when(presenter.surveyStream).thenAnswer((_) => surveysController.stream);
   }
 
   void closeStreams() {
     isLoadingController.close();
-    loadSurveysController.close();
+    surveysController.close();
   }
 
   tearDown(() {
@@ -80,10 +80,10 @@ main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
-  testWidgets('Should present error if loadSurveysStream fails', (WidgetTester tester) async {
+  testWidgets('Should present error if surveysController fails', (WidgetTester tester) async {
     await loadPage(tester);
 
-    loadSurveysController.addError(UiError.unexpected.description);
+    surveysController.addError(UiError.unexpected.description);
     await tester.pump();
 
     expect(find.text(R.strings.msgUnexpectedError), findsOneWidget);
@@ -91,10 +91,10 @@ main() {
     expect(find.text('Question 1'), findsNothing);
   });
 
-  testWidgets('Should present list loadSurveysStream success', (WidgetTester tester) async {
+  testWidgets('Should present list surveysController success', (WidgetTester tester) async {
     await loadPage(tester);
 
-    loadSurveysController.add(makeSurveys());
+    surveysController.add(makeSurveys());
     await tester.pump();
 
     expect(find.text(R.strings.msgUnexpectedError), findsNothing);
@@ -110,7 +110,7 @@ main() {
   testWidgets('Should call LoadSurveys on reload button click', (WidgetTester tester) async {
     await loadPage(tester);
 
-    loadSurveysController.addError(UiError.unexpected.description);
+    surveysController.addError(UiError.unexpected.description);
     await tester.pump();
     await tester.tap(find.text(R.strings.reload));
 

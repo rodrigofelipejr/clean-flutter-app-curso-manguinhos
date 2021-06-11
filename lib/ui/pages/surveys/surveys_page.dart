@@ -40,7 +40,7 @@ class _SurveysPageState extends State<SurveysPage> {
           });
 
           return StreamBuilder<List<SurveyViewModel>>(
-              stream: widget.presenter!.loadSurveyStream,
+              stream: widget.presenter!.surveyStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Column(

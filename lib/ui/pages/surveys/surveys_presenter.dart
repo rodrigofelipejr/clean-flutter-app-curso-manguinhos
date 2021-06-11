@@ -2,6 +2,6 @@ import 'survey_view_model.dart';
 
 abstract class SurveysPresenter {
   Stream<bool> get isLoadingStream;
-  Stream<List<SurveyViewModel>> get loadSurveyStream;
+  Stream<List<SurveyViewModel>> get surveyStream;
   Future<void> loadData();
 }
