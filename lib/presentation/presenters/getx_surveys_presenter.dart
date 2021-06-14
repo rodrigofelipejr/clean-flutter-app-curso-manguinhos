@@ -1,12 +1,12 @@
-import 'package:fordev/domain/helpers/helpers.dart';
-import 'package:fordev/ui/helpers/helpers.dart';
-import 'package:fordev/ui/pages/pages.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'package:fordev/domain/usecases/usecases.dart';
+import '../../domain/helpers/helpers.dart';
+import '../../domain/usecases/usecases.dart';
+import '../../ui/helpers/helpers.dart';
+import '../../ui/pages/pages.dart';
 
-class GetXSurveysPresenter {
+class GetXSurveysPresenter implements SurveysPresenter {
   final LoadSurveys loadSurveys;
 
   GetXSurveysPresenter({required this.loadSurveys});
