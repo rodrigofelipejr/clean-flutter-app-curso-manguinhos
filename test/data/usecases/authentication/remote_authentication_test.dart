@@ -11,7 +11,7 @@ import 'package:fordev/data/usecases/usecases.dart';
 
 import 'remote_authentication_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<HttpClient<Map>>(as: #HttpClientMock)])
+@GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
 main() {
   late RemoteAuthentication sut;
   late HttpClientMock httpClient;

@@ -1,12 +1,11 @@
-import 'package:fordev/data/models/models.dart';
-import 'package:fordev/domain/entities/entities.dart';
-import 'package:fordev/domain/helpers/helpers.dart';
-import 'package:fordev/domain/usecases/usecases.dart';
-
+import '../../../data/models/models.dart';
 import '../../../data/http/http.dart';
+import '../../../domain/entities/entities.dart';
+import '../../../domain/helpers/helpers.dart';
+import '../../../domain/usecases/usecases.dart';
 
 class RemoteLoadSurveys implements LoadSurveys {
-  final HttpClient<List<Map>> httpClient;
+  final HttpClient httpClient;
   final String url;
 
   RemoteLoadSurveys({required this.httpClient, required this.url});

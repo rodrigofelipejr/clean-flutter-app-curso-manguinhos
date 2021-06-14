@@ -1,5 +1,5 @@
-abstract class HttpClient<T> {
-  Future<T> request({
+abstract class HttpClient {
+  Future request({
     required String url,
     required String method,
     Map body,

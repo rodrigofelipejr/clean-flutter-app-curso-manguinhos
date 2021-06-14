@@ -16,19 +16,16 @@ import 'package:mockito/mockito.dart' as _i1;
 /// A class which mocks [HttpClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class HttpClientMock extends _i1.Mock
-    implements _i2.HttpClient<List<Map<dynamic, dynamic>>> {
+class HttpClientMock extends _i1.Mock implements _i2.HttpClient {
   HttpClientMock() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<Map<dynamic, dynamic>>> request(
+  _i3.Future<dynamic> request(
           {String? url, String? method, Map<dynamic, dynamic>? body}) =>
       (super.noSuchMethod(
-              Invocation.method(
-                  #request, [], {#url: url, #method: method, #body: body}),
-              returnValue: Future<List<Map<dynamic, dynamic>>>.value(
-                  <Map<dynamic, dynamic>>[]))
-          as _i3.Future<List<Map<dynamic, dynamic>>>);
+          Invocation.method(
+              #request, [], {#url: url, #method: method, #body: body}),
+          returnValue: Future<dynamic>.value()) as _i3.Future<dynamic>);
 }

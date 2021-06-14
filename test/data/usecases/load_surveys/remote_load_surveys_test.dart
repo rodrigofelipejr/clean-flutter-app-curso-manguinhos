@@ -10,7 +10,7 @@ import 'package:fordev/data/usecases/usecases.dart';
 
 import 'remote_load_surveys_test.mocks.dart';
 
-@GenerateMocks([], customMocks: [MockSpec<HttpClient<List<Map>>>(as: #HttpClientMock)])
+@GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
 void main() {
   late RemoteLoadSurveys sut;
   late HttpClientMock httpClient;
