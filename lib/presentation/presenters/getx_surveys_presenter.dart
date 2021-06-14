@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import 'package:fordev/domain/usecases/usecases.dart';
 
-class GetXSurveysPresenter {
+class GetXSurveysPresenter implements SurveysPresenter {
   final LoadSurveys loadSurveys;
 
   GetXSurveysPresenter({required this.loadSurveys});
