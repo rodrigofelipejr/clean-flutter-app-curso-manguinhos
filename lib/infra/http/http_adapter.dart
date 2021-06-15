@@ -27,25 +27,28 @@ class HttpAdapter implements HttpClient {
     }
   }
 
-  Future<Map> request({
+  Future<dynamic> request({
     required String url,
     required String method,
     Map? body,
+    Map? headers,
   }) async {
-    final headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-    };
+    final Map<String, String> defaultHeaders = headers?.cast<String, String>() ?? {}
+      ..addAll({
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      });
+
     final jsonBody = body != null ? jsonEncode(body) : null;
     var response = http.Response('', 500);
 
     try {
       switch (method) {
         case 'post':
-          response = await client.post(Uri.parse(url), headers: headers, body: jsonBody);
+          response = await client.post(Uri.parse(url), headers: defaultHeaders, body: jsonBody);
           break;
         case 'get':
-          response = await client.get(Uri.parse(url), headers: headers);
+          response = await client.get(Uri.parse(url), headers: defaultHeaders);
           break;
         default:
       }
