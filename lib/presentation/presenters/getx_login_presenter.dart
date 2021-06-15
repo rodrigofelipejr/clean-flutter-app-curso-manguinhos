@@ -92,6 +92,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
           _mainError.value = UiError.unexpected;
           break;
       }
+    } finally {
       _isLoading.value = false;
     }
   }

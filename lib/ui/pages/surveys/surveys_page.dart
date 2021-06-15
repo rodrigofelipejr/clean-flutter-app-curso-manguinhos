@@ -7,32 +7,21 @@ import '../../helpers/helpers.dart';
 import 'components/components.dart';
 import 'surveys_presenter.dart';
 
-class SurveysPage extends StatefulWidget {
-  final SurveysPresenter? presenter;
+class SurveysPage extends StatelessWidget {
+  final SurveysPresenter presenter;
 
   const SurveysPage(this.presenter, {Key? key}) : super(key: key);
 
   @override
-  _SurveysPageState createState() => _SurveysPageState();
-}
-
-class _SurveysPageState extends State<SurveysPage> {
-  @override
-  void initState() {
-    widget.presenter!.loadData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    presenter.loadData();
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(R.strings.surveys),
-      ),
+      appBar: AppBar(title: Text(R.strings.surveys)),
       body: Builder(
         builder: (context) {
-          widget.presenter!.isLoadingStream.listen((isLoading) {
-            if (isLoading) {
+          presenter.isLoadingStream.listen((isLoading) {
+            if (isLoading == true) {
               showLoading(context);
             } else {
               hideLoading(context);
@@ -40,14 +29,14 @@ class _SurveysPageState extends State<SurveysPage> {
           });
 
           return StreamBuilder<List<SurveyViewModel>>(
-              stream: widget.presenter!.surveysStream,
+              stream: presenter.surveysStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Column(
                     children: [
                       Text(snapshot.error.toString()),
                       ElevatedButton(
-                        onPressed: widget.presenter!.loadData,
+                        onPressed: presenter.loadData,
                         child: Text(R.strings.reload),
                       ),
                     ],
