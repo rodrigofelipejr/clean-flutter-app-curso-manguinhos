@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:fordev/main/decorators/decorators.dart';
+import 'package:fordev/data/http/http.dart';
 import 'package:fordev/data/http/http_client.dart';
 import 'package:fordev/data/cache/cache.dart';
 
@@ -23,14 +24,20 @@ main() {
   late Map body;
   late String httpResponse;
 
+  PostExpectation mockTokenCall() => when(fetchSecureCacheStorage.fetchSecure(any));
+
   void mockToken() {
     token = faker.guid.guid();
-    when(fetchSecureCacheStorage.fetchSecure(any)).thenAnswer((_) async => token);
+    mockTokenCall().thenAnswer((_) async => token);
+  }
+
+  void mockTokenError() {
+    token = faker.guid.guid();
+    mockTokenCall().thenThrow(Exception());
   }
 
   void mockHttpResponse() {
     httpResponse = faker.randomGenerator.string(50);
-    print('httpResponse: $httpResponse');
     when(
       httpClient.request(
         url: anyNamed('url'),
@@ -80,11 +87,10 @@ main() {
     final response = await sut.request(url: url, method: method, body: body);
     expect(response, httpResponse);
   });
+
+  test('Should throw ForbiddenError if FetchSecureCacheStorage throws', () async {
+    mockTokenError();
+    final feature = sut.request(url: url, method: method, body: body);
+    expect(feature, throwsA(HttpError.forbidden));
+  });
 }
-
-
-/*
-ensure Decorator call FetchSecureCacheStorage with correct key
-ensure Decorator adds new header if header is null
-ensure Decorator returns same result as decoratee
-*/
