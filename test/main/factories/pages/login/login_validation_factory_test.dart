@@ -3,7 +3,7 @@ import 'package:fordev/main/factories/pages/pages.dart';
 import 'package:fordev/validation/validators/validators.dart';
 
 main() {
-  test('Should return the correct validations', () {
+  test('Should return the correct validations - Login', () {
     final validations = makeLoginValidations();
     expect(validations, [
       RequiredFieldValidation('email'),
