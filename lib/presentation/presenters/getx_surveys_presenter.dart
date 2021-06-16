@@ -6,7 +6,7 @@ import '../../ui/helpers/helpers.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 
-class GetXSurveysPresenter implements SurveysPresenter {
+class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
   final LoadSurveys loadSurveys;
 
   GetXSurveysPresenter({required this.loadSurveys});
@@ -30,6 +30,7 @@ class GetXSurveysPresenter implements SurveysPresenter {
               ))
           .toList();
     } on DomainError {
+      //FIXME - Tem um bug bem aqui => gett
       _surveys.subject.addError(UiError.unexpected.description);
     } finally {
       _isLoading.value = false;
