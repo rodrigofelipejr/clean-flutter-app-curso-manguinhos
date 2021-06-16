@@ -9,7 +9,7 @@ class HttpAdapter implements HttpClient {
 
   HttpAdapter(this.client);
 
-  Map _handleResponse(http.Response response) {
+  dynamic _handleResponse(http.Response response) {
     if (response.statusCode == 200) {
       return response.body.isEmpty ? {} : jsonDecode(response.body);
     } else if (response.statusCode == 204) {
