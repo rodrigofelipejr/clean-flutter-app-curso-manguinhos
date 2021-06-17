@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/data/cache/cache.dart';
 import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/entities/survey_entity.dart';
 import 'package:fordev/data/models/models.dart';
@@ -23,10 +24,6 @@ class LocalLoadSurveys {
       throw DomainError.unexpected;
     }
   }
-}
-
-abstract class FetchCacheStorage {
-  Future<dynamic> fetch(String key);
 }
 
 @GenerateMocks([], customMocks: [
