@@ -43,24 +43,28 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
   Stream<bool> get isFormValidStream => _isFormValid.subject.stream;
   Stream<bool> get isLoadingStream => _isLoading.subject.stream;
 
+  @override
   void validateName(String name) {
     _name = name;
     _nameError.value = _validateField('name');
     _validateForm();
   }
 
+  @override
   void validateEmail(String email) {
     _email = email;
     _emailError.value = _validateField('email');
     _validateForm();
   }
 
+  @override
   void validatePassword(String password) {
     _password = password;
     _passwordError.value = _validateField('password');
     _validateForm();
   }
 
+  @override
   void validatePasswordConfirmation(String passwordConfirmation) {
     _passwordConfirmation = passwordConfirmation;
     _passwordConfirmationError.value = _validateField('passwordConfirmation');
@@ -99,6 +103,7 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
         _passwordConfirmationError.value == null;
   }
 
+  @override
   Future<void> signUp() async {
     try {
       _isLoading.value = true;

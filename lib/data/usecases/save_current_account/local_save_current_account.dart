@@ -7,6 +7,7 @@ class LocalSaveCurrentAccount implements SaveCurrentAccount {
   final SaveSecureCacheStorage saveSecureCacheStorage;
 
   LocalSaveCurrentAccount({required this.saveSecureCacheStorage});
+
   @override
   Future<void> save(AccountEntity account) async {
     try {

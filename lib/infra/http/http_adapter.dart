@@ -27,6 +27,7 @@ class HttpAdapter implements HttpClient {
     }
   }
 
+  @override
   Future<dynamic> request({
     required String url,
     required String method,

@@ -17,6 +17,7 @@ class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
   Stream<bool> get isLoadingStream => _isLoading.subject.stream;
   Stream<List<SurveyViewModel>> get surveysStream => _surveys.subject.stream;
 
+  @override
   Future<void> loadData() async {
     try {
       _isLoading.value = true;

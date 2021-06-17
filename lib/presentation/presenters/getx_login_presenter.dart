@@ -36,12 +36,14 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   Stream<bool> get isFormValidStream => _isFormValid.subject.stream;
   Stream<bool> get isLoadingStream => _isLoading.subject.stream;
 
+  @override
   void validateEmail(String email) {
     _email = email;
     _emailError.value = _validateField('email');
     _validateForm();
   }
 
+  @override
   void validatePassword(String password) {
     _password = password;
     _passwordError.value = _validateField('password');
@@ -72,6 +74,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
         _emailError.value == null && _passwordError.value == null && _email != null && _password != null;
   }
 
+  @override
   Future<void> auth() async {
     try {
       _mainError.value = null;
