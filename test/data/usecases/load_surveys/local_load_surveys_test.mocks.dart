@@ -4,7 +4,7 @@
 
 import 'dart:async' as _i3;
 
-import 'package:fordev/data/cache/fetch_cache_storage.dart' as _i2;
+import 'package:fordev/data/cache/cache_storage.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -13,11 +13,11 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-/// A class which mocks [FetchCacheStorage].
+/// A class which mocks [CacheStorage].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class FetchCacheStorageMock extends _i1.Mock implements _i2.FetchCacheStorage {
-  FetchCacheStorageMock() {
+class CacheStorageMock extends _i1.Mock implements _i2.CacheStorage {
+  CacheStorageMock() {
     _i1.throwOnMissingStub(this);
   }
 

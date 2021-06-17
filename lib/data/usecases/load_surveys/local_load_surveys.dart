@@ -5,14 +5,14 @@ import '../../../data/models/models.dart';
 import '../../../data/cache/cache.dart';
 
 class LocalLoadSurveys implements LoadSurveys {
-  final FetchCacheStorage fetchCacheStorage;
+  final CacheStorage cacheStorage;
 
-  LocalLoadSurveys({required this.fetchCacheStorage});
+  LocalLoadSurveys({required this.cacheStorage});
 
   @override
   Future<List<SurveyEntity>> load() async {
     try {
-      final data = await fetchCacheStorage.fetch('surveys');
+      final data = await cacheStorage.fetch('surveys');
       if (data?.isEmpty != false) throw Exception();
       return data.map<SurveyEntity>((json) => LocalSurveyModel.fromJson(json).toEntity()).toList();
     } catch (e) {
