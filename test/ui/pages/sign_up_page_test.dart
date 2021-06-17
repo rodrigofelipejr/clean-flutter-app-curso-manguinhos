@@ -261,7 +261,7 @@ main() {
     expect(find.text('fake page'), findsOneWidget);
   });
 
-  testWidgets('Should not change page', (WidgetTester tester) async {
+  testWidgets('Should not change page - SignUp', (WidgetTester tester) async {
     await loadPage(tester);
 
     navigateToController.add('');
