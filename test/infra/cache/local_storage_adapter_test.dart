@@ -47,4 +47,18 @@ main() {
       expect(future, throwsA(TypeMatcher<Exception>()));
     });
   });
+
+  group('delete', () {
+    setUp(() {
+      localStorage = LocalStorageMock();
+      sut = LocalStorageAdapter(localStorage);
+      key = faker.randomGenerator.string(5);
+      value = faker.randomGenerator.string(50);
+    });
+
+    test('Should call localStorage with correct values', () async {
+      await sut.delete(key);
+      verify(localStorage.deleteItem(key)).called(1);
+    });
+  });
 }
