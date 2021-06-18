@@ -23,6 +23,10 @@ class _FakeValueNotifier<T> extends _i1.Fake implements _i2.ValueNotifier<T> {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class LocalStorageMock extends _i1.Mock implements _i3.LocalStorage {
+  LocalStorageMock() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i2.ValueNotifier<Error> get onError => (super.noSuchMethod(
       Invocation.getter(#onError),
