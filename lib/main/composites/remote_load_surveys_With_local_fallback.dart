@@ -1,7 +1,7 @@
-import 'package:fordev/data/usecases/usecases.dart';
-import 'package:fordev/domain/entities/survey_entity.dart';
-import 'package:fordev/domain/helpers/helpers.dart';
-import 'package:fordev/domain/usecases/usecases.dart';
+import '../../data/usecases/usecases.dart';
+import '../../domain/entities/survey_entity.dart';
+import '../../domain/helpers/helpers.dart';
+import '../../domain/usecases/usecases.dart';
 
 class RemoteLoadSurveysWithLocalFallback implements LoadSurveys {
   final RemoteLoadSurveys remoteLoadSurveys;
