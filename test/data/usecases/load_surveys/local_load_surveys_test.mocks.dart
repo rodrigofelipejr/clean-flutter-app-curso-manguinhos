@@ -17,6 +17,10 @@ import 'package:mockito/mockito.dart' as _i1;
 ///
 /// See the documentation for Mockito's code generation for more information.
 class CacheStorageMock extends _i1.Mock implements _i2.CacheStorage {
+  CacheStorageMock() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i3.Future<dynamic> fetch(String? key) =>
       (super.noSuchMethod(Invocation.method(#fetch, [key]),

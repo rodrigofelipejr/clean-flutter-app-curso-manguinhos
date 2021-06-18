@@ -11,7 +11,7 @@ import 'package:fordev/data/cache/cache.dart';
 import 'local_load_surveys_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
-  MockSpec<CacheStorage>(as: #CacheStorageMock, returnNullOnMissingStub: true),
+  MockSpec<CacheStorage>(as: #CacheStorageMock),
 ])
 void main() {
   group('load', () {
@@ -198,7 +198,7 @@ void main() {
           SurveyEntity(
             id: faker.guid.guid(),
             question: faker.randomGenerator.string(10),
-            dateTime: DateTime.utc(2021, 5, 1),
+            dateTime: DateTime.utc(2021, 6, 17),
             didAnswer: true,
           ),
         ];
@@ -218,20 +218,20 @@ void main() {
         {
           'id': surveys[0].id,
           'question': surveys[0].question,
-          'dateTime': '2021-06-16T00:00:000Z',
+          'date': '2021-06-16T00:00:00.000Z',
           'didAnswer': 'false',
         },
         {
           'id': surveys[1].id,
           'question': surveys[1].question,
-          'dateTime': '2021-05-01T00:00:000Z',
+          'date': '2021-06-17T00:00:00.000Z',
           'didAnswer': 'true',
         },
       ];
 
       await sut.save(surveys);
       verify(cacheStorage.save(key: 'surveys', value: list)).called(1);
-    }, skip: true);
+    });
 
     test('Should throw UnexpectedError if save throws', () async {
       mockSaveError();
