@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:fordev/presentation/dependencies/validation.dart';
-import 'package:fordev/validation/dependencies/field_validation.dart';
+
+import '../../presentation/dependencies/validation.dart';
+import '../../validation/dependencies/field_validation.dart';
 
 class CompareFieldsValidation extends Equatable implements FieldValidation {
   final String field;

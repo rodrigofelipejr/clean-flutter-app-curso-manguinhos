@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fordev/ui/constants/constants.dart';
 import 'package:get/get.dart';
 
+import '../../../ui/constants/constants.dart';
 import 'splash.dart';
 
 class SplashPage extends StatelessWidget {

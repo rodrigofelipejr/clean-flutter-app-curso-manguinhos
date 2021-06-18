@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:fordev/presentation/dependencies/validation.dart';
 
+import '../../presentation/dependencies/validation.dart';
 import '../dependencies/dependencies.dart';
 
 class EmailValidation extends Equatable implements FieldValidation {

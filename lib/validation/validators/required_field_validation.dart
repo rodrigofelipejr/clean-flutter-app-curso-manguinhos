@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:fordev/presentation/dependencies/dependencies.dart';
 
+import '../../presentation/dependencies/dependencies.dart';
 import '../dependencies/dependencies.dart';
 
 class RequiredFieldValidation extends Equatable implements FieldValidation {

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:fordev/data/http/http.dart';
+import '../../data/http/http.dart';
 
 class HttpAdapter implements HttpClient {
   final http.Client client;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fordev/ui/constants/constants.dart';
+
+import '../../ui/constants/constants.dart';
 
 ThemeData appTheme() {
   return ThemeData(
