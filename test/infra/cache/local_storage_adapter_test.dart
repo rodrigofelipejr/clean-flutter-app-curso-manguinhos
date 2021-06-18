@@ -17,6 +17,8 @@ main() {
   late String key;
   late dynamic value;
 
+  void mockDeleteItemError() => when(localStorage.deleteItem(any)).thenThrow(Exception());
+
   setUp(() {
     localStorage = LocalStorageMock();
     sut = LocalStorageAdapter(localStorage);
@@ -28,5 +30,11 @@ main() {
     await sut.save(key: key, value: value);
     verify(localStorage.deleteItem(key)).called(1);
     verify(localStorage.setItem(key, value)).called(1);
+  });
+
+  test('Should throw if deleteItem throws', () async {
+    mockDeleteItemError();
+    final future = sut.save(key: key, value: value);
+    expect(future, throwsA(TypeMatcher<Exception>()));
   });
 }
