@@ -203,6 +203,10 @@ void main() {
           ),
         ];
 
+    PostExpectation mockSaveCall() => when(cacheStorage.save(key: anyNamed('key'), value: anyNamed('value')));
+
+    void mockSaveError() => mockSaveCall().thenThrow(Exception());
+
     setUp(() {
       cacheStorage = CacheStorageMock();
       sut = LocalLoadSurveys(cacheStorage: cacheStorage);
@@ -228,5 +232,11 @@ void main() {
       await sut.save(surveys);
       verify(cacheStorage.save(key: 'surveys', value: list)).called(1);
     }, skip: true);
+
+    test('Should throw UnexpectedError if save throws', () async {
+      mockSaveError();
+      final future = sut.save(surveys);
+      expect(future, throwsA(DomainError.unexpected));
+    });
   });
 }
