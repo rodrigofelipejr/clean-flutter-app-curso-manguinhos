@@ -9,7 +9,7 @@ import 'package:fordev/infra/cache/cache.dart';
 import 'local_storage_adapter_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
-  MockSpec<LocalStorage>(as: #LocalStorageMock),
+  MockSpec<LocalStorage>(as: #LocalStorageMock, returnNullOnMissingStub: true),
 ])
 main() {
   late LocalStorageAdapter sut;
@@ -65,6 +65,20 @@ main() {
       mockDeleteError();
       final future = sut.delete(key);
       expect(future, throwsA(TypeMatcher<Exception>()));
+    });
+  });
+
+  group('fetch', () {
+    setUp(() {
+      localStorage = LocalStorageMock();
+      sut = LocalStorageAdapter(localStorage);
+      key = faker.randomGenerator.string(5);
+      value = faker.randomGenerator.string(50);
+    });
+
+    test('Should call localStorage with correct values', () async {
+      await sut.fetch(key);
+      verify(localStorage.getItem(key)).called(1);
     });
   });
 }
