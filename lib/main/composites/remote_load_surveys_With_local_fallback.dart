@@ -1,5 +1,6 @@
 import 'package:fordev/data/usecases/usecases.dart';
 import 'package:fordev/domain/entities/survey_entity.dart';
+import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
 
 class RemoteLoadSurveysWithLocalFallback implements LoadSurveys {
@@ -13,8 +14,18 @@ class RemoteLoadSurveysWithLocalFallback implements LoadSurveys {
 
   @override
   Future<List<SurveyEntity>> load() async {
-    final surveys = await remoteLoadSurveys.load();
-    await localLoadSurveys.save(surveys);
-    return surveys;
+    late List<SurveyEntity> surveys;
+    try {
+      surveys = await remoteLoadSurveys.load();
+      await localLoadSurveys.save(surveys);
+      return surveys;
+    } catch (error) {
+      //NOTE - Em domain layer já tratamos para sempre retornar um DomainError, mas por precaução
+      if (error == DomainError.accessDenied) rethrow;
+
+      await localLoadSurveys.validate();
+      surveys = await localLoadSurveys.load();
+      return surveys;
+    }
   }
 }

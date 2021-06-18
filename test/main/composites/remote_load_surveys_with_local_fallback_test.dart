@@ -1,9 +1,9 @@
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/entities/survey_entity.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 import 'package:fordev/main/composites/composites.dart';
@@ -11,8 +11,8 @@ import 'package:fordev/main/composites/composites.dart';
 import 'remote_load_surveys_with_local_fallback_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
-  MockSpec<RemoteLoadSurveys>(as: #RemoteLoadSurveysMock, returnNullOnMissingStub: true),
-  MockSpec<LocalLoadSurveys>(as: #LocalLoadSurveysMock, returnNullOnMissingStub: true),
+  MockSpec<RemoteLoadSurveys>(as: #RemoteLoadSurveysMock),
+  MockSpec<LocalLoadSurveys>(as: #LocalLoadSurveysMock),
 ])
 main() {
   late RemoteLoadSurveysWithLocalFallback sut;
@@ -70,5 +70,12 @@ main() {
     mockRemoteLoadError(DomainError.accessDenied);
     final future = sut.load();
     expect(future, throwsA(DomainError.accessDenied));
+  });
+
+  test('Should call local fetch on remote error', () async {
+    mockRemoteLoadError(DomainError.unexpected);
+    await sut.load();
+    verify(local.validate()).called(1);
+    verify(local.load()).called(1);
   });
 }
