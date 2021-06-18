@@ -76,9 +76,15 @@ main() {
     verify(fetchSecureCacheStorage.fetchSecure('token')).called(1);
   });
 
+  //FIXME - not working
   test('Should call decoratee with access token on header', () async {
     await sut.request(url: url, method: method, body: body);
-    verify(httpClient.request(url: url, method: method, body: body, headers: {'x-access-token': token}));
+    verify(httpClient.request(
+      url: url,
+      method: method,
+      body: body,
+      headers: {'x-access-token': token},
+    )).called(1);
 
     await sut.request(url: url, method: method, body: body, headers: {'any_header': 'any_value'});
     verify(httpClient.request(

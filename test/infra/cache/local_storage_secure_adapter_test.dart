@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 
 import 'package:fordev/infra/cache/cache.dart';
 
-import 'local_storage_adapter_test.mocks.dart';
+import 'local_storage_secure_adapter_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
   MockSpec<FlutterSecureStorage>(as: #FlutterSecureStorageMock, returnNullOnMissingStub: true),
@@ -15,13 +15,13 @@ main() {
   late String key;
   late String value;
   late FlutterSecureStorageMock secureStorage;
-  late LocalStorageAdapter sut;
+  late LocalStorageSecureAdapter sut;
 
   setUp(() {
     key = faker.lorem.word();
     value = faker.guid.guid();
     secureStorage = FlutterSecureStorageMock();
-    sut = LocalStorageAdapter(secureStorage: secureStorage);
+    sut = LocalStorageSecureAdapter(secureStorage: secureStorage);
   });
 
   group('saveSecure', () {
