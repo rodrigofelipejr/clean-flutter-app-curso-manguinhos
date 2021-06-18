@@ -67,7 +67,7 @@ main() {
     await tester.pumpWidget(loginPage);
   }
 
-  //ANCHOR - Roda sempre ao fim dos testes
+  //NOTE - Roda sempre ao fim dos testes
   tearDown(() {
     closeStreams();
   });
@@ -227,7 +227,7 @@ main() {
     await loadPage(tester);
 
     navigateToController.add(AppRoutes.anyRoute);
-    //ANCHOR - como a troca de rota demora um pouco mais  para acontecer é utilizado o pumpAndSettle
+    //NOTE - como a troca de rota demora um pouco mais  para acontecer é utilizado o pumpAndSettle
     await tester.pumpAndSettle();
 
     expect(Get.currentRoute, AppRoutes.anyRoute);

@@ -75,7 +75,7 @@ main() {
     await tester.pumpWidget(signUpPage);
   }
 
-  //ANCHOR - Roda sempre ao fim dos testes
+  //NOTE - Roda sempre ao fim dos testes
   tearDown(() {
     closeStreams();
   });

@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 
 import 'package:fordev/presentation/dependencies/dependencies.dart';
 import 'package:fordev/validation/dependencies/dependencies.dart';
-import 'package:fordev/validation/validators/validators.dart';
+import 'package:fordev/main/composites/composites.dart';
 
 import 'validation_composite_test.mocks.dart';
 

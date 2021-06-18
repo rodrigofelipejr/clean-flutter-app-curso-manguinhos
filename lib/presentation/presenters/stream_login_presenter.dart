@@ -41,7 +41,7 @@ class StreamLoginPresenter implements LoginPresenterStream {
 
   var _state = LoginState();
 
-  //ANCHOR - O distinct não permite que sejam emitidos valores iguais
+  //NOTE - O distinct não permite que sejam emitidos valores iguais
   Stream<UiError?>? get emailErrorStream => _controller?.stream.map((state) => state.emailError).distinct();
   Stream<UiError?>? get passwordErrorStream => _controller?.stream.map((state) => state.passwordError).distinct();
   Stream<UiError?>? get mainErrorStream => _controller?.stream.map((state) => state.mainError).distinct();

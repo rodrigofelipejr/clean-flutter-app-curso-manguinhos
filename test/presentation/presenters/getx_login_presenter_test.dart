@@ -129,7 +129,7 @@ void main() {
   test('Should enable form button if any field is invalid', () async {
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
     sut.validateEmail(email);
-    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+    await Future.delayed(Duration.zero); //NOTE - Hack for stream
     sut.validatePassword(password);
   });
 

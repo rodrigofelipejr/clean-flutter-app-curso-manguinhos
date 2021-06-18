@@ -1,7 +1,7 @@
-import '../../../builders/validation_builder.dart';
+import '../../../../main/composites/composites.dart';
+import '../../../../main/builders/validation_builder.dart';
 import '../../../../validation/dependencies/dependencies.dart';
 import '../../../../presentation/dependencies/dependencies.dart';
-import '../../../../validation/validators/validators.dart';
 
 Validation makeSignUpValidation() => ValidationComposite(makeSignUpValidations());
 

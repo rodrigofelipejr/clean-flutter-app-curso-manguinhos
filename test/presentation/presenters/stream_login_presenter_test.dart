@@ -113,7 +113,7 @@ void main() {
   test('Should emit an valid form if no fields are invalid', () async {
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
     sut.validateEmail(email);
-    await Future.delayed(Duration.zero); //ANCHOR - Hack for stream
+    await Future.delayed(Duration.zero); //NOTE - Hack for stream
     sut.validatePassword(password);
   });
 
@@ -137,7 +137,8 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    // expectLater(sut.isLoadingStream, emitsInOrder([true, false])); //ANCHOR - Por conta do try catch da erro?
+    //NOTE - Por conta do try catch da erro?
+    // expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     expectLater(sut.isLoadingStream, emits(false));
     sut.mainErrorStream!.listen(expectAsync1((error) => expect(error, UiError.invalidCredentials)));
 

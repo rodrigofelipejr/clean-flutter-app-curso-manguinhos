@@ -20,7 +20,6 @@ class App extends StatelessWidget {
         GetPage(name: AppRoutes.initial, page: makeSplashPage, transition: Transition.fade),
         GetPage(name: AppRoutes.login, page: makeLoginPage, transition: Transition.fadeIn),
         GetPage(name: AppRoutes.singUp, page: makeSignUpPage),
-        //ANCHOR - remove
         GetPage(name: AppRoutes.surveys, page: makeSurveysPage, transition: Transition.fadeIn),
       ],
     );

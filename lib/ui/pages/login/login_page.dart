@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
           presenter.navigateToStream.listen((page) {
             //NOTE - diferente de null e vazio
             if (page?.isNotEmpty == true) {
-              //ANCHOR - Get.offAllNamed => remove todas as telas e insere uma nova na pilha
+              //NOTE - Get.offAllNamed => remove todas as telas e insere uma nova na pilha
               Get.offAllNamed(page!);
             }
           });

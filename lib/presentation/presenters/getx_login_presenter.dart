@@ -82,7 +82,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
       final account = await authentication.auth(params: AuthenticationParams(email: _email!, secret: _password!));
       await saveCurrentAccount.save(account);
       /** 
-       * ANCHOR - para que o presentation fique livre de implementação do flutter, a responsabilidade de navegação 
+       * NOTE - para que o presentation fique livre de implementação do flutter, a responsabilidade de navegação 
        * não vai ficar aqui dentro, e sim dentro da UI 
        */
       _navigateTo.value = AppRoutes.surveys;
