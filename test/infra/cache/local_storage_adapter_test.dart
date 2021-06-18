@@ -17,32 +17,34 @@ main() {
   late String key;
   late dynamic value;
 
-  void mockDeleteItemError() => when(localStorage.deleteItem(any)).thenThrow(Exception());
+  void mockDeleteError() => when(localStorage.deleteItem(any)).thenThrow(Exception());
 
-  void mockSetItemError() => when(localStorage.setItem(any, any)).thenThrow(Exception());
+  void mockSaveError() => when(localStorage.setItem(any, any)).thenThrow(Exception());
 
-  setUp(() {
-    localStorage = LocalStorageMock();
-    sut = LocalStorageAdapter(localStorage);
-    key = faker.randomGenerator.string(5);
-    value = faker.randomGenerator.string(50);
-  });
+  group('save', () {
+    setUp(() {
+      localStorage = LocalStorageMock();
+      sut = LocalStorageAdapter(localStorage);
+      key = faker.randomGenerator.string(5);
+      value = faker.randomGenerator.string(50);
+    });
 
-  test('Should call localStorage with correct values', () async {
-    await sut.save(key: key, value: value);
-    verify(localStorage.deleteItem(key)).called(1);
-    verify(localStorage.setItem(key, value)).called(1);
-  });
+    test('Should call localStorage with correct values', () async {
+      await sut.save(key: key, value: value);
+      verify(localStorage.deleteItem(key)).called(1);
+      verify(localStorage.setItem(key, value)).called(1);
+    });
 
-  test('Should throw if deleteItem throws', () async {
-    mockDeleteItemError();
-    final future = sut.save(key: key, value: value);
-    expect(future, throwsA(TypeMatcher<Exception>()));
-  });
+    test('Should throw if deleteItem throws', () async {
+      mockDeleteError();
+      final future = sut.save(key: key, value: value);
+      expect(future, throwsA(TypeMatcher<Exception>()));
+    });
 
-  test('Should throw if setItem throws', () async {
-    mockSetItemError();
-    final future = sut.save(key: key, value: value);
-    expect(future, throwsA(TypeMatcher<Exception>()));
+    test('Should throw if setItem throws', () async {
+      mockSaveError();
+      final future = sut.save(key: key, value: value);
+      expect(future, throwsA(TypeMatcher<Exception>()));
+    });
   });
 }
