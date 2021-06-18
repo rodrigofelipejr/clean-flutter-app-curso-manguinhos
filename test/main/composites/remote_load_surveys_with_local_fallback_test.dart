@@ -16,7 +16,7 @@ import 'remote_load_surveys_with_local_fallback_test.mocks.dart';
 main() {
   late RemoteLoadSurveysWithLocalFallback sut;
   late RemoteLoadSurveysMock remote;
-  late List<SurveyEntity> surveys;
+  late List<SurveyEntity> remoteSurveys;
   late LocalLoadSurveysMock local;
 
   List<SurveyEntity> mockSurveys() => [
@@ -35,8 +35,8 @@ main() {
       ];
 
   mockRemoteLoad() {
-    surveys = mockSurveys();
-    when(remote.load()).thenAnswer((_) async => surveys);
+    remoteSurveys = mockSurveys();
+    when(remote.load()).thenAnswer((_) async => remoteSurveys);
   }
 
   setUp(() {
@@ -53,6 +53,11 @@ main() {
 
   test('Should call local save with remote data', () async {
     await sut.load();
-    verify(local.save(surveys)).called(1);
+    verify(local.save(remoteSurveys)).called(1);
+  });
+
+  test('Should return remote data', () async {
+    final surveys = await sut.load();
+    expect(surveys, remoteSurveys);
   });
 }
