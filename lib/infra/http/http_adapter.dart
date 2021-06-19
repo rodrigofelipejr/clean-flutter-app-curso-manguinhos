@@ -46,10 +46,11 @@ class HttpAdapter implements HttpClient {
     try {
       switch (method) {
         case 'post':
-          response = await client.post(Uri.parse(url), headers: defaultHeaders, body: jsonBody);
+          response =
+              await client.post(Uri.parse(url), headers: defaultHeaders, body: jsonBody).timeout(Duration(seconds: 5));
           break;
         case 'get':
-          response = await client.get(Uri.parse(url), headers: defaultHeaders);
+          response = await client.get(Uri.parse(url), headers: defaultHeaders).timeout(Duration(seconds: 5));
           break;
         default:
       }
