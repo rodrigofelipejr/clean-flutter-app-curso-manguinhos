@@ -11,13 +11,17 @@ LoadSurveys makeRemoteLoadSurveys() {
   );
 }
 
-LoadSurveys makeLocalLoadSurveys() => LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter());
+LoadSurveys makeLocalLoadSurveys() {
+  return LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter());
+}
 
 //FIXME - Estranho não pode utilizar o makeLocalLoadSurveys() e makeRemoteLoadSurveys(), uma vez que ambos são LoadSurveys..
-LoadSurveys makeRemoteLoadSurveysWithLocalFallback() => RemoteLoadSurveysWithLocalFallback(
-      remoteLoadSurveys: RemoteLoadSurveys(
-        httpClient: makeAuthorizeHttpClientDecorator(),
-        url: makeApiUrl(AppRoutes.surveys),
-      ),
-      localLoadSurveys: LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter()),
-    );
+LoadSurveys makeRemoteLoadSurveysWithLocalFallback() {
+  return RemoteLoadSurveysWithLocalFallback(
+    remoteLoadSurveys: RemoteLoadSurveys(
+      httpClient: makeAuthorizeHttpClientDecorator(),
+      url: makeApiUrl(AppRoutes.surveys),
+    ),
+    localLoadSurveys: LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter()),
+  );
+}
