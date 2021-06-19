@@ -25,7 +25,7 @@ main() {
   group('save', () {
     setUp(() {
       localStorage = LocalStorageMock();
-      sut = LocalStorageAdapter(localStorage);
+      sut = LocalStorageAdapter(localStorage: localStorage);
       key = faker.randomGenerator.string(5);
       value = faker.randomGenerator.string(50);
     });
@@ -52,7 +52,7 @@ main() {
   group('delete', () {
     setUp(() {
       localStorage = LocalStorageMock();
-      sut = LocalStorageAdapter(localStorage);
+      sut = LocalStorageAdapter(localStorage: localStorage);
       key = faker.randomGenerator.string(5);
       value = faker.randomGenerator.string(50);
     });
@@ -78,7 +78,7 @@ main() {
 
     setUp(() {
       localStorage = LocalStorageMock();
-      sut = LocalStorageAdapter(localStorage);
+      sut = LocalStorageAdapter(localStorage: localStorage);
       key = faker.randomGenerator.string(5);
       value = faker.randomGenerator.string(50);
       result = faker.randomGenerator.string(50);

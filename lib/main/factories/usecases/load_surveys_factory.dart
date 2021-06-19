@@ -1,6 +1,7 @@
 import '../../../shared/routes/routes.dart';
-import '../../../data/usecases/usecases.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../data/usecases/usecases.dart';
+import '../../../main/composites/composites.dart';
 import '../factories.dart';
 
 LoadSurveys makeRemoteLoadSurveys() {
@@ -9,3 +10,14 @@ LoadSurveys makeRemoteLoadSurveys() {
     url: makeApiUrl(AppRoutes.surveys),
   );
 }
+
+LoadSurveys makeLocalLoadSurveys() => LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter());
+
+//FIXME - Estranho não pode utilizar o makeLocalLoadSurveys() e makeRemoteLoadSurveys(), uma vez que ambos são LoadSurveys..
+LoadSurveys makeRemoteLoadSurveysWithLocalFallback() => RemoteLoadSurveysWithLocalFallback(
+      remoteLoadSurveys: RemoteLoadSurveys(
+        httpClient: makeAuthorizeHttpClientDecorator(),
+        url: makeApiUrl(AppRoutes.surveys),
+      ),
+      localLoadSurveys: LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter()),
+    );

@@ -1,4 +1,4 @@
-import '../../entities/entities.dart';
+import '../../../domain/entities/entities.dart';
 
 //NOTE - Implementa regra de negócio
 
