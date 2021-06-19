@@ -22,16 +22,21 @@ main() {
 
   void mockSaveError() => when(localStorage.setItem(any, any)).thenThrow(Exception());
 
+  void mockReadCall() => when(localStorage.ready).thenAnswer((_) async => true);
+
   group('save', () {
     setUp(() {
       localStorage = LocalStorageMock();
       sut = LocalStorageAdapter(localStorage: localStorage);
       key = faker.randomGenerator.string(5);
       value = faker.randomGenerator.string(50);
+      mockReadCall();
     });
 
     test('Should call localStorage with correct values', () async {
       await sut.save(key: key, value: value);
+
+      verify(localStorage.ready).called(1);
       verify(localStorage.deleteItem(key)).called(1);
       verify(localStorage.setItem(key, value)).called(1);
     });
@@ -55,10 +60,13 @@ main() {
       sut = LocalStorageAdapter(localStorage: localStorage);
       key = faker.randomGenerator.string(5);
       value = faker.randomGenerator.string(50);
+      mockReadCall();
     });
 
     test('Should call localStorage with correct values', () async {
       await sut.delete(key);
+
+      verify(localStorage.ready).called(1);
       verify(localStorage.deleteItem(key)).called(1);
     });
 
@@ -72,7 +80,10 @@ main() {
   group('fetch', () {
     PostExpectation mockCall() => when(localStorage.getItem(any));
 
-    void mockFetch() => mockCall().thenAnswer((realInvocation) async => result);
+    void mockFetch() {
+      result = faker.randomGenerator.string(50);
+      return mockCall().thenAnswer((realInvocation) async => result);
+    }
 
     void mockFetchError() => mockCall().thenThrow(Exception());
 
@@ -81,13 +92,15 @@ main() {
       sut = LocalStorageAdapter(localStorage: localStorage);
       key = faker.randomGenerator.string(5);
       value = faker.randomGenerator.string(50);
-      result = faker.randomGenerator.string(50);
 
+      mockReadCall();
       mockFetch();
     });
 
     test('Should call localStorage with correct values', () async {
       await sut.fetch(key);
+
+      verify(localStorage.ready).called(1);
       verify(localStorage.getItem(key)).called(1);
     });
 
