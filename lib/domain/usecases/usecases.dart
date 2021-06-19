@@ -5,4 +5,4 @@ export 'load_current_account/load_current_account.dart';
 export 'add_account/add_account.dart';
 export 'add_account/add_account_params.dart';
 export 'load_surveys/load_surveys.dart';
-export 'load_surveys/load_surveys_result.dart';
+export 'load_surveys/load_survey_result.dart';
