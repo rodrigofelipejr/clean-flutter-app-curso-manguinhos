@@ -4,6 +4,7 @@ class AppRoutes {
   static String initial = '/';
   static String login = '/login';
   static String surveys = '/surveys';
+  static String surveyResult = '/survey_result';
   static String singUp = '/sing-up';
 
   // fake

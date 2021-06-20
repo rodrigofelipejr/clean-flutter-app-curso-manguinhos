@@ -15,12 +15,13 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '4Dev',
       theme: appTheme(),
-      initialRoute: AppRoutes.initial,
+      initialRoute: '${AppRoutes.surveyResult}/3',
       getPages: [
         GetPage(name: AppRoutes.initial, page: makeSplashPage, transition: Transition.fade),
         GetPage(name: AppRoutes.login, page: makeLoginPage, transition: Transition.fadeIn),
         GetPage(name: AppRoutes.singUp, page: makeSignUpPage),
         GetPage(name: AppRoutes.surveys, page: makeSurveysPage, transition: Transition.fadeIn),
+        GetPage(name: '${AppRoutes.surveyResult}/:survey_id', page: makeSurveyResultPage),
       ],
     );
   }
