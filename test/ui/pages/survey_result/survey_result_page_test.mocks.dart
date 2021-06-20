@@ -6,6 +6,8 @@ import 'dart:async' as _i3;
 
 import 'package:fordev/ui/pages/survey_result/survey_result_presenter.dart'
     as _i2;
+import 'package:fordev/ui/pages/survey_result/survey_result_view_model.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -28,9 +30,10 @@ class SurveyResultPresenterMock extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#isLoadingStream),
           returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
   @override
-  _i3.Stream<dynamic> get surveyResultStream =>
+  _i3.Stream<_i4.SurveyResultViewModel> get surveyResultStream =>
       (super.noSuchMethod(Invocation.getter(#surveyResultStream),
-          returnValue: Stream<dynamic>.empty()) as _i3.Stream<dynamic>);
+              returnValue: Stream<_i4.SurveyResultViewModel>.empty())
+          as _i3.Stream<_i4.SurveyResultViewModel>);
   @override
   _i3.Future<void> loadData() =>
       (super.noSuchMethod(Invocation.method(#loadData, []),

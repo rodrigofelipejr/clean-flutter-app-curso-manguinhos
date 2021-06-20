@@ -32,7 +32,7 @@ class _SurveyResultPageState extends State<SurveyResultPage> {
 
           widget.presenter!.loadData();
 
-          return StreamBuilder<dynamic>(
+          return StreamBuilder<SurveyResultViewModel>(
             stream: widget.presenter!.surveyResultStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -43,7 +43,7 @@ class _SurveyResultPageState extends State<SurveyResultPage> {
               }
 
               if (snapshot.hasData) {
-                return SurveyResult();
+                return SurveyResult(viewModel: snapshot.data!);
               }
 
               return SizedBox(height: 0);

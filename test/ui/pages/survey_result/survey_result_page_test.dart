@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fordev/ui/pages/survey_result/components/survey_result.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -19,13 +21,14 @@ import 'survey_result_page_test.mocks.dart';
 ])
 main() {
   late SurveyResultPresenterMock presenter;
+  late String urlImage;
 
   late StreamController<bool> isLoadingController;
-  late StreamController<dynamic> surveyResultController;
+  late StreamController<SurveyResultViewModel> surveyResultController;
 
   void initStreams() {
     isLoadingController = StreamController<bool>();
-    surveyResultController = StreamController<dynamic>();
+    surveyResultController = StreamController<SurveyResultViewModel>();
   }
 
   void mockStreams() {
@@ -37,6 +40,24 @@ main() {
     isLoadingController.close();
     surveyResultController.close();
   }
+
+  SurveyResultViewModel makeSurveyResult() => SurveyResultViewModel(
+        surveysId: faker.guid.guid(),
+        question: 'Question 1',
+        answers: [
+          SurveyAnswerViewModel(
+            image: urlImage,
+            answer: 'Answer 0',
+            isCurrentAnswer: true,
+            percent: '60%',
+          ),
+          SurveyAnswerViewModel(
+            answer: 'Answer 1',
+            isCurrentAnswer: false,
+            percent: '40%',
+          ),
+        ],
+      );
 
   tearDown(() {
     closeStreams();
@@ -60,6 +81,10 @@ main() {
     );
   }
 
+  setUpAll(() {
+    urlImage = 'https://angular.io/assets/images/logos/angular/angular.png';
+  });
+
   testWidgets('Should call LoadSurveyResult on page load', (WidgetTester tester) async {
     await loadPage(tester);
     verify(presenter.loadData()).called(1);
@@ -81,7 +106,7 @@ main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
-  testWidgets('Should present error if surveyStream fails', (WidgetTester tester) async {
+  testWidgets('Should present error if surveyResultStream fails', (WidgetTester tester) async {
     await loadPage(tester);
 
     surveyResultController.addError(UiError.unexpected.description);
@@ -89,7 +114,7 @@ main() {
 
     expect(find.text(R.strings.msgUnexpectedError), findsOneWidget);
     expect(find.text(R.strings.reload), findsOneWidget);
-    // expect(find.text('Question 1'), findsNothing); // TODO - implement later
+    expect(find.text('Question 1'), findsNothing);
   });
 
   testWidgets('Should call LoadResultSurvey on reload button click', (WidgetTester tester) async {
@@ -100,5 +125,28 @@ main() {
     await tester.tap(find.text(R.strings.reload));
 
     verify(presenter.loadData()).called(2);
+  });
+
+  testWidgets('Should present valid data if surveyResultStream success', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    surveyResultController.add(makeSurveyResult());
+
+    await mockNetworkImagesFor(
+      () async => await tester.pump(),
+    );
+
+    expect(find.text(R.strings.msgUnexpectedError), findsNothing);
+    expect(find.text(R.strings.reload), findsNothing);
+    expect(find.text('Question 1'), findsOneWidget);
+    expect(find.text('Answer 0'), findsOneWidget);
+    expect(find.text('60%'), findsOneWidget);
+    expect(find.text('Answer 1'), findsOneWidget);
+    expect(find.text('40%'), findsOneWidget);
+    expect(find.byType(ActiveIcon), findsOneWidget);
+    expect(find.byType(DisableIcon), findsOneWidget);
+
+    final image = tester.widget<Image>(find.byType(Image)).image as NetworkImage;
+    expect(image.url, urlImage);
   });
 }
