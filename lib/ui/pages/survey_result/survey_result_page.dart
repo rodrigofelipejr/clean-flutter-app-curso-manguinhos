@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../ui/components/components.dart';
 import '../../../ui/pages/pages.dart';
 import '../../../ui/constants/constants.dart';
 import '../../../ui/helpers/helpers.dart';
@@ -20,6 +21,14 @@ class _SurveyResultPageState extends State<SurveyResultPage> {
       appBar: AppBar(title: Text(R.strings.surveys)),
       body: Builder(
         builder: (context) {
+          widget.presenter!.isLoadingStream.listen((isLoading) {
+            if (isLoading == true) {
+              showLoading(context);
+            } else {
+              hideLoading(context);
+            }
+          });
+
           widget.presenter!.loadData();
 
           return ListView.builder(
