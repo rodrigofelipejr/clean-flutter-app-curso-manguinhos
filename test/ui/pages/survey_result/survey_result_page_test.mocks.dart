@@ -28,6 +28,10 @@ class SurveyResultPresenterMock extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#isLoadingStream),
           returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
   @override
+  _i3.Stream<dynamic> get surveyResultStream =>
+      (super.noSuchMethod(Invocation.getter(#surveyResultStream),
+          returnValue: Stream<dynamic>.empty()) as _i3.Stream<dynamic>);
+  @override
   _i3.Future<void> loadData() =>
       (super.noSuchMethod(Invocation.method(#loadData, []),
           returnValue: Future<void>.value(),

@@ -7,6 +7,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import 'package:fordev/ui/helpers/helpers.dart';
+import 'package:fordev/ui/helpers/errors/errors.dart';
 import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/pages/pages.dart';
 
@@ -19,17 +21,21 @@ main() {
   late SurveyResultPresenterMock presenter;
 
   late StreamController<bool> isLoadingController;
+  late StreamController<dynamic> surveyResultController;
 
   void initStreams() {
     isLoadingController = StreamController<bool>();
+    surveyResultController = StreamController<dynamic>();
   }
 
   void mockStreams() {
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
+    when(presenter.surveyResultStream).thenAnswer((_) => surveyResultController.stream);
   }
 
   void closeStreams() {
     isLoadingController.close();
+    surveyResultController.close();
   }
 
   tearDown(() {
@@ -73,5 +79,16 @@ main() {
     isLoadingController.add(true);
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('Should present error if surveyStream fails', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    surveyResultController.addError(UiError.unexpected.description);
+    await tester.pump();
+
+    expect(find.text(R.strings.msgUnexpectedError), findsOneWidget);
+    expect(find.text(R.strings.reload), findsOneWidget);
+    // expect(find.text('Question 1'), findsNothing); // TODO - implement later
   });
 }
