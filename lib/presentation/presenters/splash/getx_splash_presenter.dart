@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-import '../../shared/routes/routes.dart';
-import '../../domain/usecases/usecases.dart';
-import '../../ui/pages/pages.dart';
+import '../../../shared/routes/routes.dart';
+import '../../../domain/usecases/usecases.dart';
+import '../../../ui/pages/pages.dart';
 
 class GetxSplashPresenter implements SplashPresenter {
   final LoadCurrentAccount loadCurrentAccount;

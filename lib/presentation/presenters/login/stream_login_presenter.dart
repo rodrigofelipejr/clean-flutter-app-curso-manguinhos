@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import '../../ui/helpers/helpers.dart';
+import '../../../ui/helpers/helpers.dart';
 
-import '../../domain/helpers/helpers.dart';
-import '../../domain/usecases/usecases.dart';
+import '../../../domain/helpers/helpers.dart';
+import '../../../domain/usecases/usecases.dart';
 
-import '../dependencies/dependencies.dart';
+import '../../dependencies/dependencies.dart';
 
 //NOTE - apenas para fins didáticos
 abstract class LoginPresenterStream {

@@ -1,12 +1,12 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 
-import '../../shared/routes/routes.dart';
-import '../../ui/helpers/helpers.dart';
-import '../../ui/pages/pages.dart';
-import '../../domain/helpers/helpers.dart';
-import '../../domain/usecases/usecases.dart';
-import '../dependencies/dependencies.dart';
+import '../../../shared/routes/routes.dart';
+import '../../../ui/helpers/helpers.dart';
+import '../../../ui/pages/pages.dart';
+import '../../../domain/helpers/helpers.dart';
+import '../../../domain/usecases/usecases.dart';
+import '../../dependencies/dependencies.dart';
 
 class GetxLoginPresenter extends GetxController implements LoginPresenter {
   final Validation validation;
