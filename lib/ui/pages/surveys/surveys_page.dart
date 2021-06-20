@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import '../../../ui/pages/surveys/survey_view_model.dart';
-import '../../components/components.dart';
-import '../../helpers/helpers.dart';
+import '../../../ui/components/components.dart';
+import '../../../ui/helpers/helpers.dart';
 
 import 'components/components.dart';
 import 'surveys_presenter.dart';
@@ -41,16 +41,10 @@ class _SurveysPageState extends State<SurveysPage> {
           return StreamBuilder<List<SurveyViewModel>>(
             stream: widget.presenter.surveysStream,
             builder: (context, snapshot) {
-              //FIXME - refactor
               if (snapshot.hasError) {
-                return Column(
-                  children: [
-                    Text(snapshot.error.toString()),
-                    ElevatedButton(
-                      onPressed: widget.presenter.loadData,
-                      child: Text(R.strings.reload),
-                    ),
-                  ],
+                return ReloadScreen(
+                  error: snapshot.error.toString(),
+                  reload: widget.presenter.loadData,
                 );
               }
 
