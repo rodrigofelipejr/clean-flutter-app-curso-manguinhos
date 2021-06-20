@@ -91,4 +91,14 @@ main() {
     expect(find.text(R.strings.reload), findsOneWidget);
     // expect(find.text('Question 1'), findsNothing); // TODO - implement later
   });
+
+  testWidgets('Should call LoadResultSurvey on reload button click', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    surveyResultController.addError(UiError.unexpected.description);
+    await tester.pump();
+    await tester.tap(find.text(R.strings.reload));
+
+    verify(presenter.loadData()).called(2);
+  });
 }
