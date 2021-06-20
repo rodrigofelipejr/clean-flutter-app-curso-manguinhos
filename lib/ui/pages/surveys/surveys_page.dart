@@ -50,7 +50,7 @@ class _SurveysPageState extends State<SurveysPage> {
               if (snapshot.hasData) {
                 return SurveyListItems(viewModels: snapshot.data!); //FIXME - null?
               }
-              
+
               return SizedBox(height: 0);
             },
           );
