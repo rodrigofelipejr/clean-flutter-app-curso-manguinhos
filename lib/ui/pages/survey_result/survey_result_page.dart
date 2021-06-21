@@ -32,7 +32,7 @@ class _SurveyResultPageState extends State<SurveyResultPage> {
 
           widget.presenter!.loadData();
 
-          return StreamBuilder<SurveyResultViewModel>(
+          return StreamBuilder<SurveyResultViewModel?>(
             stream: widget.presenter!.surveyResultStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
