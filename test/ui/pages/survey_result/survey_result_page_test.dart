@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fordev/ui/pages/survey_result/components/survey_result.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import 'package:fordev/ui/pages/survey_result/components/components.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
 import 'package:fordev/ui/helpers/errors/errors.dart';
 import 'package:fordev/shared/routes/routes.dart';
