@@ -14,7 +14,7 @@ import 'local_load_surveys_test.mocks.dart';
   MockSpec<CacheStorage>(as: #CacheStorageMock),
 ])
 void main() {
-  group('load', () {
+  group('Load', () {
     late LocalLoadSurveys sut;
     late CacheStorageMock cacheStorage;
     late List<Map> data;
@@ -109,7 +109,7 @@ void main() {
     });
   });
 
-  group('validate', () {
+  group('Validate', () {
     late LocalLoadSurveys sut;
     late CacheStorageMock cacheStorage;
     late List<Map> data;
@@ -183,7 +183,7 @@ void main() {
     });
   });
 
-  group('save', () {
+  group('Save', () {
     late LocalLoadSurveys sut;
     late CacheStorageMock cacheStorage;
     late List<SurveyEntity> surveys;

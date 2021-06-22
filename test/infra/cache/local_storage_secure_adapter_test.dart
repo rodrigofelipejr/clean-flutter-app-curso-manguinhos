@@ -24,7 +24,7 @@ main() {
     sut = LocalStorageSecureAdapter(secureStorage: secureStorage);
   });
 
-  group('saveSecure', () {
+  group('SaveSecure', () {
     void mockSaveSecureError() {
       when(secureStorage.write(key: anyNamed('key'), value: anyNamed('value'))).thenThrow(Exception());
     }
@@ -41,7 +41,7 @@ main() {
     });
   });
 
-  group('fetchSecure', () {
+  group('FetchSecure', () {
     PostExpectation mockFetchSecureCall() => when(secureStorage.read(key: anyNamed('key')));
 
     void mockFetchSecure() => mockFetchSecureCall().thenAnswer((_) async => value);

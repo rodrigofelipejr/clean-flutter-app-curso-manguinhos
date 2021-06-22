@@ -40,7 +40,7 @@ main() {
     mockHttpData(mockValidData());
   });
 
-  test('should call HttpClient with correct values', () async {
+  test('Should call HttpClient with correct values', () async {
     await sut.add(params: params);
 
     verify(httpClient.request(url: url, method: 'post', body: {
@@ -51,31 +51,31 @@ main() {
     }));
   });
 
-  test('should throw UnexpectedError if HttpClient return 400', () async {
+  test('Should throw UnexpectedError if HttpClient return 400', () async {
     mockHttpError(HttpError.badRequest);
     final future = sut.add(params: params);
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('should throw UnexpectedError if HttpClient return 404', () async {
+  test('Should throw UnexpectedError if HttpClient return 404', () async {
     mockHttpError(HttpError.notFound);
     final future = sut.add(params: params);
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('should throw UnexpectedError if HttpClient return 500', () async {
+  test('Should throw UnexpectedError if HttpClient return 500', () async {
     mockHttpError(HttpError.serverError);
     final future = sut.add(params: params);
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('should throw InvalidCredentialsError if HttpClient return 403', () async {
+  test('Should throw InvalidCredentialsError if HttpClient return 403', () async {
     mockHttpError(HttpError.forbidden);
     final future = sut.add(params: params);
     expect(future, throwsA(DomainError.emailInUse));
   });
 
-  test('should return an Account if HttpClient return 200', () async {
+  test('Should return an Account if HttpClient return 200', () async {
     final validData = mockValidData();
     mockHttpData(validData);
     final account = await sut.add(params: params);

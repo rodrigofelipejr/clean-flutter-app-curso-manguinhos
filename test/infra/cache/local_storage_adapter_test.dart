@@ -24,7 +24,7 @@ main() {
 
   void mockReadCall() => when(localStorage.ready).thenAnswer((_) async => true);
 
-  group('save', () {
+  group('Save', () {
     setUp(() {
       localStorage = LocalStorageMock();
       sut = LocalStorageAdapter(localStorage: localStorage);
@@ -54,7 +54,7 @@ main() {
     });
   });
 
-  group('delete', () {
+  group('Delete', () {
     setUp(() {
       localStorage = LocalStorageMock();
       sut = LocalStorageAdapter(localStorage: localStorage);
@@ -77,7 +77,7 @@ main() {
     });
   });
 
-  group('fetch', () {
+  group('Fetch', () {
     PostExpectation mockCall() => when(localStorage.getItem(any));
 
     void mockFetch() {

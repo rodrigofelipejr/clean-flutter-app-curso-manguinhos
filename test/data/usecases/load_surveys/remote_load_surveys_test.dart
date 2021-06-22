@@ -78,19 +78,19 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('should throw UnexpectedError if HttpClient return 404', () async {
+  test('Should throw UnexpectedError if HttpClient return 404', () async {
     mockHttpError(HttpError.notFound);
     final future = sut.load();
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('should throw UnexpectedError if HttpClient return 500', () async {
+  test('Should throw UnexpectedError if HttpClient return 500', () async {
     mockHttpError(HttpError.serverError);
     final future = sut.load();
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('should throw AccessDeniedError if HttpClient return 403', () async {
+  test('Should throw AccessDeniedError if HttpClient return 403', () async {
     mockHttpError(HttpError.forbidden);
     final future = sut.load();
     expect(future, throwsA(DomainError.accessDenied));
