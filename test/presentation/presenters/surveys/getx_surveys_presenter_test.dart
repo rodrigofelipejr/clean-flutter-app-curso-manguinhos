@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
 import 'package:fordev/ui/pages/pages.dart';
@@ -86,5 +87,11 @@ main() {
     );
 
     await sut.loadData();
+  });
+
+  test('Should go to SurveyResultPage on survey click', () async {
+    //NOTE - Como estamos testando streams o o teste deve ficar antes da chamada
+    sut.navigateToStream.listen(expectAsync1((page) => '${AppRoutes.surveyResult}/any_route'));
+    sut.goToSurveyResult('any_route');
   });
 }

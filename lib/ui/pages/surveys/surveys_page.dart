@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../ui/pages/surveys/survey_view_model.dart';
 import '../../../ui/components/components.dart';
@@ -37,6 +39,13 @@ class _SurveysPageState extends State<SurveysPage> {
             }
           });
 
+          widget.presenter.navigateToStream.listen((page) {
+            if (page?.isNotEmpty == true) {
+              //NOTE - Get.toNamed => insere uma nova tela na pilha
+              Get.toNamed(page!);
+            }
+          });
+
           return StreamBuilder<List<SurveyViewModel>>(
             stream: widget.presenter.surveysStream,
             builder: (context, snapshot) {
@@ -48,7 +57,10 @@ class _SurveysPageState extends State<SurveysPage> {
               }
 
               if (snapshot.hasData) {
-                return SurveyListItems(viewModels: snapshot.data!); //FIXME - null?
+                return Provider(
+                  create: (_) => widget.presenter,
+                  child: SurveyListItems(viewModels: snapshot.data!),
+                ); //FIXME - null?
               }
 
               return SizedBox(height: 0);

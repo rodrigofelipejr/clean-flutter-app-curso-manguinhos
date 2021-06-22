@@ -20,20 +20,24 @@ main() {
 
   late StreamController<bool> isLoadingController;
   late StreamController<List<SurveyViewModel>> surveysController;
+  late StreamController<String?> navigateToController;
 
   void initStreams() {
     isLoadingController = StreamController<bool>();
     surveysController = StreamController<List<SurveyViewModel>>();
+    navigateToController = StreamController<String?>();
   }
 
   void mockStreams() {
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
     when(presenter.surveysStream).thenAnswer((_) => surveysController.stream);
+    when(presenter.navigateToStream).thenAnswer((_) => navigateToController.stream);
   }
 
   void closeStreams() {
     isLoadingController.close();
     surveysController.close();
+    navigateToController.close();
   }
 
   tearDown(() {
@@ -48,7 +52,10 @@ main() {
 
     final surveysPage = GetMaterialApp(
       initialRoute: AppRoutes.surveys,
-      getPages: [GetPage(name: AppRoutes.surveys, page: () => SurveysPage(presenter))],
+      getPages: [
+        GetPage(name: AppRoutes.surveys, page: () => SurveysPage(presenter)),
+        GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
+      ],
     );
 
     await tester.pumpWidget(surveysPage);
@@ -115,5 +122,28 @@ main() {
     await tester.tap(find.text(R.strings.reload));
 
     verify(presenter.loadData()).called(2);
+  });
+
+  testWidgets('Should call goToSurveyResult on survey click', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    surveysController.add(makeSurveys());
+    await tester.pump();
+
+    final survey = find.text('Question 1');
+    await tester.tap(survey);
+    await tester.pump();
+
+    verify(presenter.goToSurveyResult('1')).called(1);
+  });
+
+  testWidgets('Should change page', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    navigateToController.add(AppRoutes.anyRoute);
+    await tester.pumpAndSettle();
+
+    expect(Get.currentRoute, AppRoutes.anyRoute);
+    expect(find.text('fake page'), findsOneWidget);
   });
 }

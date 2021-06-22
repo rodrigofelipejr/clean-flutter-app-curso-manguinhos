@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../shared/routes/routes.dart';
 import '../../../ui/pages/pages.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../domain/helpers/helpers.dart';
@@ -13,9 +14,11 @@ class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
 
   var _isLoading = RxBool(true);
   var _surveys = RxList<SurveyViewModel>([]);
+  var _navigateTo = RxnString();
 
   Stream<bool> get isLoadingStream => _isLoading.subject.stream;
   Stream<List<SurveyViewModel>> get surveysStream => _surveys.subject.stream;
+  Stream<String?> get navigateToStream => _navigateTo.stream;
 
   @override
   Future<void> loadData() async {
@@ -37,5 +40,10 @@ class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
     } finally {
       _isLoading.value = false;
     }
+  }
+
+  @override
+  void goToSurveyResult(String surveyId) {
+    _navigateTo.value = '${AppRoutes.surveyResult}/$surveyId';
   }
 }
