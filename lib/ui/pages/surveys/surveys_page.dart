@@ -31,7 +31,9 @@ class _SurveysPageState extends State<SurveysPage> {
       appBar: AppBar(title: Text(R.strings.surveys)),
       body: Builder(
         builder: (context) {
-          widget.presenter.isLoadingStream.listen((isLoading) {
+          widget.presenter.isLoadingStream.listen((isLoading) async {
+            await Future.delayed(Duration(milliseconds: 500));
+
             if (isLoading == true) {
               showLoading(context);
             } else {

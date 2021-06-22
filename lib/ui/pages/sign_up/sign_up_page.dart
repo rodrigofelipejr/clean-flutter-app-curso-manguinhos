@@ -23,7 +23,9 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          presenter.isLoadingStream.listen((isLoading) {
+          presenter.isLoadingStream.listen((isLoading) async {
+            await Future.delayed(Duration(milliseconds: 500));
+
             if (isLoading) {
               showLoading(context);
             } else {

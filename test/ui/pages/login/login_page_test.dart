@@ -193,15 +193,15 @@ main() {
     await loadPage(tester);
 
     isLoadingController.add(true);
-    await tester.pump();
+    await tester.pump(Duration(milliseconds: 500));
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
     isLoadingController.add(false);
-    await tester.pump();
+    await tester.pump(Duration(milliseconds: 500));
     expect(find.byType(CircularProgressIndicator), findsNothing);
 
     isLoadingController.add(true);
-    await tester.pump();
+    await tester.pump(Duration(milliseconds: 500));
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 

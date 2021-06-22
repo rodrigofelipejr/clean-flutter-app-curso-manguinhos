@@ -34,8 +34,8 @@ class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
               ))
           .toList();
     } on DomainError {
-      //FIXME - refactor
       _surveys.subject.addError(UiError.unexpected.description);
+      //FIXME - refactor
       print(UiError.unexpected.description);
     } finally {
       _isLoading.value = false;

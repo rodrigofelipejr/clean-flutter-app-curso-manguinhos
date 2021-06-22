@@ -37,8 +37,8 @@ class GetXSurveyResultPresenter extends GetxController implements SurveyResultPr
             .toList(),
       );
     } on DomainError {
-      //FIXME - refactor
       _surveyResult.subject.addError(UiError.unexpected.description);
+      //FIXME - refactor
       print(UiError.unexpected.description);
     } finally {
       _isLoading.value = false;
