@@ -4,8 +4,9 @@
 
 import 'dart:async' as _i3;
 
+import 'package:fordev/data/cache/delete_secure_cache_storage.dart' as _i4;
 import 'package:fordev/data/cache/fetch_secure_cache_storage.dart' as _i2;
-import 'package:fordev/data/http/http_client.dart' as _i4;
+import 'package:fordev/data/http/http_client.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -29,10 +30,26 @@ class FetchSecureCacheStorageMock extends _i1.Mock
           returnValue: Future<String>.value('')) as _i3.Future<String>);
 }
 
+/// A class which mocks [DeleteSecureCacheStorage].
+///
+/// See the documentation for Mockito's code generation for more information.
+class DeleteSecureCacheStorageMock extends _i1.Mock
+    implements _i4.DeleteSecureCacheStorage {
+  DeleteSecureCacheStorageMock() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.Future<void> deleteSecure(String? key) =>
+      (super.noSuchMethod(Invocation.method(#deleteSecure, [key]),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future.value()) as _i3.Future<void>);
+}
+
 /// A class which mocks [HttpClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class HttpClientMock extends _i1.Mock implements _i4.HttpClient {
+class HttpClientMock extends _i1.Mock implements _i5.HttpClient {
   HttpClientMock() {
     _i1.throwOnMissingStub(this);
   }

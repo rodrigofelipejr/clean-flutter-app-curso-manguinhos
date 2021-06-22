@@ -12,12 +12,14 @@ import 'authorize_http_client_decorator_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
   MockSpec<FetchSecureCacheStorage>(as: #FetchSecureCacheStorageMock),
+  MockSpec<DeleteSecureCacheStorage>(as: #DeleteSecureCacheStorageMock),
   MockSpec<HttpClient>(as: #HttpClientMock),
 ])
 main() {
   late AuthorizeHttpClientDecorator sut;
   late HttpClientMock httpClient;
   late FetchSecureCacheStorageMock fetchSecureCacheStorage;
+  late DeleteSecureCacheStorageMock deleteSecureCacheStorage;
   late String token;
   late String url;
   late String method;
@@ -56,10 +58,12 @@ main() {
 
   setUp(() {
     fetchSecureCacheStorage = FetchSecureCacheStorageMock();
+    deleteSecureCacheStorage = DeleteSecureCacheStorageMock();
     httpClient = HttpClientMock();
 
     sut = AuthorizeHttpClientDecorator(
       fetchSecureCacheStorage: fetchSecureCacheStorage,
+      deleteSecureCacheStorage: deleteSecureCacheStorage,
       decoratee: httpClient,
     );
 
@@ -104,6 +108,7 @@ main() {
     mockTokenError();
     final feature = sut.request(url: url, method: method, body: body);
     expect(feature, throwsA(HttpError.forbidden));
+    verify(deleteSecureCacheStorage.deleteSecure('token')).called(1);
   });
 
   test('Should rethrow if decorative throws', () async {
