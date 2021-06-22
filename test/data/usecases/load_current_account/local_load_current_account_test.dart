@@ -50,7 +50,7 @@ main() {
 
   test('Should throw UnexpectedError if FetchSecureCacheStorage throws', () async {
     mockFetchSecureError();
-    final feature = sut.load();
-    expect(feature, throwsA(DomainError.unexpected));
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
   });
 }
