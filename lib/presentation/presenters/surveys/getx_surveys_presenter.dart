@@ -35,8 +35,11 @@ class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
                 didAnswer: survey.didAnswer,
               ))
           .toList();
-    } on DomainError {
-      _surveys.subject.addError(UiError.unexpected.description);
+    } on DomainError catch (error) {
+      if (error == DomainError.accessDenied)
+        _isSessionExpired.value = true;
+      else
+        _surveys.subject.addError(UiError.unexpected.description);
       //FIXME - refactor
       print(UiError.unexpected.description);
     } finally {
