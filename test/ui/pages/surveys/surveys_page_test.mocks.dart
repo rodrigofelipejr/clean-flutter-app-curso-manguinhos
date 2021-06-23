@@ -27,6 +27,10 @@ class SurveysPresenterMock extends _i1.Mock implements _i2.SurveysPresenter {
       (super.noSuchMethod(Invocation.getter(#isLoadingStream),
           returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
   @override
+  _i3.Stream<bool> get isSessionExpiredStream =>
+      (super.noSuchMethod(Invocation.getter(#isSessionExpiredStream),
+          returnValue: Stream<bool>.empty()) as _i3.Stream<bool>);
+  @override
   _i3.Stream<List<_i4.SurveyViewModel>> get surveysStream =>
       (super.noSuchMethod(Invocation.getter(#surveysStream),
               returnValue: Stream<List<_i4.SurveyViewModel>>.empty())

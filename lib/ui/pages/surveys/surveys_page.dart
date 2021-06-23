@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/routes/routes.dart';
 import '../../../ui/pages/surveys/survey_view_model.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/helpers/helpers.dart';
@@ -45,6 +46,12 @@ class _SurveysPageState extends State<SurveysPage> {
             if (page?.isNotEmpty == true) {
               //NOTE - Get.toNamed => insere uma nova tela na pilha
               Get.toNamed(page!);
+            }
+          });
+
+          widget.presenter.isSessionExpiredStream.listen((isExpired) {
+            if (isExpired == true) {
+              Get.offAllNamed(AppRoutes.login);
             }
           });
 
