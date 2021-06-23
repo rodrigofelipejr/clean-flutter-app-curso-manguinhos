@@ -9,17 +9,17 @@ class LocalStorageSecureAdapter implements SaveSecureCacheStorage, FetchSecureCa
   LocalStorageSecureAdapter({required this.secureStorage});
 
   @override
-  Future<void> saveSecure({required String key, required String value}) async {
+  Future<void> save({required String key, required String value}) async {
     await secureStorage.write(key: key, value: value);
   }
 
   @override
-  Future<String> fetchSecure(String key) async {
+  Future<String> fetch(String key) async {
     return await secureStorage.read(key: key) ?? '';
   }
 
   @override
-  Future<void> deleteSecure(String key) async {
+  Future<void> delete(String key) async {
     await secureStorage.delete(key: key);
   }
 }

@@ -19,9 +19,8 @@ import 'package:mockito/mockito.dart' as _i1;
 class SaveSecureCacheStorageMock extends _i1.Mock
     implements _i2.SaveSecureCacheStorage {
   @override
-  _i3.Future<void> saveSecure({String? key, String? value}) =>
-      (super.noSuchMethod(
-          Invocation.method(#saveSecure, [], {#key: key, #value: value}),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future.value()) as _i3.Future<void>);
+  _i3.Future<void> save({String? key, String? value}) => (super.noSuchMethod(
+      Invocation.method(#save, [], {#key: key, #value: value}),
+      returnValue: Future<void>.value(),
+      returnValueForMissingStub: Future.value()) as _i3.Future<void>);
 }
