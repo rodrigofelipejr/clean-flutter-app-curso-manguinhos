@@ -1,15 +1,18 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/state_manager.dart';
 
-import '../../../ui/pages/pages.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../ui/pages/pages.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../shared/routes/routes.dart';
+import '../../../presentation/mixins/mixins.dart';
 
 import '../../dependencies/dependencies.dart';
 
-class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
+class GetxSignUpPresenter extends GetxController
+    with LoadingManager, FormManager, NavigationManager, UIErrorManager
+    implements SignUpPresenter {
   final Validation validation;
   final AddAccount addAccount;
   final SaveCurrentAccount saveCurrentAccount;
@@ -24,10 +27,6 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
   var _emailError = Rxn<UiError>();
   var _passwordError = Rxn<UiError>();
   var _passwordConfirmationError = Rxn<UiError>();
-  var _navigateTo = RxnString();
-  var _mainError = Rxn<UiError>();
-  var _isFormValid = RxBool(false);
-  var _isLoading = RxBool(false);
 
   String? _name;
   String? _email;
@@ -38,10 +37,6 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
   Stream<UiError?> get emailErrorStream => _emailError.stream;
   Stream<UiError?> get passwordErrorStream => _passwordError.stream;
   Stream<UiError?> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
-  Stream<String?> get navigateToStream => _navigateTo.stream;
-  Stream<UiError?> get mainErrorStream => _mainError.stream;
-  Stream<bool> get isFormValidStream => _isFormValid.subject.stream;
-  Stream<bool> get isLoadingStream => _isLoading.subject.stream;
 
   @override
   void validateName(String name) {
@@ -93,7 +88,7 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
   }
 
   void _validateForm() {
-    _isFormValid.value = _name != null &&
+    isFormValid = _name != null &&
         _nameError.value == null &&
         _email != null &&
         _emailError.value == null &&
@@ -106,8 +101,8 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
   @override
   Future<void> signUp() async {
     try {
-      _isLoading.value = true;
-      _mainError.value = null;
+      isLoading = true;
+      mainError = null;
       final account = await addAccount.add(
         params: AddAccountParams(
           name: _name!,
@@ -118,21 +113,21 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter {
       );
 
       await saveCurrentAccount.save(account);
-      _navigateTo.value = AppRoutes.surveys;
+      navigateTo = AppRoutes.surveys;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.emailInUse:
-          _mainError.value = UiError.emailInUse;
+          mainError = UiError.emailInUse;
           break;
         default:
-          _mainError.value = UiError.unexpected;
+          mainError = UiError.unexpected;
       }
-      _isLoading.value = false;
+      isLoading = false;
     }
   }
 
   @override
   void goToLogin() {
-    _navigateTo.value = AppRoutes.login;
+    navigateTo = AppRoutes.login;
   }
 }

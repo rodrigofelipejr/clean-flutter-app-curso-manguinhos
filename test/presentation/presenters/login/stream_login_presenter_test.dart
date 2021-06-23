@@ -137,9 +137,7 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    //NOTE - Por conta do try catch da erro?
-    // expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    expectLater(sut.isLoadingStream, emits(false));
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.mainErrorStream!.listen(expectAsync1((error) => expect(error, UiError.invalidCredentials)));
 
     await sut.auth();
@@ -151,7 +149,7 @@ void main() {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
-    expectLater(sut.isLoadingStream, emits(false));
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.mainErrorStream!.listen(expectAsync1((error) => expect(error, UiError.unexpected)));
 
     await sut.auth();

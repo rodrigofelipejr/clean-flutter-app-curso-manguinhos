@@ -4,8 +4,11 @@ import '../../../ui/pages/pages.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../presentation/mixins/mixins.dart';
 
-class GetXSurveyResultPresenter extends GetxController implements SurveyResultPresenter {
+class GetXSurveyResultPresenter extends GetxController
+    with LoadingManager, SessionManager
+    implements SurveyResultPresenter {
   final LoadSurveyResult loadSurveyResult;
   final String surveyId;
 
@@ -14,18 +17,14 @@ class GetXSurveyResultPresenter extends GetxController implements SurveyResultPr
     required this.surveyId,
   });
 
-  var _isLoading = RxBool(true);
-  var _isSessionExpired = RxBool(false);
   var _surveyResult = Rxn<SurveyResultViewModel>();
 
-  Stream<bool> get isLoadingStream => _isLoading.subject.stream;
-  Stream<bool> get isSessionExpiredStream => _isSessionExpired.subject.stream;
   Stream<SurveyResultViewModel?> get surveyResultStream => _surveyResult.subject.stream;
 
   @override
   Future<void> loadData() async {
     try {
-      _isLoading.value = true;
+      isLoading = true;
       final surveyResult = await loadSurveyResult.loadBySurvey(surveyId: surveyId);
       _surveyResult.value = SurveyResultViewModel(
         surveysId: surveyResult.surveysId,
@@ -43,13 +42,13 @@ class GetXSurveyResultPresenter extends GetxController implements SurveyResultPr
       );
     } on DomainError catch (error) {
       if (error == DomainError.accessDenied)
-        _isSessionExpired.value = true;
+        isSessionExpired = true;
       else
         _surveyResult.subject.addError(UiError.unexpected.description);
       //FIXME - refactor
       print(UiError.unexpected.description);
     } finally {
-      _isLoading.value = false;
+      isLoading = false;
     }
   }
 }

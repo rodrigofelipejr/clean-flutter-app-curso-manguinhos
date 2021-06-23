@@ -9,6 +9,7 @@
     "decoratee",
     "fordev",
     "localstorage",
+    "mixins",
     "mockito",
     "mocktail",
     "unfocus",

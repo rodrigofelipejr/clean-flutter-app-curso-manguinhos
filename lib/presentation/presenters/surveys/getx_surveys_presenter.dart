@@ -1,31 +1,28 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../presentation/mixins/mixins.dart';
 import '../../../shared/routes/routes.dart';
 import '../../../ui/pages/pages.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
-class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
+class GetXSurveysPresenter extends GetxController
+    with LoadingManager, SessionManager, NavigationManager
+    implements SurveysPresenter {
   final LoadSurveys loadSurveys;
 
   GetXSurveysPresenter({required this.loadSurveys});
 
-  var _isLoading = RxBool(true);
-  var _isSessionExpired = RxBool(false);
   var _surveys = RxList<SurveyViewModel>([]);
-  var _navigateTo = RxnString();
 
-  Stream<bool> get isLoadingStream => _isLoading.subject.stream;
-  Stream<bool> get isSessionExpiredStream => _isSessionExpired.subject.stream;
   Stream<List<SurveyViewModel>> get surveysStream => _surveys.subject.stream;
-  Stream<String?> get navigateToStream => _navigateTo.stream;
 
   @override
   Future<void> loadData() async {
     try {
-      _isLoading.value = true;
+      isLoading = true;
       final surveys = await loadSurveys.load();
       _surveys.value = surveys
           .map((survey) => SurveyViewModel(
@@ -37,18 +34,18 @@ class GetXSurveysPresenter extends GetxController implements SurveysPresenter {
           .toList();
     } on DomainError catch (error) {
       if (error == DomainError.accessDenied)
-        _isSessionExpired.value = true;
+        isSessionExpired = true;
       else
         _surveys.subject.addError(UiError.unexpected.description);
       //FIXME - refactor
       print(UiError.unexpected.description);
     } finally {
-      _isLoading.value = false;
+      isLoading = false;
     }
   }
 
   @override
   void goToSurveyResult(String surveyId) {
-    _navigateTo.value = '${AppRoutes.surveyResult}/$surveyId';
+    navigateTo = '${AppRoutes.surveyResult}/$surveyId';
   }
 }

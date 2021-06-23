@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import '../../../ui/helpers/helpers.dart';
-
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-
-import '../../dependencies/dependencies.dart';
+import '../../../presentation/mixins/mixins.dart';
+import '../../../presentation/dependencies/dependencies.dart';
 
 //NOTE - apenas para fins didáticos
 abstract class LoginPresenterStream {
@@ -34,11 +33,11 @@ class LoginState {
   bool get isFormValid => emailError == null && passwordError == null && email != null && password != null;
 }
 
-class StreamLoginPresenter implements LoginPresenterStream {
+class StreamLoginPresenter with LoadingManager implements LoginPresenterStream {
   final Validation validation;
   final Authentication authentication;
-  StreamController<LoginState>? _controller = StreamController<LoginState>.broadcast(); // sync: true
 
+  StreamController<LoginState>? _controller = StreamController<LoginState>.broadcast(); // sync: true
   var _state = LoginState();
 
   //NOTE - O distinct não permite que sejam emitidos valores iguais
@@ -47,7 +46,6 @@ class StreamLoginPresenter implements LoginPresenterStream {
   Stream<UiError?>? get mainErrorStream => _controller?.stream.map((state) => state.mainError).distinct();
   Stream<String?>? get navigateToStream => _controller?.stream.map((state) => state.navigateTo).distinct();
   Stream<bool>? get isFormValidStream => _controller?.stream.map((state) => state.isFormValid).distinct();
-  Stream<bool>? get isLoadingStream => _controller?.stream.map((state) => state.isLoading).distinct();
 
   StreamLoginPresenter({required this.validation, required this.authentication});
 
@@ -94,7 +92,7 @@ class StreamLoginPresenter implements LoginPresenterStream {
 
   @override
   Future<void> auth() async {
-    _state.isLoading = true;
+    isLoading = true;
     _update();
 
     try {
@@ -110,7 +108,7 @@ class StreamLoginPresenter implements LoginPresenterStream {
       }
     }
 
-    _state.isLoading = false;
+    isLoading = false;
     _update();
   }
 

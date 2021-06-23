@@ -6,9 +6,12 @@ import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../dependencies/dependencies.dart';
+import '../../../presentation/dependencies/dependencies.dart';
+import '../../../presentation/mixins/mixins.dart';
 
-class GetxLoginPresenter extends GetxController implements LoginPresenter {
+class GetxLoginPresenter extends GetxController
+    with LoadingManager, FormManager, NavigationManager, UIErrorManager
+    implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
   final SaveCurrentAccount saveCurrentAccount;
@@ -24,17 +27,9 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
 
   var _emailError = Rxn<UiError>();
   var _passwordError = Rxn<UiError>();
-  var _mainError = Rxn<UiError>();
-  var _navigateTo = RxnString();
-  var _isFormValid = RxBool(false);
-  var _isLoading = RxBool(false);
 
   Stream<UiError?> get emailErrorStream => _emailError.stream;
   Stream<UiError?> get passwordErrorStream => _passwordError.stream;
-  Stream<UiError?> get mainErrorStream => _mainError.stream;
-  Stream<String?> get navigateToStream => _navigateTo.stream;
-  Stream<bool> get isFormValidStream => _isFormValid.subject.stream;
-  Stream<bool> get isLoadingStream => _isLoading.subject.stream;
 
   @override
   void validateEmail(String email) {
@@ -70,38 +65,37 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   }
 
   void _validateForm() {
-    _isFormValid.value =
-        _emailError.value == null && _passwordError.value == null && _email != null && _password != null;
+    isFormValid = _emailError.value == null && _passwordError.value == null && _email != null && _password != null;
   }
 
   @override
   Future<void> auth() async {
     try {
-      _mainError.value = null;
-      _isLoading.value = true;
+      mainError = null;
+      isLoading = true;
       final account = await authentication.auth(params: AuthenticationParams(email: _email!, secret: _password!));
       await saveCurrentAccount.save(account);
       /** 
        * NOTE - para que o presentation fique livre de implementação do flutter, a responsabilidade de navegação 
        * não vai ficar aqui dentro, e sim dentro da UI 
        */
-      _navigateTo.value = AppRoutes.surveys;
+      navigateTo = AppRoutes.surveys;
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.invalidCredentials:
-          _mainError.value = UiError.invalidCredentials;
+          mainError = UiError.invalidCredentials;
           break;
         default:
-          _mainError.value = UiError.unexpected;
+          mainError = UiError.unexpected;
           break;
       }
     } finally {
-      _isLoading.value = false;
+      isLoading = false;
     }
   }
 
   @override
   void goToSignUp() {
-    _navigateTo.value = AppRoutes.singUp;
+    navigateTo = AppRoutes.singUp;
   }
 }
