@@ -41,9 +41,9 @@ main() {
 
   void closeStreams() {
     isLoadingController.close();
+    isSessionExpiredController.close();
     surveysController.close();
     navigateToController.close();
-    isSessionExpiredController.close();
   }
 
   tearDown(() {

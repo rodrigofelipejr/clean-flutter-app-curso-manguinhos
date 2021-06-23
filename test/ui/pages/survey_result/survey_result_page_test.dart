@@ -24,20 +24,24 @@ main() {
   late String urlImage;
 
   late StreamController<bool> isLoadingController;
+  late StreamController<bool> isSessionExpiredController;
   late StreamController<SurveyResultViewModel> surveyResultController;
 
   void initStreams() {
     isLoadingController = StreamController<bool>();
+    isSessionExpiredController = StreamController<bool>();
     surveyResultController = StreamController<SurveyResultViewModel>();
   }
 
   void mockStreams() {
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
+    when(presenter.isSessionExpiredStream).thenAnswer((_) => isSessionExpiredController.stream);
     when(presenter.surveyResultStream).thenAnswer((_) => surveyResultController.stream);
   }
 
   void closeStreams() {
     isLoadingController.close();
+    isSessionExpiredController.close();
     surveyResultController.close();
   }
 
@@ -73,6 +77,7 @@ main() {
       initialRoute: '${AppRoutes.surveyResult}/any_survey_id',
       getPages: [
         GetPage(name: '${AppRoutes.surveyResult}/:survey_id', page: () => SurveyResultPage(presenter)),
+        GetPage(name: AppRoutes.login, page: () => Scaffold(body: Text('fake login'))),
       ],
     );
 
@@ -148,5 +153,23 @@ main() {
 
     final image = tester.widget<Image>(find.byType(Image)).image as NetworkImage;
     expect(image.url, urlImage);
+  });
+
+  testWidgets('Should logout', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isSessionExpiredController.add(true);
+    await tester.pumpAndSettle();
+
+    expect(Get.currentRoute, AppRoutes.login);
+    expect(find.text('fake login'), findsOneWidget);
+  });
+
+  testWidgets('Should not logout', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isSessionExpiredController.add(false);
+    await tester.pumpAndSettle();
+    expect(Get.currentRoute, '${AppRoutes.surveyResult}/any_survey_id');
   });
 }

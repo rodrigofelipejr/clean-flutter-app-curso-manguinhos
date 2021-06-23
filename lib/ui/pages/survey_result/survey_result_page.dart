@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../shared/routes/routes.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/pages/pages.dart';
 import '../../../ui/helpers/helpers.dart';
@@ -29,6 +31,12 @@ class _SurveyResultPageState extends State<SurveyResultPage> {
               showLoading(context);
             } else {
               hideLoading(context);
+            }
+          });
+
+          widget.presenter.isSessionExpiredStream.listen((isExpired) async {
+            if (isExpired == true) {
+              Get.offAllNamed(AppRoutes.login);
             }
           });
 

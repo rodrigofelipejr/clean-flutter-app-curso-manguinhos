@@ -9,12 +9,17 @@ class GetXSurveyResultPresenter extends GetxController implements SurveyResultPr
   final LoadSurveyResult loadSurveyResult;
   final String surveyId;
 
-  GetXSurveyResultPresenter({required this.loadSurveyResult, required this.surveyId});
+  GetXSurveyResultPresenter({
+    required this.loadSurveyResult,
+    required this.surveyId,
+  });
 
   var _isLoading = RxBool(true);
+  var _isSessionExpired = RxBool(false);
   var _surveyResult = Rxn<SurveyResultViewModel>();
 
   Stream<bool> get isLoadingStream => _isLoading.subject.stream;
+  Stream<bool> get isSessionExpiredStream => _isSessionExpired.subject.stream;
   Stream<SurveyResultViewModel?> get surveyResultStream => _surveyResult.subject.stream;
 
   @override
