@@ -30,7 +30,7 @@ class LocalSurveyAnswerModel {
   SurveyAnswerEntity toEntity() => SurveyAnswerEntity(
         image: this.image,
         answer: this.answer,
-        isCurrentAnswer: this.isCurrentAnswer.toString(),
+        isCurrentAnswer: this.isCurrentAnswer,
         percent: this.percent,
       );
 }

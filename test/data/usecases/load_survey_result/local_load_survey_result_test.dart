@@ -73,12 +73,12 @@ void main() {
             SurveyAnswerEntity(
               image: data['answers'][0]['image'],
               answer: data['answers'][0]['answer'],
-              isCurrentAnswer: 'true',
+              isCurrentAnswer: true,
               percent: 40,
             ),
             SurveyAnswerEntity(
               answer: data['answers'][1]['answer'],
-              isCurrentAnswer: 'false',
+              isCurrentAnswer: false,
               percent: 60,
             ),
           ],

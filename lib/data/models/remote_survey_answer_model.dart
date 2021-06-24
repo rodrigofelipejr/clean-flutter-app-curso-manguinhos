@@ -22,15 +22,15 @@ class RemoteSurveyAnswerModel {
     return RemoteSurveyAnswerModel(
       image: json['image'],
       answer: json['answer'],
-      isCurrentAnswer: json['isCurrentAnswer'].toLowerCase() == 'true',
-      percent: int.parse(json['percent']),
+      isCurrentAnswer: json['isCurrentAnswer'],
+      percent: json['percent'],
     );
   }
 
   SurveyAnswerEntity toEntity() => SurveyAnswerEntity(
         image: this.image,
         answer: this.answer,
-        isCurrentAnswer: this.isCurrentAnswer.toString(),
+        isCurrentAnswer: this.isCurrentAnswer,
         percent: this.percent,
       );
 }

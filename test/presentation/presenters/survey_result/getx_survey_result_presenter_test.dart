@@ -26,12 +26,12 @@ main() {
           SurveyAnswerEntity(
             image: faker.internet.httpUrl(),
             answer: faker.lorem.sentence(),
-            isCurrentAnswer: faker.randomGenerator.boolean().toString(),
+            isCurrentAnswer: faker.randomGenerator.boolean(),
             percent: faker.randomGenerator.integer(100),
           ),
           SurveyAnswerEntity(
             answer: faker.lorem.sentence(),
-            isCurrentAnswer: faker.randomGenerator.boolean().toString(),
+            isCurrentAnswer: faker.randomGenerator.boolean(),
             percent: faker.randomGenerator.integer(100),
           ),
         ],
@@ -74,12 +74,12 @@ main() {
               SurveyAnswerViewModel(
                 image: surveyResult.answers[0].image,
                 answer: surveyResult.answers[0].answer,
-                isCurrentAnswer: surveyResult.answers[0].isCurrentAnswer.toLowerCase() == 'true',
+                isCurrentAnswer: surveyResult.answers[0].isCurrentAnswer,
                 percent: '${surveyResult.answers[0].percent}%',
               ),
               SurveyAnswerViewModel(
                 answer: surveyResult.answers[1].answer,
-                isCurrentAnswer: surveyResult.answers[1].isCurrentAnswer.toLowerCase() == 'true',
+                isCurrentAnswer: surveyResult.answers[1].isCurrentAnswer,
                 percent: '${surveyResult.answers[1].percent}%',
               ),
             ],

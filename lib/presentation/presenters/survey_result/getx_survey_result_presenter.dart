@@ -34,7 +34,7 @@ class GetXSurveyResultPresenter extends GetxController
               (answer) => SurveyAnswerViewModel(
                 image: answer.image,
                 answer: answer.answer,
-                isCurrentAnswer: answer.isCurrentAnswer.toLowerCase() == 'true',
+                isCurrentAnswer: answer.isCurrentAnswer,
                 percent: '${answer.percent}%',
               ),
             )
