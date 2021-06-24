@@ -1,25 +1,25 @@
 import '../../data/http/http.dart';
 import '../../domain/entities/entities.dart';
 
-class RemoteSurveyAnswerModel {
+class LocalSurveyAnswerModel {
   final String? image;
   final String answer;
   final bool isCurrentAnswer;
   final int percent;
 
-  RemoteSurveyAnswerModel({
+  LocalSurveyAnswerModel({
     this.image,
     required this.answer,
     required this.isCurrentAnswer,
     required this.percent,
   });
 
-  factory RemoteSurveyAnswerModel.fromJson(Map json) {
+  factory LocalSurveyAnswerModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll(['answer', 'isCurrentAnswer', 'percent'])) {
       throw HttpError.invalidData;
     }
 
-    return RemoteSurveyAnswerModel(
+    return LocalSurveyAnswerModel(
       image: json['image'],
       answer: json['answer'],
       isCurrentAnswer: json['isCurrentAnswer'].toLowerCase() == 'true',

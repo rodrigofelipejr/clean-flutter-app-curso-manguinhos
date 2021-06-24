@@ -1,0 +1,130 @@
+import 'package:faker/faker.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+
+import 'package:fordev/domain/entities/entities.dart';
+import 'package:fordev/domain/entities/survey_answer_entity.dart';
+import 'package:fordev/shared/routes/routes.dart';
+import 'package:fordev/domain/helpers/helpers.dart';
+import 'package:fordev/data/usecases/usecases.dart';
+import 'package:fordev/data/cache/cache.dart';
+
+import '../load_surveys/local_load_surveys_test.mocks.dart';
+
+@GenerateMocks([], customMocks: [
+  MockSpec<CacheStorage>(as: #CacheStorageMock),
+])
+void main() {
+  group('LoadBySurvey', () {
+    late LocalLoadSurveyResult sut;
+    late CacheStorageMock cacheStorage;
+    late Map data;
+    late String surveyId;
+
+    Map mockValidData() => {
+          'surveyId': faker.guid.guid(),
+          'question': faker.lorem.sentence(),
+          'answers': [
+            {
+              'image': faker.internet.httpUrl(),
+              'answer': faker.lorem.sentence(),
+              'isCurrentAnswer': 'true',
+              'percent': '40',
+            },
+            {
+              'answer': faker.lorem.sentence(),
+              'isCurrentAnswer': 'false',
+              'percent': '60',
+            }
+          ],
+        };
+
+    PostExpectation mockFetchCall() => when(cacheStorage.fetch(any));
+
+    void mockFetch(Map json) {
+      data = json;
+      mockFetchCall().thenAnswer((_) async => data);
+    }
+
+    void mockFetchError() => mockFetchCall().thenThrow(Exception());
+
+    setUp(() {
+      cacheStorage = CacheStorageMock();
+      sut = LocalLoadSurveyResult(cacheStorage: cacheStorage);
+      surveyId = faker.guid.guid();
+      mockFetch(mockValidData());
+    });
+
+    test('Should call CacheStorage with correct key', () async {
+      await sut.loadBySurvey(surveyId: surveyId);
+      verify(cacheStorage.fetch('${AppRoutes.surveyResult}/$surveyId')).called(1);
+    });
+
+    test('Should return surveyResult on success', () async {
+      final surveys = await sut.loadBySurvey(surveyId: surveyId);
+
+      expect(
+        surveys,
+        SurveyResultEntity(
+          surveysId: data['surveyId'],
+          question: data['question'],
+          answers: [
+            SurveyAnswerEntity(
+              image: data['answers'][0]['image'],
+              answer: data['answers'][0]['answer'],
+              isCurrentAnswer: 'true',
+              percent: 40,
+            ),
+            SurveyAnswerEntity(
+              answer: data['answers'][1]['answer'],
+              isCurrentAnswer: 'false',
+              percent: 60,
+            ),
+          ],
+        ),
+      );
+    });
+
+    test('Should throw UnexpectedError if cache is empty', () async {
+      mockFetch({});
+      final future = sut.loadBySurvey(surveyId: surveyId);
+      expect(future, throwsA(DomainError.unexpected));
+    });
+
+    test('Should throw UnexpectedError if cache is invalid', () async {
+      mockFetch(
+        {
+          'surveyId': faker.guid.guid(),
+          'question': faker.lorem.sentence(),
+          'answers': [
+            {
+              'image': faker.internet.httpUrl(),
+              'answer': faker.lorem.sentence(),
+              'isCurrentAnswer': 'invalid boolean',
+              'percent': 'invalid int',
+            },
+          ],
+        },
+      );
+      final future = sut.loadBySurvey(surveyId: surveyId);
+      expect(future, throwsA(DomainError.unexpected));
+    });
+
+    test('Should throw UnexpectedError if cache is incomplete', () async {
+      mockFetch(
+        {
+          'surveyId': faker.guid.guid(),
+        },
+      );
+      final future = sut.loadBySurvey(surveyId: surveyId);
+      expect(future, throwsA(DomainError.unexpected));
+    });
+
+    test('Should throw UnexpectedError if cache throws', () async {
+      mockFetchError();
+      final future = sut.loadBySurvey(surveyId: surveyId);
+      expect(future, throwsA(DomainError.unexpected));
+    });
+  });
+}
