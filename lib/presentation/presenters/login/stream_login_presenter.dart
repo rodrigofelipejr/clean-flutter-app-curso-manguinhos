@@ -3,7 +3,6 @@ import 'dart:async';
 import '../../../ui/helpers/helpers.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../presentation/mixins/mixins.dart';
 import '../../../presentation/dependencies/dependencies.dart';
 
 //NOTE - apenas para fins didáticos
@@ -33,7 +32,7 @@ class LoginState {
   bool get isFormValid => emailError == null && passwordError == null && email != null && password != null;
 }
 
-class StreamLoginPresenter with LoadingManager implements LoginPresenterStream {
+class StreamLoginPresenter implements LoginPresenterStream {
   final Validation validation;
   final Authentication authentication;
 
@@ -46,6 +45,7 @@ class StreamLoginPresenter with LoadingManager implements LoginPresenterStream {
   Stream<UiError?>? get mainErrorStream => _controller?.stream.map((state) => state.mainError).distinct();
   Stream<String?>? get navigateToStream => _controller?.stream.map((state) => state.navigateTo).distinct();
   Stream<bool>? get isFormValidStream => _controller?.stream.map((state) => state.isFormValid).distinct();
+  Stream<bool>? get isLoadingStream => _controller?.stream.map((state) => state.isLoading).distinct();
 
   StreamLoginPresenter({required this.validation, required this.authentication});
 
@@ -92,7 +92,7 @@ class StreamLoginPresenter with LoadingManager implements LoginPresenterStream {
 
   @override
   Future<void> auth() async {
-    isLoading = true;
+    _state.isLoading = true;
     _update();
 
     try {
@@ -108,7 +108,7 @@ class StreamLoginPresenter with LoadingManager implements LoginPresenterStream {
       }
     }
 
-    isLoading = false;
+    _state.isLoading = false;
     _update();
   }
 
