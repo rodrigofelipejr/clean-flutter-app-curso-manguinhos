@@ -175,7 +175,7 @@ void main() {
       verify(cacheStorage.delete('surveys')).called(1);
     });
 
-    test('Should delete cache if it throws', () async {
+    test('Should delete cache if fetch fails throws', () async {
       mockFetchError();
 
       await sut.validate();
