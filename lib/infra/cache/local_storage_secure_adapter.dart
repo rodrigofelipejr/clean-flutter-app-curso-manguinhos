@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fordev/data/cache/delete_secure_cache_storage.dart';
 
+import '../../data/cache/delete_secure_cache_storage.dart';
 import '../../data/cache/cache.dart';
 
 class LocalStorageSecureAdapter implements SaveSecureCacheStorage, FetchSecureCacheStorage, DeleteSecureCacheStorage {

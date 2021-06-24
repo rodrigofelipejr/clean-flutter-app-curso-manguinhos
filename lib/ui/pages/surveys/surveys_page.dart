@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import '../../../shared/routes/routes.dart';
 import '../../../ui/pages/surveys/survey_view_model.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/helpers/helpers.dart';
+import '../../../ui/mixins/mixins.dart';
 
 import 'components/components.dart';
 import 'surveys_presenter.dart';
@@ -19,7 +18,7 @@ class SurveysPage extends StatefulWidget {
   _SurveysPageState createState() => _SurveysPageState();
 }
 
-class _SurveysPageState extends State<SurveysPage> {
+class _SurveysPageState extends State<SurveysPage> with LoadingManager, NavigationManager, SessionManager {
   @override
   void didChangeDependencies() {
     widget.presenter.loadData();
@@ -32,28 +31,9 @@ class _SurveysPageState extends State<SurveysPage> {
       appBar: AppBar(title: Text(R.strings.surveys)),
       body: Builder(
         builder: (context) {
-          widget.presenter.isLoadingStream.listen((isLoading) async {
-            await Future.delayed(Duration(milliseconds: 500));
-
-            if (isLoading == true) {
-              showLoading(context);
-            } else {
-              hideLoading(context);
-            }
-          });
-
-          widget.presenter.navigateToStream.listen((page) {
-            if (page?.isNotEmpty == true) {
-              //NOTE - Get.toNamed => insere uma nova tela na pilha
-              Get.toNamed(page!);
-            }
-          });
-
-          widget.presenter.isSessionExpiredStream.listen((isExpired) {
-            if (isExpired == true) {
-              Get.offAllNamed(AppRoutes.login);
-            }
-          });
+          handleLoading(context, widget.presenter.isLoadingStream);
+          handleNavigation(widget.presenter.navigateToStream);
+          handleSessionExpired(widget.presenter.isSessionExpiredStream);
 
           return StreamBuilder<List<SurveyViewModel>>(
             stream: widget.presenter.surveysStream,

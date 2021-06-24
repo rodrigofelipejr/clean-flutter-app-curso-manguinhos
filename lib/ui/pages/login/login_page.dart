@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/components/components.dart';
+import '../../../ui/mixins/mixins.dart';
 
 import 'components/components.dart';
 import 'login_presenter.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatelessWidget with KeyboardManager, LoadingManager, UIErrorManager, NavigationManager {
   final LoginPresenter presenter;
 
   const LoginPage({Key? key, required this.presenter}) : super(key: key);
@@ -18,29 +18,9 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          presenter.isLoadingStream.listen((isLoading) async {
-            await Future.delayed(Duration(milliseconds: 500));
-
-            if (isLoading) {
-              showLoading(context);
-            } else {
-              hideLoading(context);
-            }
-          });
-
-          presenter.mainErrorStream.listen((error) {
-            if (error != null) {
-              showErrorMessage(context, error.description);
-            }
-          });
-
-          presenter.navigateToStream.listen((page) {
-            //NOTE - diferente de null e vazio
-            if (page?.isNotEmpty == true) {
-              //NOTE - Get.offAllNamed => remove todas as telas e insere uma nova na pilha
-              Get.offAllNamed(page!);
-            }
-          });
+          handleLoading(context, presenter.isLoadingStream);
+          handleMainError(context, presenter.mainErrorStream);
+          handleNavigation(presenter.navigateToStream, clear: true);
 
           return GestureDetector(
             onTap: () => hideKeyboard(context),

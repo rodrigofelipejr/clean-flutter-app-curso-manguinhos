@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../../shared/routes/routes.dart';
 import '../../../ui/components/components.dart';
 import '../../../ui/pages/pages.dart';
 import '../../../ui/helpers/helpers.dart';
+import '../../../ui/mixins/mixins.dart';
 
 import 'components/survey_result.dart';
 
@@ -17,28 +16,15 @@ class SurveyResultPage extends StatefulWidget {
   _SurveyResultPageState createState() => _SurveyResultPageState();
 }
 
-class _SurveyResultPageState extends State<SurveyResultPage> {
+class _SurveyResultPageState extends State<SurveyResultPage> with LoadingManager, SessionManager {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(R.strings.surveys)),
       body: Builder(
         builder: (context) {
-          widget.presenter.isLoadingStream.listen((isLoading) async {
-            await Future.delayed(Duration(milliseconds: 500));
-
-            if (isLoading == true) {
-              showLoading(context);
-            } else {
-              hideLoading(context);
-            }
-          });
-
-          widget.presenter.isSessionExpiredStream.listen((isExpired) async {
-            if (isExpired == true) {
-              Get.offAllNamed(AppRoutes.login);
-            }
-          });
+          handleLoading(context, widget.presenter.isLoadingStream);
+          handleSessionExpired(widget.presenter.isSessionExpiredStream);
 
           widget.presenter.loadData();
 
