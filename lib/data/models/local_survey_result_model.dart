@@ -25,9 +25,22 @@ class LocalSurveyResultModel {
     );
   }
 
+  factory LocalSurveyResultModel.fromEntity(SurveyResultEntity entity) => LocalSurveyResultModel(
+        surveyId: entity.surveysId,
+        question: entity.question,
+        answers:
+            entity.answers.map<LocalSurveyAnswerModel>((answer) => LocalSurveyAnswerModel.fromEntity(answer)).toList(),
+      );
+
   SurveyResultEntity toEntity() => SurveyResultEntity(
         surveysId: this.surveyId,
         question: this.question,
         answers: this.answers.map<SurveyAnswerEntity>((answer) => answer.toEntity()).toList(),
       );
+
+  Map toJson() => {
+        'surveyId': this.surveyId,
+        'question': this.question,
+        'answers': this.answers.map<Map>((answer) => answer.toJson()).toList()
+      };
 }
