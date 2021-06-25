@@ -1,3 +1,5 @@
+import 'package:fordev/domain/helpers/helpers.dart';
+
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../../data/usecases/usecases.dart';
@@ -13,8 +15,15 @@ class RemoteLoadSurveyResultWithLocalFallback implements LoadSurveyResult {
 
   @override
   Future<SurveyResultEntity> loadBySurvey({String? surveyId}) async {
-    final surveyResult = await remote.loadBySurvey(surveyId: surveyId);
-    await local.save(surveyId: surveyId!, surveyResult: surveyResult);
+    late SurveyResultEntity surveyResult;
+    try {
+      surveyResult = await remote.loadBySurvey(surveyId: surveyId);
+      await local.save(surveyId: surveyId!, surveyResult: surveyResult);
+    } catch (error) {
+      if (error == DomainError.accessDenied) rethrow;
+      await local.validate(surveyId!);
+      surveyResult = await local.loadBySurvey(surveyId: surveyId);
+    }
     return surveyResult;
   }
 }

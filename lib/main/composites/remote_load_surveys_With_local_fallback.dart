@@ -18,14 +18,12 @@ class RemoteLoadSurveysWithLocalFallback implements LoadSurveys {
     try {
       surveys = await remoteLoadSurveys.load();
       await localLoadSurveys.save(surveys);
-      return surveys;
     } catch (error) {
       //NOTE - Em domain layer já tratamos para sempre retornar um DomainError, mas por precaução
       if (error == DomainError.accessDenied) rethrow;
-
       await localLoadSurveys.validate();
       surveys = await localLoadSurveys.load();
-      return surveys;
     }
+    return surveys;
   }
 }
