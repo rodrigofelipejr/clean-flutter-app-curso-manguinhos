@@ -1,5 +1,4 @@
-import 'package:fordev/shared/routes/routes.dart';
-
+import '../../../shared/routes/routes.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';

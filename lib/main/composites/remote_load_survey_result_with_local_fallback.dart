@@ -1,13 +1,20 @@
-import 'package:fordev/data/usecases/usecases.dart';
+import '../../domain/entities/entities.dart';
+import '../../domain/usecases/usecases.dart';
+import '../../../data/usecases/usecases.dart';
 
-class RemoteLoadSurveyResultWithLocalFallback {
+class RemoteLoadSurveyResultWithLocalFallback implements LoadSurveyResult {
   final RemoteLoadSurveyResult remote;
+  final LocalLoadSurveyResult local;
 
   RemoteLoadSurveyResultWithLocalFallback({
     required this.remote,
+    required this.local,
   });
 
-  Future<void> loadBySurvey({String? surveyId}) async {
-    await remote.loadBySurvey(surveyId: surveyId);
+  @override
+  Future<SurveyResultEntity> loadBySurvey({String? surveyId}) async {
+    final surveyResult = await remote.loadBySurvey(surveyId: surveyId);
+    await local.save(surveyId: surveyId!, surveyResult: surveyResult);
+    return surveyResult;
   }
 }

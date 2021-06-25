@@ -31,6 +31,10 @@ class _FakeCacheStorage extends _i1.Fake implements _i4.CacheStorage {}
 /// See the documentation for Mockito's code generation for more information.
 class RemoteLoadSurveyResultMock extends _i1.Mock
     implements _i5.RemoteLoadSurveyResult {
+  RemoteLoadSurveyResultMock() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i2.HttpClient get httpClient =>
       (super.noSuchMethod(Invocation.getter(#httpClient),
@@ -51,6 +55,10 @@ class RemoteLoadSurveyResultMock extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class LocalLoadSurveyResultMock extends _i1.Mock
     implements _i7.LocalLoadSurveyResult {
+  LocalLoadSurveyResultMock() {
+    _i1.throwOnMissingStub(this);
+  }
+
   @override
   _i4.CacheStorage get cacheStorage =>
       (super.noSuchMethod(Invocation.getter(#cacheStorage),
