@@ -8,5 +8,6 @@ export 'authentication/authentication.dart';
 export 'authentication/remote_authentication.dart';
 export 'survey_result/local_load_survey_result.dart';
 export 'survey_result/remote_load_survey_result.dart';
+export 'survey_result/remote_save_survey_result.dart';
 export 'surveys/local_load_surveys.dart';
 export 'surveys/remote_load_surveys.dart';

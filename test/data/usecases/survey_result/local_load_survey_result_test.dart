@@ -10,7 +10,7 @@ import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 import 'package:fordev/data/cache/cache.dart';
 
-import '../load_surveys/local_load_surveys_test.mocks.dart';
+import 'local_load_survey_result_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
   MockSpec<CacheStorage>(as: #CacheStorageMock),
