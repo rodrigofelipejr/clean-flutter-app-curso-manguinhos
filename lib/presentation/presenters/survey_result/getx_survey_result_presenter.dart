@@ -27,7 +27,7 @@ class GetXSurveyResultPresenter extends GetxController
       isLoading = true;
       final surveyResult = await loadSurveyResult.loadBySurvey(surveyId: surveyId);
       _surveyResult.value = SurveyResultViewModel(
-        surveysId: surveyResult.surveysId,
+        surveysId: surveyResult.surveyId,
         question: surveyResult.question,
         answers: surveyResult.answers
             .map(

@@ -26,7 +26,7 @@ class RemoteSurveyResultModel {
   }
 
   SurveyResultEntity toEntity() => SurveyResultEntity(
-        surveysId: this.surveyId,
+        surveyId: this.surveyId,
         question: this.question,
         answers: this.answers.map<SurveyAnswerEntity>((answer) => answer.toEntity()).toList(),
       );

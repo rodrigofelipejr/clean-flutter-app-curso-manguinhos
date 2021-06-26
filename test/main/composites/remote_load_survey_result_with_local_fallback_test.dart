@@ -23,7 +23,7 @@ main() {
   late SurveyResultEntity localSurveyResult;
 
   SurveyResultEntity mockSurveyResultEntity() => SurveyResultEntity(
-        surveysId: faker.guid.guid(),
+        surveyId: faker.guid.guid(),
         question: faker.lorem.sentence(),
         answers: [
           SurveyAnswerEntity(

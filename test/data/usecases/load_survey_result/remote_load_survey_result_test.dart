@@ -66,7 +66,7 @@ void main() {
     expect(
         result,
         SurveyResultEntity(
-          surveysId: surveyResult['surveyId'],
+          surveyId: surveyResult['surveyId'],
           question: surveyResult['question'],
           answers: [
             SurveyAnswerEntity(

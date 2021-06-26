@@ -20,7 +20,7 @@ main() {
   late String surveyId;
 
   SurveyResultEntity mockValidData() => SurveyResultEntity(
-        surveysId: faker.guid.guid(),
+        surveyId: faker.guid.guid(),
         question: faker.lorem.sentence(),
         answers: [
           SurveyAnswerEntity(
@@ -68,7 +68,7 @@ main() {
         (survey) => expect(
           survey,
           SurveyResultViewModel(
-            surveysId: surveyResult.surveysId,
+            surveysId: surveyResult.surveyId,
             question: surveyResult.question,
             answers: [
               SurveyAnswerViewModel(

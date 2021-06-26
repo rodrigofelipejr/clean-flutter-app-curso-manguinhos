@@ -67,7 +67,7 @@ void main() {
       expect(
         surveys,
         SurveyResultEntity(
-          surveysId: data['surveyId'],
+          surveyId: data['surveyId'],
           question: data['question'],
           answers: [
             SurveyAnswerEntity(
@@ -218,7 +218,7 @@ void main() {
     void mockSaveError() => mockSaveCall().thenThrow(Exception());
 
     SurveyResultEntity mockSurveyResult() => SurveyResultEntity(
-          surveysId: faker.guid.guid(),
+          surveyId: faker.guid.guid(),
           question: faker.lorem.sentence(),
           answers: [
             SurveyAnswerEntity(
@@ -243,7 +243,7 @@ void main() {
 
     test('Should call CacheStorage with correct values', () async {
       final json = {
-        'surveyId': surveyResult.surveysId,
+        'surveyId': surveyResult.surveyId,
         'question': surveyResult.question,
         'answers': [
           {
@@ -262,7 +262,7 @@ void main() {
       };
 
       await sut.save(surveyResult);
-      verify(cacheStorage.save(key: '${AppRoutes.surveyResult}/${surveyResult.surveysId}', value: json)).called(1);
+      verify(cacheStorage.save(key: '${AppRoutes.surveyResult}/${surveyResult.surveyId}', value: json)).called(1);
     });
 
     test('Should throw UnexpectedError if save throws', () async {
