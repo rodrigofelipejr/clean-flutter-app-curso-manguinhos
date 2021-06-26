@@ -46,9 +46,12 @@ class GetXSurveyResultPresenter extends GetxController
       else
         //FIXME - refactor
         _surveyResult.subject.addError(UiError.unexpected.description);
-        print(UiError.unexpected.description);
+      print(UiError.unexpected.description);
     } finally {
       isLoading = false;
     }
   }
+
+  @override
+  Future<void> save({required String answer}) async {}
 }

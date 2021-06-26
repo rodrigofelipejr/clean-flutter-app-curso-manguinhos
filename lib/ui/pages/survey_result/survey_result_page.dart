@@ -39,7 +39,10 @@ class _SurveyResultPageState extends State<SurveyResultPage> with LoadingManager
               }
 
               if (snapshot.hasData) {
-                return SurveyResult(viewModel: snapshot.data!);
+                return SurveyResult(
+                  viewModel: snapshot.data!,
+                  onSave: widget.presenter.save,
+                );
               }
 
               return SizedBox(height: 0);

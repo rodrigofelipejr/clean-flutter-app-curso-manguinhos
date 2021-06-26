@@ -21,10 +21,6 @@ import 'package:mockito/mockito.dart' as _i1;
 /// See the documentation for Mockito's code generation for more information.
 class SurveyResultPresenterMock extends _i1.Mock
     implements _i2.SurveyResultPresenter {
-  SurveyResultPresenterMock() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i3.Stream<bool> get isLoadingStream =>
       (super.noSuchMethod(Invocation.getter(#isLoadingStream),
@@ -41,6 +37,11 @@ class SurveyResultPresenterMock extends _i1.Mock
   @override
   _i3.Future<void> loadData() =>
       (super.noSuchMethod(Invocation.method(#loadData, []),
+          returnValue: Future<void>.value(),
+          returnValueForMissingStub: Future.value()) as _i3.Future<void>);
+  @override
+  _i3.Future<void> save({String? answer}) =>
+      (super.noSuchMethod(Invocation.method(#save, [], {#answer: answer}),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i3.Future<void>);
 }
