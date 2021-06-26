@@ -4,25 +4,25 @@ import '../../domain/entities/entities.dart';
 class RemoteSurveyAnswerModel {
   final String? image;
   final String answer;
-  final bool isCurrentAnswer;
+  final bool isCurrentAccountAnswer;
   final int percent;
 
   RemoteSurveyAnswerModel({
     this.image,
     required this.answer,
-    required this.isCurrentAnswer,
+    required this.isCurrentAccountAnswer,
     required this.percent,
   });
 
   factory RemoteSurveyAnswerModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll(['answer', 'isCurrentAnswer', 'percent'])) {
+    if (!json.keys.toSet().containsAll(['answer', 'isCurrentAccountAnswer', 'percent'])) {
       throw HttpError.invalidData;
     }
 
     return RemoteSurveyAnswerModel(
       image: json['image'],
       answer: json['answer'],
-      isCurrentAnswer: json['isCurrentAnswer'],
+      isCurrentAccountAnswer: json['isCurrentAccountAnswer'],
       percent: json['percent'],
     );
   }
@@ -30,7 +30,7 @@ class RemoteSurveyAnswerModel {
   SurveyAnswerEntity toEntity() => SurveyAnswerEntity(
         image: this.image,
         answer: this.answer,
-        isCurrentAnswer: this.isCurrentAnswer,
+        isCurrentAnswer: this.isCurrentAccountAnswer,
         percent: this.percent,
       );
 }

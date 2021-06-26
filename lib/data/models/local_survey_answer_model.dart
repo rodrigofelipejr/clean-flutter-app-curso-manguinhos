@@ -44,7 +44,7 @@ class LocalSurveyAnswerModel {
   Map toJson() => {
         'image': this.image,
         'answer': this.answer,
-        'isCurrentAnswer': this.isCurrentAnswer.toString(),
+        'isCurrentAccountAnswer': this.isCurrentAnswer.toString(),
         'percent': this.percent.toString(),
       };
 }

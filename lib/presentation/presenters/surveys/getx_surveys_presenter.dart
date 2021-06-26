@@ -36,8 +36,8 @@ class GetXSurveysPresenter extends GetxController
       if (error == DomainError.accessDenied)
         isSessionExpired = true;
       else
+        //FIXME - refactor
         _surveys.subject.addError(UiError.unexpected.description);
-      //FIXME - refactor
       print(UiError.unexpected.description);
     } finally {
       isLoading = false;

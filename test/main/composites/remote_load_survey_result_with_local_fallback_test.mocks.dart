@@ -75,11 +75,8 @@ class LocalLoadSurveyResultMock extends _i1.Mock
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i6.Future<void>);
   @override
-  _i6.Future<void> save(
-          {String? surveyId, _i3.SurveyResultEntity? surveyResult}) =>
-      (super.noSuchMethod(
-          Invocation.method(
-              #save, [], {#surveyId: surveyId, #surveyResult: surveyResult}),
+  _i6.Future<void> save(_i3.SurveyResultEntity? surveyResult) =>
+      (super.noSuchMethod(Invocation.method(#save, [surveyResult]),
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future.value()) as _i6.Future<void>);
 }

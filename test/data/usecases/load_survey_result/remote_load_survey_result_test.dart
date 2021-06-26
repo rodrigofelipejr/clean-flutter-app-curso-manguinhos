@@ -27,13 +27,13 @@ void main() {
             'answer': faker.randomGenerator.string(20),
             'percent': faker.randomGenerator.integer(100),
             'count': faker.randomGenerator.integer(10000),
-            'isCurrentAnswer': faker.randomGenerator.boolean(),
+            'isCurrentAccountAnswer': faker.randomGenerator.boolean(),
           },
           {
             'answer': faker.randomGenerator.string(20),
             'percent': faker.randomGenerator.integer(100),
             'count': faker.randomGenerator.integer(10000),
-            'isCurrentAnswer': faker.randomGenerator.boolean(),
+            'isCurrentAccountAnswer': faker.randomGenerator.boolean(),
           }
         ],
         'date': faker.date.dateTime().toIso8601String(),
@@ -72,12 +72,12 @@ void main() {
             SurveyAnswerEntity(
               image: surveyResult['answers'][0]['image'],
               answer: surveyResult['answers'][0]['answer'],
-              isCurrentAnswer: surveyResult['answers'][0]['isCurrentAnswer'],
+              isCurrentAnswer: surveyResult['answers'][0]['isCurrentAccountAnswer'],
               percent: surveyResult['answers'][0]['percent'],
             ),
             SurveyAnswerEntity(
               answer: surveyResult['answers'][1]['answer'],
-              isCurrentAnswer: surveyResult['answers'][1]['isCurrentAnswer'],
+              isCurrentAnswer: surveyResult['answers'][1]['isCurrentAccountAnswer'],
               percent: surveyResult['answers'][1]['percent'],
             ),
           ],

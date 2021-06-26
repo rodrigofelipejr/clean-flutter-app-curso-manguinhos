@@ -212,7 +212,6 @@ void main() {
     late LocalLoadSurveyResult sut;
     late CacheStorageMock cacheStorage;
     late SurveyResultEntity surveyResult;
-    late String surveyId;
 
     PostExpectation mockSaveCall() => when(cacheStorage.save(key: anyNamed('key'), value: anyNamed('value')));
 
@@ -237,7 +236,6 @@ void main() {
         );
 
     setUp(() {
-      surveyId = faker.guid.guid();
       cacheStorage = CacheStorageMock();
       sut = LocalLoadSurveyResult(cacheStorage: cacheStorage);
       surveyResult = mockSurveyResult();
@@ -251,25 +249,25 @@ void main() {
           {
             'image': surveyResult.answers[0].image,
             'answer': surveyResult.answers[0].answer,
-            'isCurrentAnswer': 'true',
+            'isCurrentAccountAnswer': 'true',
             'percent': '40',
           },
           {
             'image': null,
             'answer': surveyResult.answers[1].answer,
-            'isCurrentAnswer': 'false',
+            'isCurrentAccountAnswer': 'false',
             'percent': '60',
-          }
+          },
         ],
       };
 
-      await sut.save(surveyId: surveyId, surveyResult: surveyResult);
-      verify(cacheStorage.save(key: '${AppRoutes.surveyResult}/$surveyId', value: json)).called(1);
+      await sut.save(surveyResult);
+      verify(cacheStorage.save(key: '${AppRoutes.surveyResult}/${surveyResult.surveysId}', value: json)).called(1);
     });
 
     test('Should throw UnexpectedError if save throws', () async {
       mockSaveError();
-      final future = sut.save(surveyId: surveyId, surveyResult: surveyResult);
+      final future = sut.save(surveyResult);
       expect(future, throwsA(DomainError.unexpected));
     });
   });
