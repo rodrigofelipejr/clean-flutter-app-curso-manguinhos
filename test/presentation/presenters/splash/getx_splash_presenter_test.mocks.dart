@@ -5,7 +5,7 @@
 import 'dart:async' as _i4;
 
 import 'package:fordev/domain/entities/account_entity.dart' as _i2;
-import 'package:fordev/domain/usecases/load_current_account/load_current_account.dart'
+import 'package:fordev/domain/usecases/account/load_current_account.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 

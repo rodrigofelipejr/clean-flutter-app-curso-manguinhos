@@ -6,9 +6,9 @@ import 'dart:async' as _i6;
 
 import 'package:fordev/data/cache/cache_storage.dart' as _i4;
 import 'package:fordev/data/http/http_client.dart' as _i2;
-import 'package:fordev/data/usecases/load_survey_result/local_load_survey_result.dart'
+import 'package:fordev/data/usecases/survey_result/local_load_survey_result.dart'
     as _i7;
-import 'package:fordev/data/usecases/load_survey_result/remote_load_survey_result.dart'
+import 'package:fordev/data/usecases/survey_result/remote_load_survey_result.dart'
     as _i5;
 import 'package:fordev/domain/entities/survey_result_entity.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;

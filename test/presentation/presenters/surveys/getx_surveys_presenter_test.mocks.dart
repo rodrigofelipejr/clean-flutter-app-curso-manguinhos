@@ -5,7 +5,7 @@
 import 'dart:async' as _i3;
 
 import 'package:fordev/domain/entities/survey_entity.dart' as _i4;
-import 'package:fordev/domain/usecases/load_surveys/load_surveys.dart' as _i2;
+import 'package:fordev/domain/usecases/surveys/load_surveys.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values

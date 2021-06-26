@@ -5,12 +5,12 @@
 import 'dart:async' as _i5;
 
 import 'package:fordev/domain/entities/account_entity.dart' as _i2;
+import 'package:fordev/domain/usecases/account/save_current_account.dart'
+    as _i7;
 import 'package:fordev/domain/usecases/authentication/authentication.dart'
     as _i4;
 import 'package:fordev/domain/usecases/authentication/authentication_params.dart'
     as _i6;
-import 'package:fordev/domain/usecases/save_current_account/save_current_account.dart'
-    as _i7;
 import 'package:fordev/presentation/dependencies/validation.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 

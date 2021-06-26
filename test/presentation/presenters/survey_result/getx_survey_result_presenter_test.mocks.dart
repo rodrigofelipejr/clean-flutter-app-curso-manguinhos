@@ -5,7 +5,7 @@
 import 'dart:async' as _i4;
 
 import 'package:fordev/domain/entities/survey_result_entity.dart' as _i2;
-import 'package:fordev/domain/usecases/load_surveys/load_survey_result.dart'
+import 'package:fordev/domain/usecases/surveys_result/load_survey_result.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
