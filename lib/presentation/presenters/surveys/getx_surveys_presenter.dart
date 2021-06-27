@@ -24,14 +24,15 @@ class GetXSurveysPresenter extends GetxController
     try {
       isLoading = true;
       final surveys = await loadSurveys.load();
-      _surveys.value = surveys
+      _surveys.subject.add(surveys
           .map((survey) => SurveyViewModel(
                 id: survey.id,
                 question: survey.question,
                 date: DateFormat('dd MM yyyy').format(survey.dateTime),
                 didAnswer: survey.didAnswer,
               ))
-          .toList();
+          .toList());
+      print(surveys);
     } on DomainError catch (error) {
       if (error == DomainError.accessDenied)
         isSessionExpired = true;
