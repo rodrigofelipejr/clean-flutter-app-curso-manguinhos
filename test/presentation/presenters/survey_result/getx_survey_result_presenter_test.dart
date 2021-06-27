@@ -78,7 +78,7 @@ main() {
     mockSaveSurveyResult(mockValidData());
   });
 
-  group('LoadData', () {
+  group('Load', () {
     test('Should call LoadSurveyResult on loadData', () async {
       await sut.loadData();
       verify(loadSurveyResult.loadBySurvey(surveyId: surveyId)).called(1);
@@ -140,35 +140,54 @@ main() {
       await sut.save(answer: answer);
       verify(saveSurveyResult.save(answer: answer)).called(1);
     });
-  });
-
-  test('Should emit correct event on success', () async {
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.surveyResultStream.listen(
-      expectAsync1(
-        (survey) => expect(
-          survey,
-          SurveyResultViewModel(
-            surveysId: saveResult.surveyId,
-            question: saveResult.question,
-            answers: [
-              SurveyAnswerViewModel(
-                image: saveResult.answers[0].image,
-                answer: saveResult.answers[0].answer,
-                isCurrentAnswer: saveResult.answers[0].isCurrentAnswer,
-                percent: '${saveResult.answers[0].percent}%',
-              ),
-              SurveyAnswerViewModel(
-                answer: saveResult.answers[1].answer,
-                isCurrentAnswer: saveResult.answers[1].isCurrentAnswer,
-                percent: '${saveResult.answers[1].percent}%',
-              ),
-            ],
+    test('Should emit correct event on success', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      sut.surveyResultStream.listen(
+        expectAsync1(
+          (survey) => expect(
+            survey,
+            SurveyResultViewModel(
+              surveysId: saveResult.surveyId,
+              question: saveResult.question,
+              answers: [
+                SurveyAnswerViewModel(
+                  image: saveResult.answers[0].image,
+                  answer: saveResult.answers[0].answer,
+                  isCurrentAnswer: saveResult.answers[0].isCurrentAnswer,
+                  percent: '${saveResult.answers[0].percent}%',
+                ),
+                SurveyAnswerViewModel(
+                  answer: saveResult.answers[1].answer,
+                  isCurrentAnswer: saveResult.answers[1].isCurrentAnswer,
+                  percent: '${saveResult.answers[1].percent}%',
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
 
-    await sut.save(answer: answer);
+      await sut.save(answer: answer);
+    });
+
+    test('Should emit correct event on failure', () async {
+      mockSaveSurveyResultError(DomainError.unexpected);
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      sut.surveyResultStream.listen(
+        null,
+        onError: expectAsync1((error) => expect(error, UiError.unexpected.description)),
+      );
+
+      await sut.save(answer: answer);
+    });
+
+    test('Should emit correct event on acesses denied', () async {
+      mockSaveSurveyResultError(DomainError.accessDenied);
+
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(sut.isSessionExpiredStream, emits(true));
+
+      await sut.save(answer: answer);
+    });
   });
 }
