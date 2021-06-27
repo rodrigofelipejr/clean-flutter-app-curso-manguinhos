@@ -7,6 +7,8 @@ import 'dart:async' as _i4;
 import 'package:fordev/domain/entities/survey_result_entity.dart' as _i2;
 import 'package:fordev/domain/usecases/surveys_result/load_survey_result.dart'
     as _i3;
+import 'package:fordev/domain/usecases/surveys_result/save_survey_result.dart'
+    as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -32,4 +34,20 @@ class LoadSurveyResultMock extends _i1.Mock implements _i3.LoadSurveyResult {
           returnValue: Future<_i2.SurveyResultEntity>.value(
               _FakeSurveyResultEntity())) as _i4
       .Future<_i2.SurveyResultEntity>);
+}
+
+/// A class which mocks [SaveSurveyResult].
+///
+/// See the documentation for Mockito's code generation for more information.
+class SaveSurveyResultMock extends _i1.Mock implements _i5.SaveSurveyResult {
+  SaveSurveyResultMock() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i2.SurveyResultEntity> save({String? answer}) =>
+      (super.noSuchMethod(Invocation.method(#save, [], {#answer: answer}),
+              returnValue: Future<_i2.SurveyResultEntity>.value(
+                  _FakeSurveyResultEntity()))
+          as _i4.Future<_i2.SurveyResultEntity>);
 }

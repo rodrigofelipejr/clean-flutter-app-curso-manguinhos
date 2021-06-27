@@ -10,10 +10,12 @@ class GetXSurveyResultPresenter extends GetxController
     with LoadingManager, SessionManager
     implements SurveyResultPresenter {
   final LoadSurveyResult loadSurveyResult;
+  final SaveSurveyResult saveSurveyResult;
   final String surveyId;
 
   GetXSurveyResultPresenter({
     required this.loadSurveyResult,
+    required this.saveSurveyResult,
     required this.surveyId,
   });
 
@@ -53,5 +55,23 @@ class GetXSurveyResultPresenter extends GetxController
   }
 
   @override
-  Future<void> save({required String answer}) async {}
+  Future<void> save({required String answer}) async {
+    isLoading = true;
+    final surveyResult = await saveSurveyResult.save(answer: answer);
+    _surveyResult.value = SurveyResultViewModel(
+      surveysId: surveyResult.surveyId,
+      question: surveyResult.question,
+      answers: surveyResult.answers
+          .map(
+            (answer) => SurveyAnswerViewModel(
+              image: answer.image,
+              answer: answer.answer,
+              isCurrentAnswer: answer.isCurrentAnswer,
+              percent: '${answer.percent}%',
+            ),
+          )
+          .toList(),
+    );
+    isLoading = false;
+  }
 }
