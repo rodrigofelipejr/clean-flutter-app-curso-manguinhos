@@ -64,6 +64,24 @@ main() {
 
   void mockSaveSurveyResultError(DomainError error) => mockSaveSurveyResultCall().thenThrow(error);
 
+  SurveyResultViewModel mapToViewModel(SurveyResultEntity entity) => SurveyResultViewModel(
+        surveysId: entity.surveyId,
+        question: entity.question,
+        answers: [
+          SurveyAnswerViewModel(
+            image: entity.answers[0].image,
+            answer: entity.answers[0].answer,
+            isCurrentAnswer: entity.answers[0].isCurrentAnswer,
+            percent: '${entity.answers[0].percent}%',
+          ),
+          SurveyAnswerViewModel(
+            answer: entity.answers[1].answer,
+            isCurrentAnswer: entity.answers[1].isCurrentAnswer,
+            percent: '${entity.answers[1].percent}%',
+          ),
+        ],
+      );
+
   setUp(() {
     surveyId = faker.randomGenerator.string(50);
     loadSurveyResult = LoadSurveyResultMock();
@@ -140,33 +158,26 @@ main() {
       await sut.save(answer: answer);
       verify(saveSurveyResult.save(answer: answer)).called(1);
     });
-    test('Should emit correct event on success', () async {
+
+    test('Should emit correct events on success - onLoad', () async {
       expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
       sut.surveyResultStream.listen(
-        expectAsync1(
-          (survey) => expect(
-            survey,
-            SurveyResultViewModel(
-              surveysId: saveResult.surveyId,
-              question: saveResult.question,
-              answers: [
-                SurveyAnswerViewModel(
-                  image: saveResult.answers[0].image,
-                  answer: saveResult.answers[0].answer,
-                  isCurrentAnswer: saveResult.answers[0].isCurrentAnswer,
-                  percent: '${saveResult.answers[0].percent}%',
-                ),
-                SurveyAnswerViewModel(
-                  answer: saveResult.answers[1].answer,
-                  isCurrentAnswer: saveResult.answers[1].isCurrentAnswer,
-                  percent: '${saveResult.answers[1].percent}%',
-                ),
-              ],
-            ),
-          ),
-        ),
+        expectAsync1((result) => expect(result, mapToViewModel(loadResult))),
+      );
+      await sut.loadData();
+    });
+
+    test('Should emit correct events on success - onLoad and onSave', () async {
+      expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+      expectLater(
+        sut.surveyResultStream,
+        emitsInAnyOrder([
+          mapToViewModel(loadResult),
+          mapToViewModel(saveResult),
+        ]),
       );
 
+      await sut.loadData();
       await sut.save(answer: answer);
     });
 
