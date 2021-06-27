@@ -6,6 +6,6 @@ import '../factories.dart';
 Authentication makeRemoteAuthentication() {
   return RemoteAuthentication(
     httpClient: makeHttpAdapter(),
-    url: makeApiUrl(AppRoutes.login),
+    url: makeApiUrl(ApiRoutes.login),
   );
 }

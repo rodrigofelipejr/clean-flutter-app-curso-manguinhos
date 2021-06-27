@@ -6,6 +6,6 @@ import '../factories.dart';
 AddAccount makeRemoteAddAccount() {
   return RemoteAddAccount(
     httpClient: makeHttpAdapter(),
-    url: makeApiUrl(AppRoutes.singUp),
+    url: makeApiUrl(ApiRoutes.signUp),
   );
 }

@@ -22,7 +22,7 @@ class App extends StatelessWidget {
       getPages: [
         GetPage(name: AppRoutes.initial, page: makeSplashPage, transition: Transition.fade),
         GetPage(name: AppRoutes.login, page: makeLoginPage, transition: Transition.fadeIn),
-        GetPage(name: AppRoutes.singUp, page: makeSignUpPage),
+        GetPage(name: AppRoutes.signUp, page: makeSignUpPage),
         GetPage(name: AppRoutes.surveys, page: makeSurveysPage, transition: Transition.fadeIn),
         GetPage(name: '${AppRoutes.surveyResult}/:survey_id', page: makeSurveyResultPage),
       ],

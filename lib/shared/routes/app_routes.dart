@@ -5,7 +5,7 @@ class AppRoutes {
   static String login = '/login';
   static String surveys = '/surveys';
   static String surveyResult = '/survey_result';
-  static String singUp = '/sing-up';
+  static String signUp = '/sign-up';
 
   // fake
   static String anyRoute = 'any_route';

@@ -204,7 +204,7 @@ void main() {
 
   test('Should go to SignUpPage on link click', () async {
     //NOTE - Como estamos testando streams o o teste deve ficar antes da chamada
-    sut.navigateToStream.listen(expectAsync1((page) => AppRoutes.singUp));
+    sut.navigateToStream.listen(expectAsync1((page) => AppRoutes.signUp));
     sut.goToSignUp();
   });
 }

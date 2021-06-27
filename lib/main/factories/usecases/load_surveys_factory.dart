@@ -7,7 +7,7 @@ import '../factories.dart';
 LoadSurveys makeRemoteLoadSurveys() {
   return RemoteLoadSurveys(
     httpClient: makeAuthorizeHttpClientDecorator(),
-    url: makeApiUrl(AppRoutes.surveys),
+    url: makeApiUrl(ApiRoutes.surveys),
   );
 }
 
@@ -20,7 +20,7 @@ LoadSurveys makeRemoteLoadSurveysWithLocalFallback() {
   return RemoteLoadSurveysWithLocalFallback(
     remoteLoadSurveys: RemoteLoadSurveys(
       httpClient: makeAuthorizeHttpClientDecorator(),
-      url: makeApiUrl(AppRoutes.surveys),
+      url: makeApiUrl(ApiRoutes.surveys),
     ),
     localLoadSurveys: LocalLoadSurveys(cacheStorage: makeLocalStorageAdapter()),
   );

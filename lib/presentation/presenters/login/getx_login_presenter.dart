@@ -96,6 +96,6 @@ class GetxLoginPresenter extends GetxController
 
   @override
   void goToSignUp() {
-    navigateTo = AppRoutes.singUp;
+    navigateTo = AppRoutes.signUp;
   }
 }

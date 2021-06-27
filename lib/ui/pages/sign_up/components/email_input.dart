@@ -24,6 +24,7 @@ class EmailInput extends StatelessWidget {
               ),
               errorText: snapshot.hasData ? snapshot.data!.description : null,
             ),
+            textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             onChanged: presenter.validateEmail,
           );

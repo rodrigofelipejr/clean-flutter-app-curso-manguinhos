@@ -65,9 +65,9 @@ main() {
     mockStreams();
 
     final signUpPage = GetMaterialApp(
-      initialRoute: AppRoutes.singUp,
+      initialRoute: AppRoutes.signUp,
       getPages: [
-        GetPage(name: AppRoutes.singUp, page: () => SignUpPage(presenter: presenter)),
+        GetPage(name: AppRoutes.signUp, page: () => SignUpPage(presenter: presenter)),
         GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
       ],
     );
@@ -266,11 +266,11 @@ main() {
 
     navigateToController.add('');
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, AppRoutes.singUp);
+    expect(Get.currentRoute, AppRoutes.signUp);
 
     navigateToController.add(null);
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, AppRoutes.singUp);
+    expect(Get.currentRoute, AppRoutes.signUp);
   });
 
   testWidgets('Should call goToLogin on link click', (WidgetTester tester) async {
