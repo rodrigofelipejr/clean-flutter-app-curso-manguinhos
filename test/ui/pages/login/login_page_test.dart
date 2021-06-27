@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:faker/faker.dart';
-import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 
@@ -11,6 +10,7 @@ import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/helpers/helpers.dart';
 import 'package:fordev/ui/pages/pages.dart';
 
+import '../../helpers/helpers.dart';
 import 'login_page_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [MockSpec<LoginPresenter>(as: #LoginPresenterMock)])
@@ -56,15 +56,7 @@ main() {
     initStreams();
     mockStreams();
 
-    final loginPage = GetMaterialApp(
-      initialRoute: AppRoutes.login,
-      getPages: [
-        GetPage(name: AppRoutes.login, page: () => LoginPage(presenter: presenter)),
-        GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
-      ],
-    );
-
-    await tester.pumpWidget(loginPage);
+    await tester.pumpWidget(makePage(path: AppRoutes.login, page: () => LoginPage(presenter: presenter)));
   }
 
   //NOTE - Roda sempre ao fim dos testes
@@ -230,7 +222,7 @@ main() {
     //NOTE - como a troca de rota demora um pouco mais  para acontecer é utilizado o pumpAndSettle
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, AppRoutes.anyRoute);
+    expect(currentRoute, AppRoutes.anyRoute);
     expect(find.text('fake page'), findsOneWidget);
   });
 

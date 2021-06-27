@@ -32,7 +32,6 @@ class GetXSurveysPresenter extends GetxController
                 didAnswer: survey.didAnswer,
               ))
           .toList());
-      print(surveys);
     } on DomainError catch (error) {
       if (error == DomainError.accessDenied)
         isSessionExpired = true;

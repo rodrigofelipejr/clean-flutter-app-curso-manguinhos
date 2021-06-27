@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -12,6 +11,7 @@ import 'package:fordev/ui/pages/pages.dart';
 import 'package:fordev/shared/routes/app_routes.dart';
 import 'package:fordev/shared/routes/routes.dart';
 
+import '../../helpers/helpers.dart';
 import 'surveys_page_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
@@ -56,22 +56,7 @@ main() {
     initStreams();
     mockStreams();
 
-    final routerObserver = Get.put<RouteObserver>(RouteObserver<PageRoute>());
-
-    final surveysPage = GetMaterialApp(
-      initialRoute: AppRoutes.surveys,
-      navigatorObservers: [routerObserver],
-      getPages: [
-        GetPage(name: AppRoutes.surveys, page: () => SurveysPage(presenter)),
-        GetPage(
-          name: AppRoutes.anyRoute,
-          page: () => Scaffold(appBar: AppBar(title: Text('any')), body: Text('fake page')),
-        ),
-        GetPage(name: AppRoutes.login, page: () => Scaffold(body: Text('fake login'))),
-      ],
-    );
-
-    await tester.pumpWidget(surveysPage);
+    await tester.pumpWidget(makePage(path: AppRoutes.surveys, page: () => SurveysPage(presenter)));
   }
 
   List<SurveyViewModel> makeSurveys() => [
@@ -166,7 +151,7 @@ main() {
     navigateToController.add(AppRoutes.anyRoute);
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, AppRoutes.anyRoute);
+    expect(currentRoute, AppRoutes.anyRoute);
     expect(find.text('fake page'), findsOneWidget);
   });
 
@@ -176,7 +161,7 @@ main() {
     isSessionExpiredController.add(true);
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, AppRoutes.login);
+    expect(currentRoute, AppRoutes.login);
     expect(find.text('fake login'), findsOneWidget);
   });
 
@@ -185,6 +170,6 @@ main() {
 
     isSessionExpiredController.add(false);
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, AppRoutes.surveys);
+    expect(currentRoute, AppRoutes.surveys);
   });
 }

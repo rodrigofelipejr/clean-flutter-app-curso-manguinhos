@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
@@ -14,6 +13,7 @@ import 'package:fordev/ui/helpers/errors/errors.dart';
 import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/pages/pages.dart';
 
+import '../../helpers/helpers.dart';
 import 'survey_result_page_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
@@ -73,16 +73,10 @@ main() {
     initStreams();
     mockStreams();
 
-    final surveysPage = GetMaterialApp(
-      initialRoute: '${AppRoutes.surveyResult}/any_survey_id',
-      getPages: [
-        GetPage(name: '${AppRoutes.surveyResult}/:survey_id', page: () => SurveyResultPage(presenter)),
-        GetPage(name: AppRoutes.login, page: () => Scaffold(body: Text('fake login'))),
-      ],
-    );
-
     await mockNetworkImagesFor(
-      () async => await tester.pumpWidget(surveysPage),
+      () async => await tester.pumpWidget(
+        makePage(path: '${AppRoutes.surveyResult}/any_survey_id', page: () => SurveyResultPage(presenter)),
+      ),
     );
   }
 
@@ -161,7 +155,7 @@ main() {
     isSessionExpiredController.add(true);
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, AppRoutes.login);
+    expect(currentRoute, AppRoutes.login);
     expect(find.text('fake login'), findsOneWidget);
   });
 
@@ -170,7 +164,7 @@ main() {
 
     isSessionExpiredController.add(false);
     await tester.pumpAndSettle();
-    expect(Get.currentRoute, '${AppRoutes.surveyResult}/any_survey_id');
+    expect(currentRoute, '${AppRoutes.surveyResult}/any_survey_id');
   });
 
   testWidgets('Should call save on list item click', (WidgetTester tester) async {

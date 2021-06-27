@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:fordev/shared/routes/routes.dart';
 import 'package:fordev/ui/pages/pages.dart';
 
+import '../../helpers/helpers.dart';
 import 'splash_page_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [
@@ -24,15 +24,7 @@ main() {
 
     when(presenter.navigateToStream).thenAnswer((_) => navigateToController.stream);
 
-    await tester.pumpWidget(
-      GetMaterialApp(
-        initialRoute: AppRoutes.initial,
-        getPages: [
-          GetPage(name: AppRoutes.initial, page: () => SplashPage(presenter: presenter)),
-          GetPage(name: AppRoutes.anyRoute, page: () => Scaffold(body: Text('fake page'))),
-        ],
-      ),
-    );
+    await tester.pumpWidget(makePage(path: AppRoutes.initial, page: () => SplashPage(presenter: presenter)));
   }
 
   tearDown(() {
@@ -55,7 +47,7 @@ main() {
     navigateToController.add(AppRoutes.anyRoute);
     await tester.pumpAndSettle();
 
-    expect(Get.currentRoute, AppRoutes.anyRoute);
+    expect(currentRoute, AppRoutes.anyRoute);
     expect(find.text('fake page'), findsOneWidget);
   });
 
@@ -64,10 +56,10 @@ main() {
 
     navigateToController.add('');
     await tester.pump();
-    expect(Get.currentRoute, AppRoutes.initial);
+    expect(currentRoute, AppRoutes.initial);
 
     navigateToController.add(null);
     await tester.pump();
-    expect(Get.currentRoute, AppRoutes.initial);
+    expect(currentRoute, AppRoutes.initial);
   });
 }
