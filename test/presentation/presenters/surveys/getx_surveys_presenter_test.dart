@@ -100,7 +100,14 @@ main() {
 
   test('Should go to SurveyResultPage on survey click', () async {
     //NOTE - Como estamos testando streams o o teste deve ficar antes da chamada
-    sut.navigateToStream.listen(expectAsync1((page) => '${AppRoutes.surveyResult}/any_route'));
+    expectLater(
+        sut.navigateToStream,
+        emitsInOrder([
+          '${AppRoutes.surveyResult}/any_route',
+          '${AppRoutes.surveyResult}/any_route',
+        ]));
+
+    sut.goToSurveyResult('any_route');
     sut.goToSurveyResult('any_route');
   });
 }
