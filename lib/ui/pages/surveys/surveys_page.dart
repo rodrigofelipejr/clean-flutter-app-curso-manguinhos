@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/pages/surveys/survey_view_model.dart';
@@ -18,11 +19,24 @@ class SurveysPage extends StatefulWidget {
   _SurveysPageState createState() => _SurveysPageState();
 }
 
-class _SurveysPageState extends State<SurveysPage> with LoadingManager, NavigationManager, SessionManager {
+class _SurveysPageState extends State<SurveysPage> with LoadingManager, NavigationManager, SessionManager, RouteAware {
   @override
   void didChangeDependencies() {
+    Get.find<RouteObserver>().subscribe(this, ModalRoute.of(context)!);
     widget.presenter.loadData();
     super.didChangeDependencies();
+  }
+
+  @override
+  void didPopNext() {
+    widget.presenter.loadData();
+    super.didPopNext();
+  }
+
+  @override
+  void dispose() {
+    Get.find<RouteObserver>().unsubscribe(this);
+    super.dispose();
   }
 
   @override
