@@ -1,4 +1,4 @@
-import '../../../main/composites/remote_load_survey_result_with_local_fallback.dart';
+import '../../../main/composites/composites.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../data/usecases/usecases.dart';
 import '../factories.dart';
