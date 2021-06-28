@@ -9,6 +9,8 @@ import 'package:fordev/domain/usecases/usecases.dart';
 import 'package:fordev/data/http/http.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 
+import '../../../mocks/account/fake_account_factory.dart';
+import '../../../mocks/mocks.dart';
 import 'remote_authentication_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
@@ -17,21 +19,29 @@ main() {
   late HttpClientMock httpClient;
   late AuthenticationParams params;
   late String url;
+  late Map apiResult;
 
-  Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
+  PostExpectation mockRequest() => when(
+        httpClient.request(
+          url: anyNamed('url'),
+          method: anyNamed('method'),
+          body: anyNamed('body'),
+        ),
+      );
 
-  PostExpectation mockRequest() =>
-      when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')));
+  void mockHttpData(Map data) {
+    apiResult = data;
+    return mockRequest().thenAnswer((_) async => data);
+  }
 
-  void mockHttpData(Map data) => mockRequest().thenAnswer((_) async => data);
   void mockHttpError(HttpError error) => mockRequest().thenThrow(error);
 
   setUp(() {
     httpClient = HttpClientMock();
     url = faker.internet.httpUrl();
     sut = RemoteAuthentication(httpClient: httpClient, url: url);
-    params = AuthenticationParams(email: faker.internet.email(), secret: faker.internet.password());
-    mockHttpData(mockValidData());
+    params = FakeParamsFactory.makeAuthentication();
+    mockHttpData(FakeAccountFactory.makeApiJson());
   });
 
   test('Should call HttpClient with correct values', () async {
@@ -69,10 +79,8 @@ main() {
   });
 
   test('Should return an Account if HttpClient return 200', () async {
-    final validData = mockValidData();
-    mockHttpData(validData);
     final account = await sut.auth(params: params);
-    expect(account.token, validData['accessToken']);
+    expect(account.token, apiResult['accessToken']);
   });
 
   test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {

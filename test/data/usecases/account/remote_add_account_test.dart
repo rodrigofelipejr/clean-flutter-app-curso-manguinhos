@@ -1,14 +1,14 @@
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/domain/usecases/usecases.dart';
-
 import 'package:fordev/data/http/http.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 
+import '../../../mocks/mocks.dart';
 import 'remote_add_account_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
@@ -17,27 +17,29 @@ main() {
   late HttpClientMock httpClient;
   late String url;
   late AddAccountParams params;
+  late Map apiResult;
 
   PostExpectation mockRequest() => when(
-        httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')),
+        httpClient.request(
+          url: anyNamed('url'),
+          method: anyNamed('method'),
+          body: anyNamed('body'),
+        ),
       );
 
-  Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
+  void mockHttpData(Map data) {
+    apiResult = data;
+    return mockRequest().thenAnswer((_) async => data);
+  }
 
-  void mockHttpData(Map data) => mockRequest().thenAnswer((_) async => data);
   void mockHttpError(HttpError error) => mockRequest().thenThrow(error);
 
   setUp(() {
     httpClient = HttpClientMock();
     url = faker.internet.httpUrl();
     sut = RemoteAddAccount(httpClient: httpClient, url: url);
-    params = AddAccountParams(
-      name: faker.person.name(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      passwordConfirmation: faker.internet.password(),
-    );
-    mockHttpData(mockValidData());
+    params = FakeParamsFactory.makeAddAccount();
+    mockHttpData(FakeAccountFactory.makeApiJson());
   });
 
   test('Should call HttpClient with correct values', () async {
@@ -76,9 +78,7 @@ main() {
   });
 
   test('Should return an Account if HttpClient return 200', () async {
-    final validData = mockValidData();
-    mockHttpData(validData);
     final account = await sut.add(params: params);
-    expect(account.token, validData['accessToken']);
+    expect(account.token, apiResult['accessToken']);
   });
 }

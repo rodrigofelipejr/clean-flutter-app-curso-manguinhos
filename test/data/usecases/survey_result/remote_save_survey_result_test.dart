@@ -8,6 +8,7 @@ import 'package:fordev/domain/helpers/helpers.dart';
 import 'package:fordev/data/http/http.dart';
 import 'package:fordev/data/usecases/usecases.dart';
 
+import '../../../mocks/survey_result/fake_survey_result_factory.dart';
 import 'remote_load_survey_result_test.mocks.dart';
 
 @GenerateMocks([], customMocks: [MockSpec<HttpClient>(as: #HttpClientMock)])
@@ -17,28 +18,6 @@ void main() {
   late String url;
   late String answer;
   late Map surveyResult;
-
-//NOTE - mock - Resposta da API
-  Map mockValidData() => {
-        'surveyId': faker.guid.guid(),
-        'question': faker.randomGenerator.string(50),
-        'answers': [
-          {
-            'image': faker.internet.httpUrl(),
-            'answer': faker.randomGenerator.string(20),
-            'percent': faker.randomGenerator.integer(100),
-            'count': faker.randomGenerator.integer(10000),
-            'isCurrentAccountAnswer': faker.randomGenerator.boolean(),
-          },
-          {
-            'answer': faker.randomGenerator.string(20),
-            'percent': faker.randomGenerator.integer(100),
-            'count': faker.randomGenerator.integer(10000),
-            'isCurrentAccountAnswer': faker.randomGenerator.boolean(),
-          }
-        ],
-        'date': faker.date.dateTime().toIso8601String(),
-      };
 
   PostExpectation mockRequest() => when(httpClient.request(
         url: anyNamed('url'),
@@ -58,7 +37,7 @@ void main() {
     httpClient = HttpClientMock();
     answer = faker.lorem.sentence();
     sut = RemoteSaveSurveyResult(httpClient: httpClient, url: url);
-    mockHttpData(mockValidData());
+    mockHttpData(FakeSurveyResultFactory.makeApiJson());
   });
 
   test('Should call HttpClient with correct values', () async {
@@ -97,7 +76,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClient return 200 with invalid data', () async {
-    mockHttpData({'invalid_key': 'invalid_value'});
+    mockHttpData(FakeSurveyResultFactory.makeInvalidApiJson());
 
     final future = sut.save(answer: answer);
     expect(future, throwsA(DomainError.unexpected));
